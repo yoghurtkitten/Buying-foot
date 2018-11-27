@@ -1,0 +1,23 @@
+{
+  "name": "buying-foot",
+  "version": "1.0.0",
+  "description": "node, vue, mini-ui",
+  "main": "app.js",
+  "scripts": {
+    "test": "node ./test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MadaoDemo/Buying-foot.git"
+  },
+  "keywords": [
+    "node",
+    "vue"
+  ],
+  "author": "madao",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MadaoDemo/Buying-foot/issues"
+  },
+  "homepage": "https://github.com/MadaoDemo/Buying-foot#readme"
+}
