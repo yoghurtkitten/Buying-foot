@@ -7,9 +7,18 @@
     <title>Document</title>
 </head>
 <body>
-    <form action="/login" method="post">
-        用户名：<input type="text" name="name" id="" placeholder="昵称/邮箱/手机号"><br>
-        密码：<input type="password" name="password" id=""><br>
+    <form action="/user/login" method="post">
+        用户名: <input type="text" name="name" id="" placeholder="昵称/邮箱/手机号"><br>
+        密码: <input type="password" name="password" id=""><br>
+        性别: 
+        <input type="radio" name="gender" id="g1" checked>
+        <label for="g1">男</label>
+        <input type="radio" name="gender" id="g2" checked>
+        <label for="g2">女</label><br>
+        邮箱: <input type="email" name="email" id=""><br>
+        手机号: <input type="tel" name="phone" id=""><br>
+        真实姓名: <input type="text" name="user_name" id="">
+        <input type="hidden" name="avatar" value="../asset/img/img.jpg"><br>
         <input type="submit" value="登录">
     </form>
 </body>
