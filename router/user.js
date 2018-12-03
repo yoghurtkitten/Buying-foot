@@ -84,19 +84,17 @@ router.get('/list/:count/:index', (req, res) => {
         if (err) {
             throw err;
         }
-        // res.send(result[0]);
         res.send(`<!doctype html>
         <html>
             <body>
-                <img src = `+result[0].avatar+`>
-                <img src = `+result[1].avatar+`>
+                <p>${result[0].id}<p>
+                <p>${result[0].name}<p>
+                <p>${result[0].name}<p>
+                <img src = ${result[0].avatar}> 
             </body>
         </html>
         `); 
-
     })
 })
-
-
 
 module.exports = router;
