@@ -6,4 +6,5 @@ function createXhr(){
     } else {
         xhr = new ActiveXObject('Microsoft.XMLHttp');
     }
+    return xhr;
 }

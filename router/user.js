@@ -16,7 +16,7 @@ function validate(body) {
     return {code: mycode, str: mystr};
 }
 
-router.post('/login', (req, res) => {
+router.post('/regist', (req, res) => {
     var obj = req.body;
     var validateResult = validate(obj);
     if (validateResult.str) {
@@ -95,6 +95,21 @@ router.get('/list/:count/:index', (req, res) => {
         </html>
         `); 
     })
-})
+});
+
+router.post('/validate', (req, res) => {
+    var obj = req.body;
+    var sql = 'SELECT * FROM user WHERE name = ?'
+    pool.query(sql, [obj.name], (err, result) => {
+        if (err) {
+            throw err;
+        }
+        if (result.length) {
+            res.send({code: 401, msg: '该用户名已存在'});
+        } else {
+            res.send({code: 200, msg: '通过'});
+        }
+    });
+});
 
 module.exports = router;

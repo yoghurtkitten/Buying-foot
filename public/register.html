@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <form action="/user/regist" method="post">
+        用户名: <input type="text" name="name" id="uname" placeholder="昵称/邮箱/手机号" onblur="validate()"><br>
+        密码: <input type="password" name="password" id=""><br>
+        性别: 
+        <input type="radio" name="gender" id="g1" value="1" checked>
+        <label for="g1">男</label>
+        <input type="radio" name="gender" id="g2" value="0">
+        <label for="g2">女</label><br>
+        邮箱: <input type="email" name="email" id=""><br>
+        手机号: <input type="tel" name="phone" id=""><br>
+        真实姓名: <input type="text" name="user_name" id="">
+        <input type="hidden" name="avatar" value="../asset/img/img.jpg"><br>
+        <input type="submit" value="登录">
+        <!-- <input type="button" value="登录" onclick="regist()"> -->
+    </form>
+    <script src="./common.js"></script>
+    <script>
+        function validate() {
+            var xhr = createXhr();
+                
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState == 4 && xhr.status == 200) {
+                    var result = xhr.responseText;
+                    console.log(result);
+                }
+            }
+            
+            xhr.open('post', '/user/validate', true);
+
+            xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+
+            var n = uname.value;
+            var data = `name=${n}`;
+            xhr.send(data);
+        }
+    </script>
+</body>
+</html>
