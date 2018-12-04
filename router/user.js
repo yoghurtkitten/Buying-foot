@@ -99,6 +99,11 @@ router.get('/list/:count/:index', (req, res) => {
 
 router.post('/validate', (req, res) => {
     var obj = req.body;
+    if (!obj.name) {
+        res.send({code: 402, msg: '用户名不能为空'});        
+        return;
+    }
+
     var sql = 'SELECT * FROM user WHERE name = ?'
     pool.query(sql, [obj.name], (err, result) => {
         if (err) {

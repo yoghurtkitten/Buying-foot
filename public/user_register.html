@@ -8,7 +8,7 @@
 </head>
 <body>
     <form action="/user/regist" method="post">
-        用户名: <input type="text" name="name" id="uname" placeholder="昵称/邮箱/手机号" onblur="validate()"><br>
+        用户名: <input type="text" name="name" id="uname" placeholder="昵称/邮箱/手机号" onblur="validate()"><span id="msg1"></span><br>
         密码: <input type="password" name="password" id=""><br>
         性别: 
         <input type="radio" name="gender" id="g1" value="1" checked>
@@ -20,7 +20,6 @@
         真实姓名: <input type="text" name="user_name" id="">
         <input type="hidden" name="avatar" value="../asset/img/img.jpg"><br>
         <input type="submit" value="登录">
-        <!-- <input type="button" value="登录" onclick="regist()"> -->
     </form>
     <script src="./common.js"></script>
     <script>
@@ -30,7 +29,9 @@
             xhr.onreadystatechange = function () {
                 if (xhr.readyState == 4 && xhr.status == 200) {
                     var result = xhr.responseText;
-                    console.log(result);
+                    var arr = JSON.parse(result)
+                    msg1.innerHTML = arr.msg;
+                    console.log(arr.msg);
                 }
             }
             

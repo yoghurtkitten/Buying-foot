@@ -1,6 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const userRouter = require('./router/user');
+const businessRouter = require('./router/business');
 
 const server = express();
 
@@ -10,3 +11,4 @@ server.use(express.static('asset'));
 server.use(bodyParser.urlencoded({extended: false}));
 
 server.use('/user', userRouter);
+server.use('/business', businessRouter);
