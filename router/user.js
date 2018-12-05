@@ -36,8 +36,8 @@ router.post('/regist', (req, res) => {
     }) 
 });
 
-router.get('/del/:id', (req, res) => {
-    var id = req.params.id;
+router.get('/del', (req, res) => {
+    var id = req.query.id;
     var sql = 'DELETE FROM user WHERE id = ?';
     pool.query(sql, [id], (err, result) => {
         if (err) {
@@ -51,8 +51,9 @@ router.get('/del/:id', (req, res) => {
     })
 })
 
-router.get('/query/:id', (req, res) => {
-    var id = req.params.id;
+router.get('/query', (req, res) => {
+    res.send(req.query.id);
+/*     var id = req.query.id;
     var sql = 'SELECT * FROM user WHERE id = ?';
     pool.query(sql, [id], (err, result) => {
         if (err) {
@@ -64,7 +65,7 @@ router.get('/query/:id', (req, res) => {
         } else {
             res.send({code: 401, msg: 'Query Fault!'});
         }
-    })
+    }) */
 })
 
 router.post('/update', (req, res) => {
@@ -96,6 +97,18 @@ router.get('/list/:count/:index', (req, res) => {
         `); 
     })
 });
+
+router.get('/list_all', (req, res) => {
+
+    var sql = 'SELECT * FROM user';
+    pool.query(sql, (err, result) => {
+        if (err) {
+            throw err;
+        }
+        res.send(result); 
+    })
+});
+
 
 router.post('/validate', (req, res) => {
     var obj = req.body;

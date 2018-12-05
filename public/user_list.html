@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="../asset/js/jquery-3.3.1.min.js"></script>
+</head>
+<body onload="show_all()">
+    <table id="d1" border='1px' cellspacing="0">
+        <thead>
+            <tr>
+                <td>用户名</td>
+                <td>密码</td>
+                <td>性别</td>
+                <td>邮箱</td>
+                <td>手机号</td>
+                <td>真实姓名</td>
+                <td>操作</td>
+            </tr>
+        </thead>
+    </table>
+    <script>
+        function show_all() {
+            var xhr = new XMLHttpRequest();
+
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState == 4 && xhr.status == 200) {
+                    var result = xhr.responseText;
+                    var arr = JSON.parse(result);
+                    for (let i = 0; i < arr.length; i++) {
+                        const item = arr[i];
+                        d1.innerHTML += `
+                            <tr>
+                                <td>${item.name}</td>
+                                <td>${item.password}</td>
+                                <td>${item.gender == 1 ? '男' : (item.gender == 0 ? '女' : '不详')}</td>
+                                <td>${item.email}</td>
+                                <td>${item.phone}</td>
+                                <td>${item.user_name}</td>
+                                <td>
+                                    <a href="/user/del?id=${item.id}">删除</a><a href="javascript:void(0);" onclick="js_method(${item.id})">修改</a>
+                                </td>
+                            </tr>
+                        `
+                    }
+                }
+            }
+            
+            xhr.open('get', '/user/list_all', true);
+
+            xhr.send(null);
+        }
+
+        function js_method(id){
+            url = "user_update.html?uid="+id;//此处拼接内容
+            window.location.href = url;
+        }
+    </script>
+</body>
+</html>
