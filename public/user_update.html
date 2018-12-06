@@ -10,7 +10,7 @@
 <body>
 
     <input type="hidden" name="" id="uid">
-    用户名: <input type="text" name="name" id="uname"><br>
+    用户名: <input type="text" name="name" id="uname" placeholder="昵称/邮箱/手机号" onblur="validate()"><span id="msg1"></span><br><br>
     密码: <input type="text" name="password" id="password"><br>
     性别: 
     <input type="radio" name="gender" id="g1" value="1">
@@ -21,19 +21,12 @@
     手机号: <input type="tel" name="phone" id="phone"><br>
     真实姓名: <input type="text" name="user_name" id="user_name"><br>
     <input type="button" value="保存修改" onclick="update_()">
-
+    <script src="./common.js"></script>
     <script>
         $(function(){
-            var url = location.search;
-            var theRequest = new Object();  
-            if (url.indexOf("?") != -1) {  
-                var str = url.substr(1);  
-                strs = str.split("&");  
-                for(var i = 0; i < strs.length; i ++) {  
-                    theRequest[strs[i].split("=")[0]]=unescape(strs[i].split("=")[1]);  
-                }  
-            }
-            // id.value = theRequest.id;
+            var urlParams = new URLSearchParams(location.search);
+            var i = urlParams.get('id');
+            uid.value = i;
             
             var xhr = new XMLHttpRequest();
 
@@ -59,7 +52,7 @@
                 }
             }
 
-            xhr.open('get', `/user/query?id=${theRequest.id}`, true);
+            xhr.open('get', `/user/query?id=${i}`, true);
 
             xhr.send(null);
         })
@@ -69,7 +62,11 @@
             xhr.onreadystatechange = function () {
                 if (xhr.readyState == 4 && xhr.status == 200) {
                     var result = xhr.responseText;
-                    console.log(result);
+                    if (result == 'Update Success!!'){
+                        location.href='http://127.0.0.1:3000/user_list.html'                            
+                    } else {
+                        alert(result);
+                    }
                 }
             }
 
@@ -86,9 +83,29 @@
                 
             }
 
-            var data = `id=${uid.value}&name=${uname.value}&email=${email.value}&phone=${phone.value}&user_name=${user_name.value}&gender=${gender}`;
+            var data = `id=${uid.value}&name=${uname.value}&email=${email.value}&phone=${phone.value}&user_name=${user_name.value}&gender=${gender}&password=${password.value}`;
             xhr.send(data);
         } 
+        function validate() {
+            var xhr = createXhr();
+                
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState == 4 && xhr.status == 200) {
+                    var result = xhr.responseText;
+                    var arr = JSON.parse(result)
+                    msg1.innerHTML = arr.msg;
+                    console.log(arr.msg);
+                }
+            }
+            
+            xhr.open('post', '/user/update_validate', true);
+
+            xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+
+            var n = uname.value;
+            var data = `name=${n}&id=${uid.value}`;
+            xhr.send(data);
+        }
     </script>
 </body>
 </html>

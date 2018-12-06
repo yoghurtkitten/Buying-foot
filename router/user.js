@@ -29,7 +29,7 @@ router.post('/regist', (req, res) => {
             throw err;
         }
         if (result.affectedRows) {
-            res.send({code: 200, msg: 'Insert Success!'})
+            res.send(`<script>alert('添加成功');location.href='http://127.0.0.1:3000/user_list.html'</script>`)
         } else {
             res.send({code: 401, msg: 'Insert Fault!'})
         }
@@ -44,7 +44,7 @@ router.get('/del', (req, res) => {
             throw err;
         }
         if (result.affectedRows) {
-            res.send({code: 200, msg: 'Delete Success!'})            
+            res.send(`<script>alert('删除成功');location.href="http://127.0.0.1:3000/user_list.html"</script>`)            
         } else {
             res.send({code: 401, msg: 'Delete Fault!'})
         }
@@ -80,13 +80,15 @@ router.post('/update', (req, res) => {
         return;     
     }
 
-    var sql = 'UPDATE user SET name = ?, email = ?, phone = ?, user_name = ?, gender = ? WHERE id = ?';
+    var sql = 'UPDATE user SET name = ?, email = ?, phone = ?, user_name = ?, gender = ?, password = ? WHERE id = ?';
 
-    pool.query(sql, [obj.name, obj.email, obj.phone, obj.user_name, obj.gender, obj.id], (err, result) => {
+    pool.query(sql, [obj.name, obj.email, obj.phone, obj.user_name, obj.gender, obj.password, obj.id], (err, result) => {
         if (err) {
             throw err;
         }
+        // res.send(result);
         if (result.affectedRows) {
+            // res.send(`<script>alert('修改成功');location.href='http://127.0.0.1:3000/user_list.html'</script>`)
             res.send('Update Success!!');
         } else {
             res.send('Update Error!!');
@@ -146,6 +148,30 @@ router.post('/validate', (req, res) => {
             res.send({code: 200, msg: '通过'});
         }
     });
+});
+
+router.post('/update_validate', (req, res) => {
+    var obj = req.body;
+    if (!obj.name) {
+        res.send({code: 402, msg: '用户名不能为空'});        
+        return;
+    }
+
+    var sql = 'SELECT * FROM user WHERE name = ?'
+    pool.query(sql, [obj.name], (err, result) => {
+        if (err) {
+            throw err;
+        }
+        if (result.length) {
+            if (result[0].id == obj.id) {
+                res.send({code: 200, msg: '通过'});   
+            } else {
+                res.send({code: 401, msg: '该用户名已存在'});
+            }
+        } else {
+            res.send({code: 200, msg: '通过'});
+        }
+    }); 
 });
 
 module.exports = router;
