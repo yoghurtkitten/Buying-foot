@@ -52,27 +52,45 @@ router.get('/del', (req, res) => {
 })
 
 router.get('/query', (req, res) => {
-    res.send(req.query.id);
-/*     var id = req.query.id;
+    // res.send(req.query.id);
+    var id = req.query.id;
     var sql = 'SELECT * FROM user WHERE id = ?';
     pool.query(sql, [id], (err, result) => {
         if (err) {
             throw err;
         }
         if (result.length) {
-            res.send({code: 200, msg: 'Query Success!'});            
-            console.log(result);
+            res.send(result);            
         } else {
             res.send({code: 401, msg: 'Query Fault!'});
         }
-    }) */
+    }) 
 })
 
 router.post('/update', (req, res) => {
-    var form = new formidable.IncomingForm();
+    /* var form = new formidable.IncomingForm();
     form.parse(req, function(err, fields, files) {
         console.log('fields',fields);//表单传递的input数据
         console.log(files.Filedata.name);//上传文件数据
+    }); */
+    var obj = req.body;
+    var validateResult = validate(obj);
+    if (validateResult.str) {
+        res.send({code: validateResult.code, msg: validateResult.str});
+        return;     
+    }
+
+    var sql = 'UPDATE user SET name = ?, email = ?, phone = ?, user_name = ?, gender = ? WHERE id = ?';
+
+    pool.query(sql, [obj.name, obj.email, obj.phone, obj.user_name, obj.gender, obj.id], (err, result) => {
+        if (err) {
+            throw err;
+        }
+        if (result.affectedRows) {
+            res.send('Update Success!!');
+        } else {
+            res.send('Update Error!!');
+        }
     });
 });
 

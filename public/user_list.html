@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
-    <script src="../asset/js/jquery-3.3.1.min.js"></script>
+    <script src="./jquery-3.3.1.min.js"></script>
 </head>
 <body onload="show_all()">
     <table id="d1" border='1px' cellspacing="0">
@@ -40,7 +40,7 @@
                                 <td>${item.phone}</td>
                                 <td>${item.user_name}</td>
                                 <td>
-                                    <a href="/user/del?id=${item.id}">删除</a><a href="javascript:void(0);" onclick="js_method(${item.id})">修改</a>
+                                    <a href="/user/del?id=${item.id}">删除</a><a href="user_update.html?id=${item.id}">修改</a>
                                 </td>
                             </tr>
                         `
@@ -53,10 +53,6 @@
             xhr.send(null);
         }
 
-        function js_method(id){
-            url = "user_update.html?uid="+id;//此处拼接内容
-            window.location.href = url;
-        }
     </script>
 </body>
 </html>
