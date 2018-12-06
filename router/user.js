@@ -29,7 +29,7 @@ router.post('/regist', (req, res) => {
             throw err;
         }
         if (result.affectedRows) {
-            res.send(`<script>alert('添加成功');location.href='http://127.0.0.1:3000/user_list.html'</script>`)
+            res.send({code: 200, msg: 'Insert Success!'})
         } else {
             res.send({code: 401, msg: 'Insert Fault!'})
         }
