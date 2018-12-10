@@ -1,0 +1,28 @@
+.header{
+    /* border: 1px solid black; */
+}
+.header ul {
+    margin-left: 46%;
+    height: 70px;
+    list-style: none;
+}
+.header ul li{
+    /* overflow:hidden; 解决高度设置无效的问题 */
+    float:left;
+    height:70px;
+    margin-right:4px;
+    line-height: 70px;
+    font-size: 0.8rem;
+    padding-left: 2rem;
+}
+.header ul li a{
+    text-decoration: none;
+    /* font-weight: bold; */
+    color: #fff;
+    height: 100%;
+    display: flex;
+    text-align: center;
+}
+.header ul li a:hover{
+    border-bottom: 3px solid #000;
+}

@@ -5,9 +5,53 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
+    <script src="js/jquery-3.3.1.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/header.css">
+    <style>
+        html{
+            font-size: 20px;
+        }
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        .main_img{
+            height: 39rem;
+            width: 100%;
+            background:url(https://p1.meituan.net/1440.590/codeman/d2ab674fa0e4c875865e524d82fe15a34372569.png) no-repeat; 
+            background-size: cover;
+        }
+        .btn{
+            width: 250px;
+            height: 150px;
+        }
+        #btn{
+            margin: 0 auto !important;
+        }
+    </style>
 </head>
 <body>
-    <a href="login.html">登录</a>
-    
+    <!-- <a href="login.html">登录</a> -->
+    <div class="main_img">
+        <header class="header">
+            <ul>
+                <li><a href="#">首页</a></li>
+                <li><a href="#">加盟</a></li>
+                <li><a href="#">点外卖</a></li>
+                <li><a href="#">公告</a></li>
+                <li><a href="#">关于我们</a></li>
+            </ul>
+        </header>
+        <section>
+            <div class="btn-group" role="group" aria-label="..." id="btn">
+                <button type="button" class="btn btn-info">Left</button>
+                <button type="button" class="btn btn-warning">Middle</button>
+                <button type="button" class="btn btn-danger">Right</button>
+            </div>
+        </section>
+    </div>
+
 </body>
 </html>
