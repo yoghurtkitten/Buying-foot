@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        .container{
+            width: 100%;
+            height: 560px;
+            margin: 102px auto;
+            margin-left: 0;
+            background: url(http://www.codeboy.com/img/register/bg.png) no-repeat;
+            background-size: cover;
+        }
+        .login-form{
+            width: 280px;
+            background-color: rgba(0, 0, 0, .3);
+            margin-top:122px;
+            margin-left: 72%;
+            ;
+        }
+        .txt{
+            width: 253px;
+            height: 277px;
+            overflow: hidden;
+            padding: 10px
+        }
+
+        .login{
+            color: #fff;
+            font-size: 18px;
+            display: inline;
+            line-height: 40px;
+        }
+        span{
+            color: #fff;
+            font-size: 18px;
+        }
+        .regist{
+            margin-left: 45%;
+            font-size: 12px;
+        }
+        hr{
+            margin: 0;
+        }
+        input{
+            width: 253px;
+            padding: 10px 20px;
+            margin-top: 16px;
+            border-width: 1px;
+            
+        }
+        .btn{
+            width: 276px;
+            background-color: #27b0f6;
+            color: #fff;
+            font-size: 13.33px;
+            border-radius: 2px;
+            margin-top: 0;
+            border: none;
+        }
+        #auto_login{
+            width: 20px;
+            margin-bottom: 0;
+            margin-top: 0;
+        }
+        span>label{
+            font-size: 12px;
+        }
+        .msg{
+            margin-bottom: 10px;
+            height: 19px;
+            line-height: 19px;
+        }
+        span>a{
+            text-decoration: none;
+            color: #fff;
+            font-size: 12px;
+            margin-left: 46%;
+        }
+        .text{
+            height: 84px;
+        }
+        span>img{
+            position: relative;
+            left: 225px;
+            top: -34px
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <table></table>
+        <div class="login-form">
+            <div class="txt">
+                <p>
+                    <p class="login">帐号登录</p>
+                    <span><a href="#" class="regist">新用户注册</a></span>
+                </p>
+                <hr>
+                <div class="inner-form">
+                    <div class="text">
+                        <input type="text" name="" id="" placeholder="请输入您的用户名">
+                        <span>
+                            <img src="http://www.codeboy.com/img/login/yhm.png" alt="">
+                        </span>
+                    </div>
+                    <div class="text">
+                        <input type="text" name="" id="" placeholder="请输入您的密码">
+                        <span>
+                            <img src="http://www.codeboy.com/img/login/mm.png" alt="">
+                        </span>
+                    </div>
+                    <div class="msg">
+                        <span><input type="checkbox" name="login" id="auto_login"><label for="auto_login">自动登录</label></span>
+                        <span><a href="#">忘记密码？</a></span>
+                    </div>
+                    <input type="button" value="登录" class="btn">
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

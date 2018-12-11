@@ -8,7 +8,7 @@
     <script src="js/jquery-3.3.1.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/header.css">
+    <!-- <link rel="stylesheet" href="css/header.css"> -->
     <style>
         html{
             font-size: 20px;
@@ -18,40 +18,132 @@
             padding: 0;
         }
         .main_img{
-            height: 39rem;
+            height: 42rem;
             width: 100%;
-            background:url(https://p1.meituan.net/1440.590/codeman/d2ab674fa0e4c875865e524d82fe15a34372569.png) no-repeat; 
+            background:url(http://demo.cssmoban.com/cssthemes5/cpts_1488_cmk/images/slider/1.jpg) no-repeat; 
             background-size: cover;
         }
-        .btn{
+        .my-btn{
             width: 250px;
             height: 150px;
         }
-        #btn{
-            margin: 0 auto !important;
+        #body{
+            width: 100%;
+           
+            border: 1px solid transparent;
+        }
+        #demo{
+            margin: 40rem auto;
+            width: 37.5rem;
+        }
+        .search-cotain{
+            width: 945px;
+            height: 50px;
+        }
+        .search-icon{
+            height: 50px;
+            width: 50px;
+            border-left: transparent;
+        }
+        .header ul {
+            margin-left: 53%;
+            margin-bottom: 0;
+            height: 115px;
+            list-style: none;
+        }
+        .header ul li{
+            /* overflow:hidden; 解决高度设置无效的问题 */
+            float:left;
+            height:115px;
+            margin-right:4px;
+            line-height: 115px;
+            font-size: 0.8rem;
+            padding-left: 2rem;
+        }
+        .header ul li a{
+            text-decoration: none;
+            font-weight: bold;
+            color: #535353;
+            height: 100%;
+            display: flex;
+            text-align: center;
+        }
+        .header ul li a:hover{
+            color:#e54c2a;
+        }
+        .nav{
+            width: 100%;
+        }
+        .test{
+            margin-top: 30px;
+            display: none;
+            margin-left: 30%;
+        }
+        .slider{
+            width: 30%;
+            height: 11rem;
+            border: 1px solid #000;
+            float: left;
+            margin-left: 18%;
+            margin-top: 16%;
         }
     </style>
+    <script>
+        $(function(){
+            // $('.test').hide();
+            $('#search').click(function () {
+                $('li a').fadeOut();
+                $('#search').fadeOut();
+                setTimeout(() => {
+                    $('.test').fadeIn();
+                }, 500)
+
+            });
+            $('.close').click(function () {
+                $('.test').fadeOut();
+                setTimeout(() => {
+                    $('li a').fadeIn();
+                    $('#search').fadeIn();
+                }, 500)
+            })
+        })
+    </script>
 </head>
 <body>
     <!-- <a href="login.html">登录</a> -->
-    <div class="main_img">
-        <header class="header">
+    <header class="header">
+        <div class="nav">
+            <div class="col-lg-6 test" >
+                <div class="input-group inner-test">
+                    <input type="search" class="form-control search-cotain" placeholder="Search for...">
+                    <span class="input-group-btn">
+                        <button class="btn btn-default search-icon" type="button"><span class="glyphicon glyphicon-search" aria-hidden="true" ></span></button>
+                        <button class="btn btn-default search-icon" type="button"><span class="glyphicon glyphicon-remove close" aria-hidden="true"></span></button>
+                    </span>
+                </div> 
+            </div>
             <ul>
                 <li><a href="#">首页</a></li>
                 <li><a href="#">加盟</a></li>
                 <li><a href="#">点外卖</a></li>
                 <li><a href="#">公告</a></li>
                 <li><a href="#">关于我们</a></li>
+                <li id="search"><span class="glyphicon glyphicon-search" aria-hidden="true" ></span></li>
             </ul>
-        </header>
-        <section>
-            <div class="btn-group" role="group" aria-label="..." id="btn">
-                <button type="button" class="btn btn-info">Left</button>
-                <button type="button" class="btn btn-warning">Middle</button>
-                <button type="button" class="btn btn-danger">Right</button>
+        </div>
+    </header>
+    <div class="main_img"> 
+        <div class="slider"></div>
+        <div id="body">
+            <div id="demo">
+                <div class="btn-group" role="group" aria-label="...">
+                    <button type="button" class="btn btn-info my-btn">Left</button>
+                    <button type="button" class="btn btn-danger my-btn">Right</button>
+                    <button type="button" class="btn btn-warning my-btn">Middle</button>
+                </div>
             </div>
-        </section>
-    </div>
-
+            
+        </div>      
+    </div>  
 </body>
 </html>
