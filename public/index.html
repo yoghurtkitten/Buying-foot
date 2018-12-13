@@ -13,6 +13,9 @@
         html{
             font-size: 20px;
         }
+        body{
+            overflow: hidden;
+        }
         *{
             margin: 0;
             padding: 0;
@@ -23,19 +26,26 @@
             background:url(http://demo.cssmoban.com/cssthemes5/cpts_1488_cmk/images/slider/1.jpg) no-repeat; 
             background-size: cover;
         }
+        @keyframes my-btn-Animate{
+            0%{
+                transform: translateY(2000px);
+                opacity: 0;
+            }
+            100%{
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
         .my-btn{
-            width: 250px;
-            height: 150px;
+            width: 15%;
+            height: 2.5rem;
+            animation: my-btn-Animate 1s ease 1;
+            animation-fill-mode: forwards;
         }
-        #body{
-            width: 100%;
-           
-            border: 1px solid transparent;
-        }
-        #demo{
-            margin: 40rem auto;
-            width: 37.5rem;
-        }
+        /* .my-btn:last-child{
+            animation: my-btn-Animate 1s ease-in-out 1;
+            animation-fill-mode: forwards;
+        } */
         .search-cotain{
             width: 945px;
             height: 50px;
@@ -73,6 +83,7 @@
         }
         .nav{
             width: 100%;
+            display: flex;
         }
         .test{
             margin-top: 30px;
@@ -80,13 +91,69 @@
             margin-left: 30%;
         }
         .slider{
-            width: 30%;
-            height: 11rem;
-            border: 1px solid #000;
+            width: 50%;
+            height: 16rem;
+            /* border: 1px solid #000; */
             float: left;
-            margin-left: 18%;
-            margin-top: 16%;
+            margin-left: 17%;
+            margin-top: 15.9%;
         }
+        @keyframes welcomeAnimate{
+            0%{
+                transform: translateY(-2000px);
+                opacity: 0;
+            }
+            100%{
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+        .welcome{
+            font-size: 36px;
+            font-family: "mv boli";
+            margin-bottom: 2px;
+            animation: welcomeAnimate 1s ease 1;
+            animation-fill-mode: forwards;
+        }
+        @keyframes loveAnimate{
+            0%{
+                transform: translateX(2000px);
+                opacity: 0;
+            }
+            100%{
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+        .loves{
+            font-size: 50px;
+            font-weight: bold;
+            color: #535353;
+            margin-bottom: 10px;
+
+            animation: loveAnimate 1s ease 1;
+            animation-fill-mode: forwards;
+        }
+        
+        @keyframes detailAnimate{
+            0%{
+                transform: translateX(2000px);
+                opacity: 0;
+            }
+            100%{
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+        .detail{
+            width: 79.2%;
+            font-size: 14px;
+            color: #757575;
+
+            animation: detailAnimate 1.5s ease 1;
+            animation-fill-mode: forwards;
+        }
+        
     </style>
     <script>
         $(function(){
@@ -128,22 +195,26 @@
                 <li><a href="#">点外卖</a></li>
                 <li><a href="#">公告</a></li>
                 <li><a href="#">关于我们</a></li>
-                <li id="search"><span class="glyphicon glyphicon-search" aria-hidden="true" ></span></li>
+                <li id="search"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></li>
             </ul>
         </div>
     </header>
     <div class="main_img"> 
-        <div class="slider"></div>
-        <div id="body">
-            <div id="demo">
-                <div class="btn-group" role="group" aria-label="...">
-                    <button type="button" class="btn btn-info my-btn">Left</button>
-                    <button type="button" class="btn btn-danger my-btn">Right</button>
-                    <button type="button" class="btn btn-warning my-btn">Middle</button>
-                </div>
-            </div>
+        <div class="slider">
+            <p class="welcome">
+                Welcome Resta Restawant
+            </p>
+            <p class="loves">
+                LOVES HEALTHY FOOD
+            </p>
+            <p class="detail">
+                Lorem ipsum dolor sit amet consectetur adipisicing elit.pellentesque vel volutpat felis,eu codimentum.Lorem ipsum dolor sit amet. 
+            </p>
             
-        </div>      
+            <button type="button" class="btn btn-danger my-btn">Right</button>
+            <button type="button" class="btn btn-warning my-btn">Middle</button>
+        </div>  
+
     </div>  
 </body>
 </html>
