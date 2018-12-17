@@ -25,7 +25,8 @@
             height: 42rem;
             width: 100%;
             background:url(http://demo.cssmoban.com/cssthemes5/cpts_1488_cmk/images/slider/1.jpg) no-repeat; 
-            background-size: cover;
+            /* background-size: cover; */
+            background-size: 100%;
             overflow: hidden;
         }
         @keyframes my-btn-Animate{
@@ -51,13 +52,12 @@
             }
         }
         .my-btn{
-            width: 15%;
+            width: 8%;
             height: 2.5rem;
             animation: my-btn-Animate 1s ease 1;
             animation-fill-mode: forwards;
         }
         .search-cotain{
-            width: 945px;
             height: 50px;
         }
         .search-icon{
@@ -77,6 +77,48 @@
             line-height: 115px;
             font-size: 0.8rem;
             padding-left: 2rem;
+        }
+        @media screen and (max-width:1540px) and (min-width:848px){
+            .my-btn{
+                width: 9%!important;
+            }
+            .detail{
+                width: 60%!important;
+            }
+        }
+        @media screen and (max-width:982px) and (min-width:849px){
+            .loves{
+                font-size: 2rem!important;
+            }
+            .detail{
+                width: 70%!important;
+            }
+            .my-btn{
+                width: 15%;
+            }
+        }
+        @media screen and (max-width:850px) and (min-width:741px){
+            .header ul li{
+                font-size: 0.7rem;
+                padding-left: 1rem;
+            }
+            .detail{
+                display: none;
+            }
+        }
+        @media screen and (max-width:760px){
+            .header ul li{
+                font-size: 0.6rem;
+                padding-left: 0.5rem;
+                width: 60px;
+            }
+            .loves{
+                font-size: 1.5rem!important;
+            }
+            .detail{
+                display: none;
+            }
+            
         }
         .header ul li a{
             text-decoration: none;
@@ -105,7 +147,7 @@
             margin-left: 0;
         }
         .slider{
-            width: 50%;
+            width: 100%;
             height: 16rem;
             float: left;
             margin-left: 17%;
@@ -127,10 +169,10 @@
             }
         }
         .welcome{
-            font-size: 36px;
+            font-size: 1.8rem;
             font-family: "mv boli";
             margin-bottom: 2px;
-            animation: welcomeAnimate 2s ease 1;
+            animation: welcomeAnimate 1s ease 1;
             animation-fill-mode: forwards;
         }
         @keyframes loveAnimate{
@@ -144,7 +186,7 @@
             }
         }
         .loves{
-            font-size: 50px;
+            font-size: 2.5rem;
             font-weight: bold;
             color: #535353;
             margin-bottom: 10px;
@@ -164,8 +206,8 @@
             }
         }
         .detail{
-            width: 79.2%;
-            font-size: 14px;
+            width: 29.1%;
+            font-size: 0.7rem;
             color: #757575;
 
             animation: detailAnimate 1.5s ease 1;
@@ -177,6 +219,13 @@
             display: flex;
             justify-content: center;
             align-items: center;
+        }
+        .fixed{
+            position: fixed;
+            z-index: 10000;
+            background-color: #f5f5f5;
+            /* height: 100px; */
+            top: -10px;
         }
     </style>
     <script>
@@ -197,6 +246,21 @@
                     $('#search').fadeIn();
                 }, 500)
             })
+
+            var fixedDom = document.getElementsByClassName('nav')[0];
+
+            window.onscroll = function () {
+                var scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+                if (scrollTop > fixedDom.offsetTop) {
+                    fixedDom.classList.add("fixed");
+                    console.log("滚动距离" + scrollTop + '元素距离' + fixedDom.offsetTop)
+                }
+                if (scrollTop <= fixedDom.offsetTop + 10) {
+                    fixedDom.classList.remove("fixed");
+                }
+                /* console.log("滚动距离" + scrollTop);
+                console.log('元素距离' + fixedDom.offsetTop) */
+            }
         })
     </script>
 </head>
@@ -233,7 +297,7 @@
                 LOVES HEALTHY FOOD
             </p>
             <p class="detail">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.pellentesque vel volutpat felis,eu codimentum.Lorem ipsum dolor sit amet. 
+                Lorem ipsum dolor sit amet consectetur adipisicing elit.pellentesque vel volutpat felis, eu codimentum.Lorem ipsum dolor sit amet. 
             </p>
             
             <button type="button" class="btn btn-danger my-btn">Right</button>
