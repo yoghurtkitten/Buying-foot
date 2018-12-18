@@ -1,98 +1,95 @@
 <!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="utf-8" />
-        <title>左右淡入的企业介绍</title>
-        <link type="text/css" rel="stylesheet" href="css/animate.css" />
-        <style>
-            body{
-    overflow: hidden;  /*此处需要设置溢出隐藏，否则文字起始位移超过页面大小就会在页面下方出现横的滚动条*/
-}
-.company{
-    width: 400px;
-    margin: 0 auto;
-    border: 1px #999999 solid;
-}
- 
-/*定义一个名字为lefteaseinAnimate动画，实现从页面的左边淡入页面效果*/
-@keyframes lefteaseinAnimate{
-    0%{ transform: translateX(-2000px); opacity: 0;}   /*在0%时设置文字在想X轴-2000px位移处（左边），透明度为0，也就是看不见文字*/
-    100%{ transform: translateX(0px); opacity: 1;}         /*在100%时设置文字在想X轴0px位移处，也就是原始布局的位置，透明度为1，也就是文字可以看见了*/
-}
-@-webkit-keyframes lefteaseinAnimate{
-    0%{ -webkit-transform: translateX(-2000px); opacity: 0;}
-    100%{ -webkit-transform: translateX(0px); opacity: 1;}    
-}
-@-o-keyframes lefteaseinAnimate{
-    0%{ -webkit-transform: translateX(-2000px); opacity: 0;}
-    100%{ -webkit-transform: translateX(0px); opacity: 1;}    
-}
-@-ms-keyframes lefteaseinAnimate{
-    0%{ -webkit-transform: translateX(-2000px); opacity: 0;}
-    100%{ -webkit-transform: translateX(0px); opacity: 1;}    
-}
-@-moz-keyframes lefteaseinAnimate{
-    0%{ -webkit-transform: translateX(-2000px); opacity: 0;}
-    100%{ -webkit-transform: translateX(0px); opacity: 1;}    
-}
-.company_name{
-    animation: lefteaseinAnimate 1s ease 1;    /*调用已定义好的动画lefteaseinAnimate，全程运行时间1S，进入的速度曲线为ease，只播放一次*/
-    -webkit-animation: lefteaseinAnimate 1s ease 1;
-    -ms-animation: lefteaseinAnimate 1s ease 1;
-    -o-animation: lefteaseinAnimate 1s ease 1;
-    -moz-animation: lefteaseinAnimate 1s ease 1;
-     
-    /*规定动画的最后状态为结束状态*/
-    animation-fill-mode:forwards;
-    -webkit-animation-fill-mode: forwards;  
-      -o-animation-fill-mode: forwards; 
-      -ms-animation-fill-mode: forwards;   
-      -moz-animation-fill-mode: forwards; 
-}
- 
-/*定义一个名字为righteaseinAnimate动画，实现从页面的右边淡入页面效果*/
-@keyframes righteaseinAnimate{
-    0%{ transform: translateX(2000px); opacity: 0;}   /*在0%时设置文字在想X轴2000px位移处（右边），透明度为0，也就是看不见文字*/
-    100%{ transform: translateX(0px); opacity: 1;}      /*在100%时设置文字在想X轴0px位移处，也就是原始布局的位置，透明度为1，也就是文字可以看见了*/
-}
-@-webkit-keyframes righteaseinAnimate{
-    0%{ -webkit-transform: translateX(2000px); opacity: 0;}
-    100%{ -webkit-transform: translateX(0px); opacity: 1;}
-}
-@-o-keyframes righteaseinAnimate{
-    0%{ -webkit-transform: translateX(2000px); opacity: 0;}
-    100%{ -webkit-transform: translateX(0px); opacity: 1;}
-}
-@-ms-keyframes righteaseinAnimate{
-    0%{ -webkit-transform: translateX(2000px); opacity: 0;}
-    100%{ -webkit-transform: translateX(0px); opacity: 1;}
-}
-@-moz-keyframes righteaseinAnimate{
-    0%{ -webkit-transform: translateX(2000px); opacity: 0;}
-    100%{ -webkit-transform: translateX(0px); opacity: 1;}
-}
-.company_introduce{
-    animation: righteaseinAnimate 1s ease 1;    /*调用已定义好的动画righteaseinAnimate，全程运行时间1S，进入的速度曲线为ease，只播放一次*/
-    -webkit-animation: righteaseinAnimate 1s ease 1;
-    -moz-animation: righteaseinAnimate 1s ease 1;
-    -ms-animation: righteaseinAnimate 1s ease 1;
-    -o-animation: righteaseinAnimate 1s ease 1;
-     
-    /*规定动画的最后状态为结束状态*/
-    animation-fill-mode:forwards;
-    -webkit-animation-fill-mode: forwards;  
-      -o-animation-fill-mode: forwards; 
-      -ms-animation-fill-mode: forwards;   
-      -moz-animation-fill-mode: forwards; 
-}
-        </style>
-    </head>
-    <body>
-        <div class="company">
-            <h2 class="company_name">上海世茂集团企业招聘</h2>
-            <h5 class="company_introduce">世茂集团，是以房地产开发为主的国际化企业集群，房地产界领袖企业之一。</h5>            
-        </div>    
-    </body>
-</html>
+<html lang="en">
 
- 
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="js/jquery-3.3.1.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <style>
+        html{
+            font-size: 20px;
+        }
+        .container{
+            margin: 0;
+            padding: 0;
+            border: 1px solid #000;
+        }
+        .header{
+            border: 1px solid #000;
+        }
+        .header ul {
+            display: flex;
+            list-style: none;
+            /* height: 115px; */
+            margin-bottom: 0;
+        }
+        .header ul li{
+            height:115px;
+            margin-right:4px;
+            line-height: 115px;
+            font-size: 0.8rem;
+            padding-left: 2rem;
+        }
+        .header ul li a{
+            text-decoration: none;
+            font-weight: bold;
+            color: #535353;
+            height: 100%;
+            display: flex;
+            text-align: center;
+        }
+        .header ul li a:hover{
+            color:#e54c2a;
+        }
+        .nav{
+            width: 100%;
+            display: flex;
+            justify-content:space-around;
+        }
+        .nav img{
+            vertical-align: middle;
+            margin-bottom: -23px;
+            margin-right: 150px;
+        }
+        .test{
+            margin-top: 30px;
+            display: none;
+            margin-left: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container-fluid">
+        <header class="header">
+            <div class="nav">
+                <img src="img/logo.png" alt="">
+                <div class="col-lg-6 test">
+                    <div class="input-group inner-test">
+                        <input type="search" class="form-control search-cotain" placeholder="Search for...">
+                        <span class="input-group-btn">
+                            <button class="btn btn-default search-icon" type="button"><span class="glyphicon glyphicon-search"
+                                    aria-hidden="true"></span></button>
+                            <button class="btn btn-default search-icon" type="button"><span class="glyphicon glyphicon-remove close"
+                                    aria-hidden="true"></span></button>
+                        </span>
+                    </div>
+                </div>
+                <ul>
+                    <li><a href="#">首页</a></li>
+                    <li><a href="#">加盟</a></li>
+                    <li><a href="#">点外卖</a></li>
+                    <li><a href="#">公告</a></li>
+                    <li><a href="#">关于我们</a></li>
+                    <li id="search"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></li>
+                </ul>
+            </div>
+        </header>       
+</div>
+</body>
+
+</html>

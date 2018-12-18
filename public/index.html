@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,231 +9,15 @@
     <script src="js/jquery-3.3.1.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="css/bootstrap.min.css">
-    <!-- <link rel="stylesheet" href="css/header.css"> -->
+    <link rel="stylesheet" href="css/header.css">
     <style>
-        html{
-            font-size: 20px;
-        }
-        body{
-            /* overflow: hidden; */
-            /* height: 1920px; */
-        }
-        *{
-            margin: 0;
-            padding: 0;
-        }
-        .main_img{
-            height: 42rem;
-            width: 100%;
-            background:url(http://demo.cssmoban.com/cssthemes5/cpts_1488_cmk/images/slider/1.jpg) no-repeat; 
-            /* background-size: cover; */
-            background-size: 100%;
-            overflow: hidden;
-        }
-        @keyframes my-btn-Animate{
-            0%{
-                transform: translateY(2000px);
-                opacity: 0;
-            }
-            40%{
-                transform: translateY(-20px);
-                opacity: 1;
-            }
-            60%{
-                transform: translateY(20px);
-                opacity: 1;
-            }
-            80%{
-                transform: translateY(-5px);
-                opacity: 1;
-            }
-            100%{
-                transform: translateY(0);
-                opacity: 1;
-            }
-        }
-        .my-btn{
-            width: 8%;
-            height: 2.5rem;
-            animation: my-btn-Animate 1s ease 1;
-            animation-fill-mode: forwards;
-        }
-        .search-cotain{
-            height: 50px;
-        }
-        .search-icon{
-            height: 50px;
-            width: 50px;
-            border-left: transparent;
-        }
-        .header ul {
-            display: flex;
-            list-style: none;
-            height: 115px;
-            margin-bottom: 0;
-        }
-        .header ul li{
-            height:115px;
-            margin-right:4px;
-            line-height: 115px;
-            font-size: 0.8rem;
-            padding-left: 2rem;
-        }
-        @media screen and (max-width:1540px) and (min-width:848px){
-            .my-btn{
-                width: 9%!important;
-            }
-            .detail{
-                width: 60%!important;
-            }
-        }
-        @media screen and (max-width:982px) and (min-width:849px){
-            .loves{
-                font-size: 2rem!important;
-            }
-            .detail{
-                width: 70%!important;
-            }
-            .my-btn{
-                width: 15%;
-            }
-        }
-        @media screen and (max-width:850px) and (min-width:741px){
-            .header ul li{
-                font-size: 0.7rem;
-                padding-left: 1rem;
-            }
-            .detail{
-                display: none;
-            }
-        }
-        @media screen and (max-width:760px){
-            .header ul li{
-                font-size: 0.6rem;
-                padding-left: 0.5rem;
-                width: 60px;
-            }
-            .loves{
-                font-size: 1.5rem!important;
-            }
-            .detail{
-                display: none;
-            }
-            
-        }
-        .header ul li a{
-            text-decoration: none;
-            font-weight: bold;
-            color: #535353;
-            height: 100%;
-            display: flex;
-            text-align: center;
-        }
-        .header ul li a:hover{
-            color:#e54c2a;
-        }
-        .nav{
-            width: 100%;
-            display: flex;
-            justify-content:space-around;
-        }
-        .nav img{
-            vertical-align: middle;
-            margin-bottom: -23px;
-            margin-right: 150px;
-        }
-        .test{
-            margin-top: 30px;
-            display: none;
-            margin-left: 0;
-        }
-        .slider{
-            width: 100%;
-            height: 16rem;
-            float: left;
-            margin-left: 17%;
-            margin-top: 15.9%;
-        }
-        @keyframes welcomeAnimate{
-            0%{
-                transform: translate(900px,-2000px);
-                opacity: 0;
-            }
-            40%{
-                transform: translate(200px,-1000px);
-                opacity: 0;
-            }
 
-            100%{
-                transform: translate(0, 0);
-                opacity: 1;
-            }
-        }
-        .welcome{
-            font-size: 1.8rem;
-            font-family: "mv boli";
-            margin-bottom: 2px;
-            animation: welcomeAnimate 1s ease 1;
-            animation-fill-mode: forwards;
-        }
-        @keyframes loveAnimate{
-            0%{
-                transform: translateX(2000px);
-                opacity: 0;
-            }
-            100%{
-                transform: translateX(0);
-                opacity: 1;
-            }
-        }
-        .loves{
-            font-size: 2.5rem;
-            font-weight: bold;
-            color: #535353;
-            margin-bottom: 10px;
-
-            animation: loveAnimate 1s ease 1;
-            animation-fill-mode: forwards;
-        }
-        
-        @keyframes detailAnimate{
-            0%{
-                transform: translateX(2000px);
-                opacity: 0;
-            }
-            100%{
-                transform: translateX(0);
-                opacity: 1;
-            }
-        }
-        .detail{
-            width: 29.1%;
-            font-size: 0.7rem;
-            color: #757575;
-
-            animation: detailAnimate 1.5s ease 1;
-            animation-fill-mode: forwards;
-        }
-        .sub-title{
-            height: 15rem;
-            border: 1px solid #000;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-        .fixed{
-            position: fixed;
-            z-index: 10000;
-            background-color: #f5f5f5;
-            /* height: 100px; */
-            top: -10px;
-        }
     </style>
     <script>
-        $(function(){
+        $(function () {
             // $('.test').hide();
             $('#search').click(function () {
-                $('li a').fadeOut();
+                $('.header-right').fadeOut();
                 $('#search').fadeOut();
                 setTimeout(() => {
                     $('.test').fadeIn();
@@ -242,75 +27,117 @@
             $('.close').click(function () {
                 $('.test').fadeOut();
                 setTimeout(() => {
-                    $('li a').fadeIn();
+                    $('.header-right').fadeIn();
                     $('#search').fadeIn();
                 }, 500)
             })
 
-            var fixedDom = document.getElementsByClassName('nav')[0];
+            var fixedDom = document.getElementsByClassName('header')[0];
 
             window.onscroll = function () {
                 var scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
                 if (scrollTop > fixedDom.offsetTop) {
                     fixedDom.classList.add("fixed");
-                    console.log("滚动距离" + scrollTop + '元素距离' + fixedDom.offsetTop)
                 }
                 if (scrollTop <= fixedDom.offsetTop + 10) {
                     fixedDom.classList.remove("fixed");
                 }
-                /* console.log("滚动距离" + scrollTop);
-                console.log('元素距离' + fixedDom.offsetTop) */
             }
         })
     </script>
 </head>
+
 <body>
     <!-- <a href="login.html">登录</a> -->
-     <header class="header">
-        <div class="nav">
-            <img src="img/logo.png" alt="">
-            <div class="col-lg-6 test" >
-                <div class="input-group inner-test">
-                    <input type="search" class="form-control search-cotain" placeholder="Search for...">
-                    <span class="input-group-btn">
-                        <button class="btn btn-default search-icon" type="button"><span class="glyphicon glyphicon-search" aria-hidden="true" ></span></button>
-                        <button class="btn btn-default search-icon" type="button"><span class="glyphicon glyphicon-remove close" aria-hidden="true"></span></button>
-                    </span>
-                </div> 
+    <div class="container-fluid">
+        <header class="header">
+            <div class="nav container">
+                <div class="col-md-2 col-sm-3 col-xs-6">
+                    <div class="logo"><a href="index.html"><img src="img/logo.png" alt=""></a></div>
+                </div>
+                <div class="col-md-10 col-sm-9 col-xs-6">
+                    <div class="mgea-full-width">
+                        <div class="header-right">
+                            <div class="header-menu hidden-sm hidden-xs">
+                                <ul>
+                                    <li><a href="#">首页</a></li>
+                                    <li><a href="#">加盟</a></li>
+                                    <li><a href="#">点外卖</a></li>
+                                    <li><a href="#">公告</a></li>
+                                    <li><a href="#">关于我们</a></li>
+                                    <li id="search"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="test">
+                            <div class="input-group inner-test">
+                                <input type="search" class="form-control search-cotain" placeholder="Search for...">
+                                <span class="input-group-btn">
+                                    <button class="btn btn-default search-icon" type="button"><span class="glyphicon glyphicon-search"
+                                            aria-hidden="true"></span></button>
+                                    <button class="btn btn-default search-icon" type="button"><span class="glyphicon glyphicon-remove close"
+                                            aria-hidden="true"></span></button>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- <img src="img/logo.png" alt=""> -->
             </div>
-            <ul>
-                <li><a href="#">首页</a></li>
-                <li><a href="#">加盟</a></li>
-                <li><a href="#">点外卖</a></li>
-                <li><a href="#">公告</a></li>
-                <li><a href="#">关于我们</a></li>
-                <li id="search"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></li>
-            </ul>
+        </header>
+        <div class="main_img">
+            <div>
+                <img src="http://demo.cssmoban.com/cssthemes5/cpts_1488_cmk/images/slider/1.jpg" alt="" class="img-responsive">
+            </div>
+            <div class="slider">
+                <p class="welcome">
+                    Welcome Resta Restawant
+                </p>
+                <p class="loves">
+                    LOVES HEALTHY FOOD
+                </p>
+                <p class="detail">
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit.pellentesque vel volutpat felis, eu
+                    codimentum.Lorem ipsum dolor sit amet.
+                </p>
+
+                <button type="button" class="btn btn-danger my-btn">Right</button>
+                <button type="button" class="btn btn-warning my-btn">Middle</button>
+            </div>
         </div>
-    </header>
-    <div class="main_img"> 
-        <div class="slider">
-            <p class="welcome">
-                Welcome Resta Restawant
-            </p>
-            <p class="loves">
-                LOVES HEALTHY FOOD
-            </p>
-            <p class="detail">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.pellentesque vel volutpat felis, eu codimentum.Lorem ipsum dolor sit amet. 
-            </p>
-            
-            <button type="button" class="btn btn-danger my-btn">Right</button>
-            <button type="button" class="btn btn-warning my-btn">Middle</button>
-        </div>  
-
+        <div class="sub-title">
+            <p><img src="img/server.png" alt="" class="img-responsive server-img" ></p>
+        </div>
+        <div class="server">
+            <div class="row">
+                <div class="col-md-6 col-md-offset-3">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <ul>
+                                <li>品类全覆盖，应有尽有</li>
+                                <li>美食 Delicacy</li>
+                                <li>甜点饮品 Desserts&Drinks</li>
+                                <li>水果生鲜 Fresh foods</li>
+                                <li>超市遍历 Supermarket</li>
+                            </ul>
+                        </div>
+                        <div class="col-md-6">
+                            <ul>
+                                <li>品类全覆盖，应有尽有</li>
+                                <li>美食 Delicacy</li>
+                                <li>甜点饮品 Desserts&Drinks</li>
+                                <li>水果生鲜 Fresh foods</li>
+                                <li>超市遍历 Supermarket</li>
+                            </ul>
+                        </div>
+                    </div>  
+                </div>       
+            </div>
+        </div>
     </div>
-    <div class="sub-title">
-        <p><img src="img/server.png" alt=""></p>
-    </div>
-    <div class="server">
 
-    </div>
-
+    <br><br><br><br><br><br><br>
+    <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 </body>
+
 </html>
