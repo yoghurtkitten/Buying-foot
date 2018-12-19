@@ -4,6 +4,7 @@ html{
 body{
     /* overflow: hidden; */
     /* height: 1920px; */
+    
 }
 *{
     margin: 0;
@@ -80,13 +81,26 @@ body{
     .detail{
         width: 45%!important;
     }
+    
 }
-/* @media screen and (max-width:982px){
-    body{
-        width: 980px;
-        overflow-x: scroll;
+@media screen and (max-width:1510px) and (min-width:1150px){
+    .server-content{
+        width: 80%!important;
     }
-} */
+}
+@media screen and (max-width:1149px){
+    .server-content{
+        width: 100%!important;
+    }
+}
+@media screen and (max-width:910px){
+    .server-title{
+        font-size: 32px!important;
+    }
+    ul li .main-title{
+        font-size: 1.1rem!important;
+    }
+}
 @media screen and (max-width:982px) and (min-width:849px){
     .loves{
         font-size: 2rem!important;
@@ -118,6 +132,9 @@ body{
     }
     .fixed{
         position: static!important;
+    }
+    .phone-image{
+        padding-left: 15px;
     }
 }
 @media screen and (max-width:740px){
@@ -292,17 +309,11 @@ body{
 .header-right{
     float: right;
 }
-/* .server{
-    
-} */
 .server-img{
     margin-top: 4%;
     margin-bottom: 2%;
     animation: upAnimate 2s ease 1 forwards;
 }
-/* .server-introduce{
-    
-} */
 @keyframes upAnimate{
     0%{
         opacity: 0;
@@ -321,7 +332,7 @@ ul{
     list-style: none;
 }
 ul li .main-title{
-    font-size: 26px;
+    font-size: 1.3rem;
 }
 .img{
     width: 40px;
@@ -375,3 +386,79 @@ ul li .main-title{
 .phone-image{
     padding-left: 15%;
 }
+.footer{
+    width: 100%;
+    height: auto;
+    background-color: #e54c2a;
+}
+.footer{
+    font-size: 13px;
+    height: 7%;
+    color: #fff;
+}
+.footer .row{
+    height: 100%;
+}
+.footer p{
+    margin: 0;
+}
+/* .footer-center{
+    margin: 0 auto;
+    width: 60%; 
+}
+.out-link{
+    font-size: 14px;
+}
+.out-link, .other-server{
+    color: rgb(170, 170, 170);
+}
+.copy{
+    height: 70px;
+    width: 100%;
+    color: rgb(170, 170, 170);
+    border-top:1px solid #666;
+    font-size: 12px;
+}
+.copy span:first-child{
+    margin-right: 2%;
+}
+.erweima div{
+    width: 90px;
+    height: 90px;
+    padding: 0;
+    background: url("../img/qrcode-app.png") no-repeat center center;
+    background-size: 100%;
+}
+.qrcode{
+    margin-right: 5%;
+}
+.other-server p{
+    margin: 0;
+    padding: 0;
+}
+.brand{
+    margin-top: 50px;
+    margin-bottom: 30px;
+}
+.brand :first-child{
+    margin-bottom: 12px;
+    color: #eee;
+    font-size: 22px;
+}
+.brand2{
+    margin-top: 0;
+}
+.brand :last-child{
+    font-size: 14px;
+}
+.out-link div ul{
+    margin: 0;
+}
+.out-link div ul li{
+    margin-bottom: 30%;
+}
+.out-link div ul li :last-child{
+    margin-bottom: 0;
+}
+
+ */
