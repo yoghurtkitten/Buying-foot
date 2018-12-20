@@ -328,30 +328,33 @@ ul li .main-title{
     vertical-align:middle;
 }
 .img1{
-    background: url('../img/small-img/Delicacy-nopick.png') no-repeat center center;
+    background: url('../img/small_img/Delicacy-nopick.png') no-repeat center center;
     background-size: cover;
 }
 .img2{
-    background: url('../img/small-img/Desserts-nopick.png') no-repeat center center;
+    background: url('../img/small_img/Desserts-nopick.png') no-repeat center center;
     background-size: cover;
 }
 .img3{
-    background: url('../img/small-img/Supermarket-nopick.png') no-repeat center center;
+    background: url('../img/small_img/Supermarket-nopick.png') no-repeat center center;
     background-size: cover;
 }
 .img4{
-    background: url('../img/small-img/fruit-nopick.png') no-repeat center center;
+    background: url('../img/small_img/fruit-nopick.png') no-repeat center center;
     background-size: cover;
 }
 .out-phone{
     width: 346px;
     height: 708px;
-}
-.phone{
     background: url('../img/phone.png') no-repeat center center;
     background-size: 100%;
-    width: 100%;
+}
+.phone{
+    width: 90%;
     height: 100%;
+    background: url('../img/phone/desserts.png') no-repeat center center;
+    background-size: 100%;
+    margin-left: 5%;
 }
 .server-title{
     margin-top: 5%;
@@ -365,18 +368,18 @@ ul li .main-title{
     display: block;
     margin-bottom: 5.5%;
 }
-.main-title:hover{
-    transition: transform 0.5s, transform-origin 0.5s;
-    transform:scale(1.5);
-    transform-origin: 10% 50%;
-    color: #FFBA1E;
-}
 .main-title_hover{
     transition: transform 0.5s, transform-origin 0.5s;
     transform:scale(1.5);
-    transform-origin: 10% 50%;
+    transform-origin: 10% 70%; 
     color: #FFBA1E;
-}
+} 
+.main-title_out{
+    transition: transform 0.5s, transform-origin 0.5s;
+    /* transform:scale(0.5); */
+    transform-origin: 10% 50%; 
+    color: #333;
+} 
 .server-content{
     margin: 0 auto;
     width: 60%;
@@ -415,5 +418,10 @@ ul li .main-title{
     height: 12px;
     margin: 0;
     background-color: #e54c2a;
+}
+.main-title+div{
+    border-top: 3px solid transparent;
+    width: 20%;
+    margin-left: 13%;
 }
 

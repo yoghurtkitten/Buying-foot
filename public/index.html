@@ -61,12 +61,57 @@
             }
             
             var main_title = $('.main-title');
-            main_title.hover(() => {
-               
-            },
-            () => {
 
+            main_title.each(function(){
+                $(this).mouseenter(function(){
+                    $(this).removeClass('main-title_out');
+                    $(this).addClass('main-title_hover');
+                    $(this).next().css('color','#FFBA1E');
+                    $(this).next().css('border-top-color','#FFBA1E');
+
+                    var str = $(this).parent().prev().css("background-image");
+                    str=str.replace('-no','-');
+                    str=str.replace('.png','ed.png');
+                    str=str.replace('http://127.0.0.1:3000','..');
+                    $(this).parent().prev().css("background-image",str);
+
+                    if (str.indexOf('Delicacy') != -1) {
+                        $('.phone').each(function(){
+                            $(this).css("background-image","url('../img/phone/delicacy.png')") 
+                        })
+                    }
+                    if (str.indexOf('Desserts') != -1) {
+                        $('.phone').each(function(){
+                            $(this).css("background-image","url('../img/phone/desserts.png')") 
+                        })
+                    }
+                    if (str.indexOf('fruit') != -1) {
+                        $('.phone').each(function(){
+                            $(this).css("background-image","url('../img/phone/fresh.png')") 
+                        })
+                    }
+                    if (str.indexOf('Supermarket') != -1) {
+                        $('.phone').each(function(){
+                            $(this).css("background-image","url('../img/phone/supermarket.png')") 
+                        })
+                    }
+
+                })
+                $(this).mouseleave(function(){
+                    $(this).next().css('color','#333');
+                    $(this).next().css('border-top-color','transparent');
+
+                    $(this).removeClass('main-title_hover');
+                    $(this).addClass('main-title_out');
+
+                    var str = $(this).parent().prev().css("background-image");
+                    str=str.replace('-','-no');
+                    str=str.replace('ed.png','.png');
+                    str=str.replace('http://127.0.0.1:3000','..');
+                    $(this).parent().prev().css("background-image",str);
+                })
             })
+            
         })
     </script>
 </head>
@@ -128,13 +173,7 @@
                     <li class="" data-slide-to="1" data-target="#demo"></li>
                     <li class="" data-slide-to="2" data-target="#demo"></li>
                 </ul>
-                <a href="#demo" class="carousel-control-prev " data-slide="prev">
-                    <span class="carousel-control-prev-icon"></span>
-                </a>
-    
-                <a href="#demo" class="carousel-control-next " data-slide="next">
-                    <span class="carousel-control-next-icon"></span>
-                </a>
+
             </div>
             <div class="slider">
                 <p class="welcome">
