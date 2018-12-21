@@ -1,10 +1,6 @@
 html{
     font-size: 20px;
 }
-body{
-
-    
-}
 *{
     margin: 0;
     padding: 0;
@@ -60,12 +56,12 @@ body{
     width: 50%;
     border-left: transparent;
 }
-.header ul {
+.list-info ul {
     display: flex;
     list-style: none;
     margin-bottom: 0;
 }
-.header ul li{
+.list-info ul li{
     height:115px;
     margin-right:4px;
     line-height: 115px;
@@ -165,7 +161,7 @@ body{
         height: 50%;
     }
 }
-.header ul li a{
+.list-info ul li a{
     text-decoration: none;
     font-weight: bold;
     color: #535353;
@@ -173,7 +169,7 @@ body{
     display: flex;
     text-align: center;
 }
-.header ul li a:hover{
+.list-info ul li a:hover{
     color:#e54c2a;
 }
 .nav{
@@ -295,6 +291,29 @@ body{
 .header-right{
     float: right;
 }
+#p2{
+    height: 200px!important;
+    width: 130px;
+    position: absolute;
+    left: -20px;
+    top: 100px;
+    z-index: 1000;
+    background-color: #fff;
+    font-size: 16px;
+    border-radius: 3%;
+    display: none;
+}
+#p2 ul li{
+    margin-top: 10%;
+}
+#p2 ul li a{
+    text-decoration: none;
+    color: #535353;
+}
+#p2 ul li a:hover{
+    text-decoration: none;
+    color: #e54c2a;
+}
 .server-img{
     margin-top: 4%;
     margin-bottom: 2%;
@@ -355,6 +374,7 @@ ul li .main-title{
     background: url('../img/phone/desserts.png') no-repeat center center;
     background-size: 100%;
     margin-left: 5%;
+    transition: all 0.5s;
 }
 .server-title{
     margin-top: 5%;
@@ -425,3 +445,16 @@ ul li .main-title{
     margin-left: 13%;
 }
 
+.show-btn{
+    display: none;
+    margin-top: 20px;
+}
+
+.card{
+    border: none;
+}
+.card-header{
+    padding: 0;
+    border: none;
+    background: none;
+}
