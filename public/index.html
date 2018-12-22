@@ -30,29 +30,29 @@
                 }, 500)
             })
 
-            // var fixedDom = document.getElementsByClassName('header')[0];
             var fixedDom = $('.header')[0];
 
-            $('.server-img').hide();
-            $('.server-title').hide();
-            $('.server-list').hide();
-            $('.phone-image').hide();
+            $('.server-img').css('opacity','0');
+            $('.server-title').css('opacity','0');
+            $('.server-list').css('opacity','0');
+            $('.phone-image').css('opacity','0');
 
             window.onscroll = function () {
                 var scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
                 if (scrollTop > fixedDom.offsetTop) {
-                    $('.server-img').show();
-                    $('.server-title').show();
-                    $('.server-list').show();
-                    $('.phone-image').show();
+                    $('.server-img').css({'opacity':'1','animation-name':'upAnimate','animation-duration':'2s','animation-timing-function':'ease','animation-iteration-count':'1','animation-fill-mode':'forwards'});
+                    $('.server-title').css({'opacity':'1','animation-name':'upAnimate','animation-duration':'2s','animation-timing-function':'ease','animation-iteration-count':'1','animation-fill-mode':'forwards'});
+                    $('.server-list').css({'opacity':'1','animation-name':'upAnimate','animation-duration':'2s','animation-timing-function':'ease','animation-iteration-count':'1','animation-fill-mode':'forwards'});
+                    $('.phone-image').css({'opacity':'1','animation-name':'upAnimate','animation-duration':'2s','animation-timing-function':'ease','animation-iteration-count':'1','animation-fill-mode':'forwards'});
 
                     fixedDom.classList.add("fixed");
                 }
                 if (scrollTop <= fixedDom.offsetTop + 10) {
-                    $('.server-img').hide();
-                    $('.server-title').hide();
-                    $('.server-list').hide();
-                    $('.phone-image').hide();
+                    $('.server-img').css({'opacity':'0','animation':'none'});
+                    $('.server-title').css({'opacity':'0','animation':'none'});
+                    $('.server-list').css({'opacity':'0','animation':'none'});
+                    $('.phone-image').css({'opacity':'0','animation':'none'});
+
                     fixedDom.classList.remove("fixed");
                 }
             }
@@ -287,7 +287,7 @@
 
         <div class="footer">
             <div class="row">
-                <div class="col d-flex justify-content-center align-items-center">
+                <div class="col d-flex justify-content-center align-items-center mt-5">
                     <p>
                         Copyright &copy; 2017.Company Name All Rights Reserved.More Templates
                     </p>

@@ -7,7 +7,7 @@ html{
 }
 .container-fluid{
     width: 100%;
-    height: 50rem;
+    /* height: 50rem; */
     margin: 0;
     padding: 0;
 }
@@ -124,7 +124,7 @@ html{
         position: static!important;
     }
     .phone-image{
-        padding-left: 15px;
+        /* padding-left: 15px; */
     }
 }
 @media screen and (max-width:740px){
@@ -159,6 +159,12 @@ html{
     }
     .my-btn{
         height: 50%;
+    }
+}
+@media screen and (max-width:320px){
+    .out-phone{
+        width: 80%!important;
+        height: 500px!important;
     }
 }
 .list-info ul li a{
@@ -317,7 +323,7 @@ html{
 .server-img{
     margin-top: 4%;
     margin-bottom: 2%;
-    animation: upAnimate 2s ease 1 forwards;    
+    /* animation: upAnimate 2s ease 1 forwards;     */
 }
 @keyframes upAnimate{
     0%{
@@ -331,7 +337,7 @@ html{
 }
 .server-title{
     font-size: 40px;
-    animation: upAnimate 2s ease 1 forwards;    
+    /* animation: upAnimate 2s ease 1 forwards;     */
 }
 ul{
     list-style: none;
@@ -382,7 +388,7 @@ ul li .main-title{
     padding: 0;
 }
 .server-list{
-    animation: upAnimate 2s ease 1 forwards;        
+    /* animation: upAnimate 2s ease 1 forwards;         */
 }
 .server-list li{
     display: block;
@@ -406,9 +412,11 @@ ul li .main-title{
 }
 .server-left{
     padding-left: 4%;
+   /*  visibility: visible;
+    visibility: hidden; */
 }
 .phone-image{
-    padding-left: 15%;
+    /* padding-left: 15%; */
     animation: upAnimate 2s ease 1 forwards;        
 }
 .footer{
@@ -418,7 +426,7 @@ ul li .main-title{
 }
 .footer{
     font-size: 13px;
-    height: 7%;
+    /* height: 25%; */
     color: #fff;
 }
 .footer .row{
@@ -457,4 +465,10 @@ ul li .main-title{
     padding: 0;
     border: none;
     background: none;
+}
+#demo{
+    width: 100%;
+}
+.carousel-item img{
+    width: 100%;
 }

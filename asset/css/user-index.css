@@ -155,7 +155,7 @@ ul{
     width: 100%;
 }
 .inner-address{
-    height: 118px;
+    height: 550px;
     border: 1px solid #000;
 }
 .detail-btn div a{
@@ -174,19 +174,68 @@ ul{
 }
 .form-control {
 
-    width: 88%!important;
+    width: 72%!important;
 
 }
 .search-btn{
     background-color: #e54c2a;
     border-radius: 0;
-    height: 49px;
+    height: 48px;
     color: #fff;
-    width: 80px;
-    /* background-color: #e54c2a;
-    border-radius: 0;
-    display: block;
-    height: 50px;
-    color: #fff; */
-    
+    width: 107px;
+    text-align: center;
+    line-height: 2.5;    
+}
+.main_img>img{
+    width: 100%;
+}
+.search-form div{
+    cursor: pointer;
+}
+.search-form input{
+    font-size: 16px;
+}
+.select-btn{
+    width: 96px!important;
+    height: 48px;
+    /* border: 1px solid #000; */
+    float: left;
+    background-color: #fff;
+}
+.down-icon{
+    content: '';
+    border: 5px solid transparent;
+    border-width: 4px 5px;
+    border-top-color: #999;
+}
+.address-detail{
+    width: 100%;
+    height: 435px;
+    position: relative;
+    background-color: #fff;
+}
+.up-icon{
+    width: 10px;
+    border: 10px solid transparent;
+    border: 9px 10px;
+    border-bottom-color: #fff;
+    position: absolute;
+    top: -20px;
+    left: 40px;
+}
+.city{
+    width: 40%;
+    border-radius: 5%;
+    /* height: 100%; */
+}
+.input-city{
+    border-radius: 0!important;
+    width: 50%!important;
+}
+.up-icon+div{
+    border-bottom: 1px solid #ddd;
+}
+
+.city-list li{
+    float: left;
 }
