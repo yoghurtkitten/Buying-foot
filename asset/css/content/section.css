@@ -18,6 +18,7 @@ iframe{
     height: auto;
     width: 100%;
     overflow: hidden;
+    top: 0;
 }
 .main_img div{
     float: left;
@@ -49,27 +50,6 @@ iframe{
     height: 2.5rem;
     animation: my-btn-Animate 1s ease 1;
     animation-fill-mode: forwards;
-}
-.form-control{
-    padding-top: 24px;
-    padding-bottom: 24px;
-}
-.search-icon{
-    height: 50px;
-    width: 50%;
-    border-left: transparent;
-}
-.list-info ul {
-    display: flex;
-    list-style: none;
-    margin-bottom: 0;
-}
-.list-info ul li{
-    height:115px;
-    margin-right:4px;
-    line-height: 115px;
-    font-size: 0.8rem;
-    padding-left: 2rem;
 }
 @media screen and (max-width:1540px) and (min-width:981px){
     .my-btn{
@@ -123,12 +103,6 @@ iframe{
     .my-btn{
         width: 14%;
     }
-    .fixed{
-        position: static!important;
-    }
-    .phone-image{
-        /* padding-left: 15px; */
-    }
 }
 @media screen and (max-width:740px){
     .loves{
@@ -169,33 +143,6 @@ iframe{
         width: 80%!important;
         height: 500px!important;
     }
-}
-.list-info ul li a{
-    text-decoration: none;
-    font-weight: bold;
-    color: #535353;
-    height: 100%;
-    display: flex;
-    text-align: center;
-}
-.list-info ul li a:hover{
-    color:#e54c2a;
-}
-.nav{
-
-    display: flex;
-    padding-left: 15px;
-    justify-content:space-around;
-}
-.nav img{
-    vertical-align: middle;
-    margin-bottom: -23px;
-    margin-right: 150px;
-}
-.test{
-    padding-top: 30px;
-    display: none;
-    margin-left: 0;
 }
 .slider{
     width: 100%;
@@ -286,43 +233,7 @@ iframe{
         opacity: 1;
     }
 }
-.fixed{
-    position: fixed;
-    z-index: 10000;
-    background-color: #f5f5f5;
-    width: 100%;
-    top: -0px;
-    animation: navAnimate 2s ease 1;
-}
-.header-menu{
-    display: inline-block;
-}
-.header-right{
-    float: right;
-}
-#p2{
-    height: 200px!important;
-    width: 130px;
-    position: absolute;
-    left: -20px;
-    top: 100px;
-    z-index: 1000;
-    background-color: #fff;
-    font-size: 16px;
-    border-radius: 3%;
-    display: none;
-}
-#p2 ul li{
-    margin-top: 10%;
-}
-#p2 ul li a{
-    text-decoration: none;
-    color: #535353;
-}
-#p2 ul li a:hover{
-    text-decoration: none;
-    color: #e54c2a;
-}
+
 .server-img{
     margin-top: 4%;
     margin-bottom: 2%;
@@ -356,31 +267,31 @@ ul li .main-title{
     vertical-align:middle;
 }
 .img1{
-    background: url('../img/small_img/Delicacy-nopick.png') no-repeat center center;
+    background: url('../../img/small_img/Delicacy-nopick.png') no-repeat center center;
     background-size: cover;
 }
 .img2{
-    background: url('../img/small_img/Desserts-nopick.png') no-repeat center center;
+    background: url('../../img/small_img/Desserts-nopick.png') no-repeat center center;
     background-size: cover;
 }
 .img3{
-    background: url('../img/small_img/Supermarket-nopick.png') no-repeat center center;
+    background: url('../../img/small_img/Supermarket-nopick.png') no-repeat center center;
     background-size: cover;
 }
 .img4{
-    background: url('../img/small_img/fruit-nopick.png') no-repeat center center;
+    background: url('../../img/small_img/fruit-nopick.png') no-repeat center center;
     background-size: cover;
 }
 .out-phone{
     width: 346px;
     height: 708px;
-    background: url('../img/phone.png') no-repeat center center;
+    background: url('../../img/phone.png') no-repeat center center;
     background-size: 100%;
 }
 .phone{
     width: 90%;
     height: 100%;
-    background: url('../img/phone/desserts.png') no-repeat center center;
+    background: url('../../img/phone/desserts.png') no-repeat center center;
     background-size: 100%;
     margin-left: 5%;
     transition: all 0.5s;
@@ -389,6 +300,9 @@ ul li .main-title{
     margin-top: 5%;
     margin-bottom: 14%;
     padding: 0;
+}
+.server-list{
+    /* animation: upAnimate 2s ease 1 forwards;         */
 }
 .server-list li{
     display: block;
@@ -455,4 +369,8 @@ ul li .main-title{
 }
 .carousel-item img{
     width: 100%;
+}
+.hide-div{
+    position: absolute;
+    top: 0;
 }

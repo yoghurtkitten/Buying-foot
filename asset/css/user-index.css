@@ -156,7 +156,7 @@ ul{
 }
 .inner-address{
     height: 550px;
-    border: 1px solid #000;
+    /* border: 1px solid #000; */
 }
 .detail-btn div a{
     background: #fff;  
@@ -211,8 +211,10 @@ ul{
 .address-detail{
     width: 100%;
     height: 435px;
-    position: relative;
+    /* position: relative; */
     background-color: #fff;
+    overflow: auto;
+    display: none;
 }
 .up-icon{
     width: 10px;
@@ -220,7 +222,7 @@ ul{
     border: 9px 10px;
     border-bottom-color: #fff;
     position: absolute;
-    top: -20px;
+    top: 95px;
     left: 40px;
 }
 .city{
@@ -236,6 +238,22 @@ ul{
     border-bottom: 1px solid #ddd;
 }
 
+.city-list{
+    width: 99%;
+    /* float: left; */
+    padding-left: 12%;
+}
 .city-list li{
     float: left;
+    width: 84px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    margin-bottom: 1%;
+    margin-right: 0.1%;
+}
+
+.city-detail div span{
+    float: left;
+    padding-left: 4.5%;
 }

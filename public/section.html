@@ -11,50 +11,29 @@
     <script src="js/popper.min.js"></script>
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/bootstrap3.7.css">
-    <link rel="stylesheet" href="css/index.css">
+    <link rel="stylesheet" href="css/content/section.css">
     <script>
         $(function () {
-            $('#search').click(function () {
-                $('.header-right').fadeOut();
-                $('#search').fadeOut();
-                setTimeout(() => {
-                    $('.test').fadeIn();
-                }, 500)
-
-            });
-            $('.close').click(function () {
-                $('.test').fadeOut();
-                setTimeout(() => {
-                    $('.header-right').fadeIn();
-                    $('#search').fadeIn();
-                }, 500)
-            })
-
-            var fixedDom = $('.header')[0];
 
             $('.server-img').css('opacity','0');
             $('.server-title').css('opacity','0');
             $('.server-list').css('opacity','0');
             $('.phone-image').css('display','none');
 
-
             window.onscroll = function () {
                 var scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
-                if (scrollTop > fixedDom.offsetTop) {
+                console.log(scrollTop);
+                if (scrollTop > 1) {
                     $('.server-img').css({'opacity':'1','animation-name':'upAnimate','animation-duration':'2s','animation-timing-function':'ease','animation-iteration-count':'1','animation-fill-mode':'forwards'});
                     $('.server-title').css({'opacity':'1','animation-name':'upAnimate','animation-duration':'2s','animation-timing-function':'ease','animation-iteration-count':'1','animation-fill-mode':'forwards'});
                     $('.server-list').css({'opacity':'1','animation-name':'upAnimate','animation-duration':'2s','animation-timing-function':'ease','animation-iteration-count':'1','animation-fill-mode':'forwards'});
                     $('.phone-image').css({'opacity':'1','animation-name':'upAnimate','animation-duration':'2s','animation-timing-function':'ease','animation-iteration-count':'1','animation-fill-mode':'forwards','display':'inline'});
-
-                    fixedDom.classList.add("fixed");
                 }
-                if (scrollTop <= fixedDom.offsetTop + 10) {
+                if (scrollTop <= 0) {
                     $('.server-img').css({'opacity':'0','animation':'none'});
                     $('.server-title').css({'opacity':'0','animation':'none'});
                     $('.server-list').css({'opacity':'0','animation':'none'});
                     $('.phone-image').css({'opacity':'0','animation':'none'});
-
-                    fixedDom.classList.remove("fixed");
                 }
             }
 
@@ -110,20 +89,6 @@
                 })
             })
 
-            if ($('.hidden-sm').css('display') == 'none') {
-                $('.show-btn').css('display', 'inline');
-            } else {
-                $('.show-btn').css('display', 'none')
-            }
-            $(window).resize(function () {
-                if ($('.hidden-sm').css('display') == 'none') {
-                    $('.show-btn').css('display', 'inline')
-                } else {
-                    $('#p2').removeClass('show');
-                    $('.show-btn').css('display', 'none')
-                }
-            })
-
         })
     </script>
 </head>
@@ -131,66 +96,6 @@
 <body>
     <!-- <a href="login.html">登录</a> -->
     <div class="container-fluid">
-        <header class="header">
-            <div class="nav container navbar-light">
-                <div class="col-md-2 col-sm-3 col-xs-6">
-                    <div class="logo"><a href="index.html"><img src="img/logo.png" alt=""></a></div>
-                </div>
-
-                <div class="col-md-10 col-sm-9 col-xs-6">
-                    <div class="mgea-full-width">
-                        <div class="header-right">
-                            <div class="card">
-                                <div class="card-header">
-                                    <button type="button" class="btn show-btn navbar-toggler" data-toggle="collapse" data-target="#p2">
-                                        <span class="navbar-toggler-icon"></span>
-                                    </button>
-                                </div>
-                    
-                                <div id="p2" class="collapse" data-parent="#parent">
-                                    <div class="card-body">
-                                        <ul class="list-unstyled">
-                                            <li>
-                                                <a href="#"> 首页</a></li>
-                                            <li>
-                                                <a href="#"> 加盟</a></li>
-                                            <li>
-                                                <a href="#"> 点外卖</a></li>
-                                            <li>
-                                                <a href="#"> 公告</a></li>
-                                            <li>
-                                                <a href="#"> 关于我们</a></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="header-menu hidden-sm hidden-xs list-info">
-                                <ul>
-                                    <li><a href="#">首页</a></li>
-                                    <li><a href="#">加盟</a></li>
-                                    <li><a href="#">点外卖</a></li>
-                                    <li><a href="#">公告</a></li>
-                                    <li><a href="#">关于我们</a></li>
-                                    <li id="search"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="test">
-                            <div class="input-group inner-test">
-                                <input type="search" class="form-control search-cotain" placeholder="Search for...">
-                                <span class="input-group-btn">
-                                    <button class="btn btn-default search-icon" type="button"><span class="glyphicon glyphicon-search"
-                                            aria-hidden="true"></span></button>
-                                    <button class="btn btn-default search-icon" type="button"><span class="glyphicon glyphicon-remove close"
-                                            aria-hidden="true"></span></button>
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </header>
         <div class="main_img">
             <div class="carousel" data-ride="carousel" id="demo">
                 <div class="carousel-inner">
@@ -286,35 +191,7 @@
             </div>
         </div>
 
-        <!-- <div class="footer">
-            <div class="row">
-                <div class="col d-flex justify-content-center align-items-center mt-5">
-                    <p>
-                        Copyright &copy; 2017.Company Name All Rights Reserved.More Templates
-                    </p>
-                </div>
-            </div>
-        </div> -->
-        <iframe src="./footer.html" frameborder="0" scrolling="no" class="frame-div" onload="this.height=100"></iframe>
-
     </div>
-    <script type="text/javascript">
-        function reinitIframe(){
-
-            var ifram = $(".frame-div");
-
-            try{
-                ifram.each(function(){
-                    var bHeight = this.contentWindow.document.body.scrollHeight;
-                    var dHeight = this.contentWindow.document.documentElement.scrollHeight;
-                    var height = Math.max(bHeight, dHeight);
-                    this.height = height;
-
-                })
-            }catch (ex){}
-        }
-        window.setInterval("reinitIframe()", 200);
-    </script>
 </body>
 
 </html>
