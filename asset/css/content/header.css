@@ -94,6 +94,9 @@ iframe{
     top: -0px;
     animation: navAnimate 2s ease 1;
 }
+.header{
+    background: #fff;
+}
 .header-menu{
     display: inline-block;
 }
