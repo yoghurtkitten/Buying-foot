@@ -52,13 +52,30 @@
         }
         .select-address:hover{
             color: #e54c2a;
+            text-decoration: none;
         }
         .change-address{
             width: 200px;
-            height: 100px;
             background: #fff;
             top: 100%;
             left: 20%;
+            display: none;
+        }
+        .type-detail div{
+            width: 88px;
+            height: 30px;
+            /* border: 1px solid #000; */
+            padding-left: 32px;
+            background: url("img/small_img/new-icon-sort.png") no-repeat;
+            background-size: 28%;
+            font-size: 14px;
+            margin-right: 1.5%;
+        }
+        .type-detail p{
+            margin-right: 1.5%;
+        }
+        .type-detail ul li{
+            float: left;
         }
     </style>
     <script>
@@ -102,6 +119,10 @@
                     $('#p2').removeClass('show');
                     $('.show-btn').css('display', 'none')
                 }
+            })
+
+            $('.select-address').click(function(){
+                $('.change-address').toggle();
             })
 
         })
@@ -188,7 +209,7 @@
                                 </a>
                             </div>
                             <div class="position-absolute change-address">
-                                <ul class="list-unstyled list-group">
+                                <ul class="list-unstyled list-group m-0">
                                     <li class="list-group-item">武昌区</li>
                                     <li class="list-group-item">切换至新地址</li>
                                 </ul>
@@ -207,6 +228,19 @@
                                 </a>
                             </div>
                         </div>
+                    </div>
+                    <div class="type-detail d-flex">
+                        <div>商家分类</div>
+                        <p>|</p>
+                        <ul class="list-unstyled">
+                            <li>全部</li>
+                            <li>美食</li>
+                            <li>正餐优选</li>
+                            <li>超市</li>
+                            <li>精选小吃</li>
+                            <li>鲜果购</li>
+                            <li>下午茶</li>
+                        </ul>
                     </div>
                 </div>
             </div>
