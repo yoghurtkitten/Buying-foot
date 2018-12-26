@@ -393,7 +393,7 @@ ul li .main-title{
     transition: transform 0.5s, transform-origin 0.5s;
     transform:scale(1.5);
     transform-origin: 10% 70%; 
-    color: #FFBA1E;
+    color: #e54c2a;
 } 
 .main-title_out{
     transition: transform 0.5s, transform-origin 0.5s;
