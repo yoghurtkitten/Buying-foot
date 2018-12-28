@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,39 +13,311 @@
     <link rel="stylesheet" href="css/bootstrap3.7.css">
     <link rel="stylesheet" href="css/content/header.css">
     <link rel="stylesheet" href="css/icon/iconfont.css">
+
     <style>
-        body{
+        body {
             margin: 0;
             background: #f5f5f5;
         }
-        iframe{
+
+        iframe {
             width: 100%;
             height: 120px;
         }
-        .business-info{
+
+        .business-info {
             position: relative;
             height: 120px;
+            background: #fff;
         }
-        .right-b{
+
+        .busin-title {
+            color: #333;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .left-b {
             width: 40%;
             height: 100%;
-            border: 1px solid #000;
+            /* border: 1px solid #000; */
+            padding-top: 1.35%;
+            padding-left: 1.4%;
+            overflow: hidden;
+        }
 
+        .left-b-show-all {
+            height: 200%;
+            background: #fff;
+            box-shadow: 1px 1px 5px #ccc;
+        }
+
+        .icon {
+            height: 90px;
+        }
+
+        .icon+div {
+            width: 40%;
+            height: 60%;
+        }
+
+        .star i {
+            color: #e54c2a;
+        }
+
+        .left-inner+div p span {
+            font-size: 12px;
+            color: #666;
+        }
+
+        .left-inner+div p i {
+            display: inline-block;
+            color: #666;
+            margin-right: 3%;
+            font-size: 12px;
+        }
+
+        .right-b {
+            /* border: 1px solid #000; */
+            margin-left: 1.5%;
+        }
+
+        .right-b div i {
+            font-size: 23px;
+            color: #6A6A6A;
+            cursor: pointer;
+        }
+
+        .detail-info div p {
+            font-size: 12px;
+            color: #6a6a6a;
+            margin: 0;
+        }
+
+        .detail-info div p span {
+            font-size: 28px;
+            font-weight: bold;
+            color: #4a4a4a;
 
         }
+
+        .detail-info>div {
+            height: 42%;
+            /* border: 1px solid #000; */
+        }
+
+        .right-b div:last-child p {
+            font-size: 12px;
+            color: #6A6A6A;
+        }
+
+        .save {
+            /* border: 1px solid #000; */
+            flex: 0 0 18%;
+            margin-left: 7%;
+            box-sizing: border-box;
+            border-left: 1px dashed #e5e5e5;
+        }
+
+        .save div {
+            height: 50%;
+            text-align: center;
+        }
+        .container>.row{
+            width: 100%;
+        }
+        .tabber{
+            height: 59px;
+            border: 1px solid #000;
+            background: #fff;
+            width: 100%;
+        }
+        .tabber ul {
+            width: 336px;
+            border: 1px solid #000;
+            margin-bottom: 0;
+        }
+        .tabber ul li a{
+            text-decoration: none;
+            line-height: 55px;
+            color: #333;
+            font-size: 16px;
+        }
+        .sort-info{
+            color: #333;
+            font-size: 16px;
+        } 
+        .sort-info i{
+            color: #999;
+        }
+        .tabber ul li:last-child>a{
+            display: inline-block;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            padding-left: 10px;
+        }
+        .rank i{
+            font-size: 22px;
+            vertical-align: middle;
+            width: 32px;
+            height: 32px;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            float: left;
+            /* margin-right: 10px; */
+            padding-left: 5%;
+            border: 1px solid #999;
+
+        }
+        .rank i:first-child{
+            border: none;
+            color: #fff;
+            background: #e54c2a;
+        }
+        
     </style>
 </head>
+
 <body>
     <iframe src="./header.html" frameborder="0" scrolling="no" class="frame-div" onload="this.height=100"></iframe>
     <div class="container">
-        <div class="business-info">
-            <div class="right-b">
-                <img src="img/business/piza.jpg" alt="">
-                
+        <div class="business-info row m-0 mt-3">
+            <div class="left-b col-auto">
+                <div class="left-inner d-flex align-items-center">
+                    <img src="img/business/business-icon.png" class="icon" alt="">
+                    <div class="ml-2">
+                        <p class="busin-title">
+                            四美包子（虎泉店）
+                            <i class="iconfont">&#xeb6d;</i>
+                        </p>
+                        <div class="star">
+                            <i class="iconfont">&#xec43;</i>
+                            <i class="iconfont">&#xec43;</i>
+                            <i class="iconfont">&#xec43;</i>
+                            <i class="iconfont">&#xec43;</i>
+                            <i class="iconfont">&#xec43;</i>
+                            <span>
+                                5分
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-3 pl-2">
+                    <p>
+                        <i class="iconfont">&#xe68f;</i>
+                        <span>营业时间</span>
+                        <span>07:00-20:15</span>
+                    </p>
+                    <p>
+                        <i class="iconfont">&#xec3f;</i>
+                        <span>商家地址</span>
+                        <span>虎泉街91号虎泉时尚中心创意坊1楼特1-1号</span>
+                    </p>
+                    <p>
+                        <i class="iconfont">&#xe678;</i>
+                        <span>商家电话</span>
+                        <span>15968432165</span>
+                    </p>
+                </div>
+            </div> 
+            <div class="right-b col-md-7 p-0 row">
+                <div class="col-md-7 offset-md-2 d-flex justify-content-between align-items-center detail-info">
+                    <div>
+                        <p>平均送餐时间</p>
+                        <p><span>33</span>分钟</p>
+                    </div>
+                    <div>
+                        <p>起送</p>
+                        <p><span>15</span>元</p>
+                    </div>
+                    <div>
+                        <p>配送费</p>
+                        <p><span>3</span>元</p>
+                    </div>
+                </div>
+                <div class="col-md-3 save d-flex justify-content-center p-0">
+                    <div class="align-self-center">
+                        <p>收藏本店</p>
+                        <i class="iconfont">&#xeca2;</i>
+                    </div>
+                </div>
+            </div> 
+        </div>
+        <div class="tabber m-0 p-0 mt-3 row">
+            <ul class="d-flex justify-content-around col-md-auto p-0">
+                <li>
+                    <a href="#">所有商品</a>
+                </li>
+                <li>
+                    <a href="#">评价</a>
+                </li>
+                <li>
+                    <a href="#">商家资质</a>
+                </li>
+            </ul>
+            <div class="offset-md-3 col-md-5 p-0">
+                <ul class="d-flex sort-info">
+                    <li>
+                        <a href="#">
+                            默认排序
+                        </a>
+                        
+                    </li>
+                    <li>
+                        <a href="#">
+                            评分
+                            <i class="iconfont">&#xe796;</i>
+                        </a>
+                        
+                    </li>
+                    <li>
+                        <a href="#">
+                            销量
+                            <i class="iconfont">&#xe796;</i>
+                        </a>
+                        
+                    </li>
+                    <li>
+                        <a href="#">
+                            价格
+                            <i class="iconfont">&#xe796;</i>
+                        </a>
+                        
+                    </li>
+                    <li>
+                        <a href="#" class="rank">
+                            <i class="iconfont">&#xe73f;</i>
+                            <i class="iconfont">&#xe742;</i>
+                        </a>
+                    </li>
+                </ul>
             </div>
         </div>
     </div>
     <script src="js/frame.js"></script>
-    
+    <script>
+        var title = $('.left-inner');
+        var heart = $('.save>div>i');
+
+        title.hover(function () {
+            $('.left-b').addClass('left-b-show-all');
+            $('.busin-title>.iconfont').html('&#xeb6e;');
+        }, function () {
+            $('.left-b').removeClass('left-b-show-all');
+            $('.busin-title>.iconfont').html('&#xeb6d;');
+        });
+
+        heart.hover(function () {
+            $('.right-b div i').html('&#xeca1;');
+            $('.right-b div i').css('color','#e54c2a')
+        }, function () {
+            $('.right-b div i').html('&#xeca2;');
+            $('.right-b div i').css('color','#6A6A6A')
+        });
+
+    </script>
 </body>
+
 </html>
