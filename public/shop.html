@@ -13,171 +13,7 @@
     <link rel="stylesheet" href="css/bootstrap3.7.css">
     <link rel="stylesheet" href="css/content/header.css">
     <link rel="stylesheet" href="css/icon/iconfont.css">
-
-    <style>
-        body {
-            margin: 0;
-            background: #f5f5f5;
-        }
-
-        iframe {
-            width: 100%;
-            height: 120px;
-        }
-
-        .business-info {
-            position: relative;
-            height: 120px;
-            background: #fff;
-        }
-
-        .busin-title {
-            color: #333;
-            font-size: 14px;
-            font-weight: bold;
-        }
-
-        .left-b {
-            width: 40%;
-            height: 100%;
-            /* border: 1px solid #000; */
-            padding-top: 1.35%;
-            padding-left: 1.4%;
-            overflow: hidden;
-        }
-
-        .left-b-show-all {
-            height: 200%;
-            background: #fff;
-            box-shadow: 1px 1px 5px #ccc;
-        }
-
-        .icon {
-            height: 90px;
-        }
-
-        .icon+div {
-            width: 40%;
-            height: 60%;
-        }
-
-        .star i {
-            color: #e54c2a;
-        }
-
-        .left-inner+div p span {
-            font-size: 12px;
-            color: #666;
-        }
-
-        .left-inner+div p i {
-            display: inline-block;
-            color: #666;
-            margin-right: 3%;
-            font-size: 12px;
-        }
-
-        .right-b {
-            /* border: 1px solid #000; */
-            margin-left: 1.5%;
-        }
-
-        .right-b div i {
-            font-size: 23px;
-            color: #6A6A6A;
-            cursor: pointer;
-        }
-
-        .detail-info div p {
-            font-size: 12px;
-            color: #6a6a6a;
-            margin: 0;
-        }
-
-        .detail-info div p span {
-            font-size: 28px;
-            font-weight: bold;
-            color: #4a4a4a;
-
-        }
-
-        .detail-info>div {
-            height: 42%;
-            /* border: 1px solid #000; */
-        }
-
-        .right-b div:last-child p {
-            font-size: 12px;
-            color: #6A6A6A;
-        }
-
-        .save {
-            /* border: 1px solid #000; */
-            flex: 0 0 18%;
-            margin-left: 7%;
-            box-sizing: border-box;
-            border-left: 1px dashed #e5e5e5;
-        }
-
-        .save div {
-            height: 50%;
-            text-align: center;
-        }
-        .container>.row{
-            width: 100%;
-        }
-        .tabber{
-            height: 59px;
-            border: 1px solid #000;
-            background: #fff;
-            width: 100%;
-        }
-        .tabber ul {
-            width: 336px;
-            border: 1px solid #000;
-            margin-bottom: 0;
-        }
-        .tabber ul li a{
-            text-decoration: none;
-            line-height: 55px;
-            color: #333;
-            font-size: 16px;
-        }
-        .sort-info{
-            color: #333;
-            font-size: 16px;
-        } 
-        .sort-info i{
-            color: #999;
-        }
-        .tabber ul li:last-child>a{
-            display: inline-block;
-            height: 100%;
-            display: flex;
-            align-items: center;
-            padding-left: 10px;
-        }
-        .rank i{
-            font-size: 22px;
-            vertical-align: middle;
-            width: 32px;
-            height: 32px;
-            text-align: center;
-            display: flex;
-            align-items: center;
-            float: left;
-            /* margin-right: 10px; */
-            padding-left: 5%;
-            border: 1px solid #999;
-
-        }
-        .rank i:first-child{
-            border: none;
-            color: #fff;
-            background: #e54c2a;
-        }
-        
-    </style>
+    <link rel="stylesheet" href="css/shop.css">
 </head>
 
 <body>
@@ -257,8 +93,8 @@
                     <a href="#">商家资质</a>
                 </li>
             </ul>
-            <div class="offset-md-3 col-md-5 p-0">
-                <ul class="d-flex sort-info">
+            <div class="offset-md-3 col-md-5 p-0 d-flex justify-content-end">
+                <ul class="d-flex sort-info m-0">
                     <li>
                         <a href="#">
                             默认排序
@@ -293,6 +129,57 @@
                         </a>
                     </li>
                 </ul>
+            </div>
+        </div>
+        <div class="d-flex">
+            <div class="category mt-3">
+                <ul class="d-flex flex-wrap pt-3 pl-4 m-0">
+                    <li>
+                        <a href="#">热销</a>
+                    </li>
+                    <li>
+                        <a href="#">扫二维码领红包</a>
+                    </li>
+                    <li>
+                        <a href="#">新品</a>
+                    </li>
+                    <li>
+                        <a href="#">大包</a>
+                    </li>
+                    <li>
+                        <a href="#">靓粥</a>
+                    </li>
+                    <li>
+                        <a href="#">饮品</a>
+                    </li>
+                    <li>
+                        <a href="#">粉面</a>
+                    </li>
+                    <li>
+                        <a href="#">小食</a>
+                    </li>
+                    <li>
+                        <a href="#">套餐</a>
+                    </li>
+                    <li>
+                        <a href="#">冷藏</a>
+                    </li>
+                    <li>
+                        <a href="#">暖汤</a>
+                    </li>
+                    <li>
+                        <a href="#">优惠</a>
+                    </li>
+                    <li>
+                        <a href="#">小份热菜</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="mt-3 concat">
+                <p>商家公告</p>
+                <p>
+                    <span>配送说明</span><span>配送费：￥4.00</span>
+                </p>   
             </div>
         </div>
     </div>
