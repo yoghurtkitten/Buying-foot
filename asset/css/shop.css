@@ -197,6 +197,12 @@ iframe {
     background: #e54c2a;
     color: #fff;
 }
+.category ul li:first-child{
+    background: #e54c2a;
+}
+.category ul li:first-child>a{
+    color: #fff;
+}
 .category ul li:hover{
     background: #eee;
 }
