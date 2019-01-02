@@ -12,6 +12,7 @@ iframe {
     position: relative;
     height: 120px;
     background: #fff;
+    min-width: 690px;
 }
 
 .busin-title {
@@ -28,6 +29,7 @@ iframe {
     padding-left: 1.4%;
     overflow: hidden;
     z-index: 10;
+    min-width: 345px;
 }
 
 .left-b:last-child{
@@ -45,7 +47,7 @@ iframe {
 }
 
 .icon+div {
-    width: 40%;
+    /* width: 40%; */
     height: 60%;
 }
 
@@ -64,16 +66,20 @@ iframe {
     margin-right: 3%;
     font-size: 12px;
 }
-
-.right-b {
-    /* border: 1px solid #000; */
-    margin-left: 1.5%;
+.right-b{
+    min-width: 345px;
+    display: flex;
+    justify-content: space-between;
 }
 
 .right-b div i {
     font-size: 23px;
     color: #6A6A6A;
     cursor: pointer;
+}
+.detail-info{
+    width: 50%;
+    margin-left: 20%;
 }
 
 .detail-info div p {
@@ -100,9 +106,8 @@ iframe {
 }
 
 .save {
-    /* border: 1px solid #000; */
+    width: 50%;
     flex: 0 0 18%;
-    margin-left: 7%;
     box-sizing: border-box;
     border-left: 1px dashed #e5e5e5;
 }
@@ -110,6 +115,7 @@ iframe {
 .save div {
     height: 50%;
     text-align: center;
+    width: 120px;
 }
 .container>.row{
     width: 100%;
@@ -124,7 +130,7 @@ iframe {
     width: 336px;
     /* border: 1px solid #000; */
     margin-bottom: 0;
-    margin-right: 3%;
+    /* margin-right: 3%; */
 }
 .tabber ul li a{
     text-decoration: none;
@@ -368,4 +374,31 @@ h4{
 .total+span{
     font-size: 12px;
     color: #999;
+}
+@media screen and (max-width:1005px){
+    .goods-type ul li{
+        width: 98%;
+    }
+}
+@media screen and (max-width:770px){
+    .detail-info {
+        margin-left: 0;
+    }
+    .right-b{
+        background: #fff;
+        z-index: 10000;
+        height: 120px;
+        justify-content:space-around;
+    }
+    .concat{
+        display: none;
+    }
+    .category {
+        width: 100%;
+        
+    }
+    .goods{
+        width: 100%;
+        margin-right: 0;
+    }
 }
