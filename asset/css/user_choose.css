@@ -2,7 +2,7 @@ body{
     background: #f5f5f5;
 }
 body, iframe{
-    cursor: url('img/brand/cursor.ico'),auto;
+    cursor: url('../img/brand/cursor.ico'),auto;
 }
 .detail-btn div a{
     background: #fff;  
@@ -12,7 +12,7 @@ body, iframe{
 }
 .new-list-btn{
     width: 96px;
-    background: #fff url("img/small_img/order-list.png") no-repeat 10px 6px / 15px 18px!important;
+    background: #fff url("../img/small_img/order-list.png") no-repeat 10px 6px / 15px 18px!important;
     padding-left: 30px;
     box-sizing: border-box;
 }
@@ -23,7 +23,7 @@ body, iframe{
     display: block;
     width: 14px!important;
     height: 30px!important;
-    background: url("img/small_img/address-icon.png")no-repeat center center;
+    background: url("../img/small_img/address-icon.png")no-repeat center center;
     background-size: 100%;
     float: left;
 }
@@ -34,7 +34,7 @@ a:hover{
     text-decoration: none;
 }
 .select-address{
-    background: url("img/small_img/up-icon.png") no-repeat right center;
+    background: url("../img/small_img/up-icon.png") no-repeat right center;
     background-size: 10px 5px;
     width: 60%;
     color: #e54c2a;
@@ -59,7 +59,7 @@ a:hover{
     width: 88px;
     height: 30px;
     padding-left: 32px;
-    background: url("img/small_img/new-icon-sort.png") no-repeat;
+    background: url("../img/small_img/new-icon-sort.png") no-repeat;
     background-position-y: center;
     background-size: 28%;
     font-size: 14px;
@@ -112,7 +112,7 @@ a:hover{
 /* 765px */
 @media screen and (max-width:765px){
     .select-address{
-        background: url("img/small_img/up-icon.png") no-repeat 60px center;
+        background: url("../img/small_img/up-icon.png") no-repeat 60px center;
         background-size: 10px 5px;
         width: 60%;
         color: #e54c2a;
