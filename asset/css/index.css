@@ -394,6 +394,7 @@ ul li .main-title{
     transform:scale(1.5);
     transform-origin: 10% 70%; 
     color: #e54c2a;
+
 } 
 .main-title_out{
     transition: transform 0.5s, transform-origin 0.5s;
