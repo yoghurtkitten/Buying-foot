@@ -175,6 +175,43 @@ router.post('/update_validate', (req, res) => {
 });
 
 router.post('/login', (req, res) => {
-    res.send(req.body);
+    var obj = req.body;
+    var validateResult = validate(obj);
+    if (validateResult.str) {
+        res.send({code: validateResult.code, msg: validateResult.str});
+        return;     
+    }
+    var sql = 'SELECT * FROM user where name = ? and password = ?';
+    pool.query(sql, [obj.name, obj.password], (err, result) => {
+        if (err) {
+            throw err;
+        }
+        if (result.length) {
+            res.send({code: 200, msg: 'Login Success!'})
+        } else {
+            var new_user = 'SELECT * FROM user where name = ?';
+            pool.query(new_user, [obj.name], (err, result) => {
+                if (err) {
+                    throw err;
+                }
+                if (result.length) {
+                    res.send({code: 401, msg: 'Login Fault!'})
+                } else {
+                    var insert_sql = 'INSERT INTO user SET ?';
+                    pool.query(insert_sql, [obj], (err, result) => {
+                        if (err) {
+                            throw err;
+                        }
+                        if (result.affectedRows) {
+                            res.send({code: 200, msg: 'Insert Success!'})
+                        } else {
+                            res.send({code: 401, msg: 'Insert Fault!'})
+                        }
+                    }) 
+                }
+            })
+
+        }
+    })
 })
 module.exports = router;

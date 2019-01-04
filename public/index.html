@@ -155,11 +155,11 @@
                                             <li>
                                                 <a href="#"> 加盟</a></li>
                                             <li>
-                                                <a href="#"> 点外卖</a></li>
+                                                <a href="user_index.html"> 点外卖</a></li>
                                             <li>
                                                 <a href="#"> 关于我们</a></li>
                                             <li>
-                                                <a href="#"> 登录</a></li>
+                                                <a href="login.html"> 登录</a></li>
                                         </ul>
                                     </div>
                                 </div>
@@ -169,9 +169,9 @@
                                 <ul>
                                     <li><a href="#">首页</a></li>
                                     <li><a href="#">加盟</a></li>
-                                    <li><a href="#">点外卖</a></li>
+                                    <li><a href="user_index.html">点外卖</a></li>
                                     <li><a href="#">关于我们</a></li>
-                                    <li><a href="#">登录</a></li>
+                                    <li><a href="login.html">登录</a></li>
                                     <li id="search"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></li>
                                 </ul>
                             </div>
@@ -223,7 +223,7 @@
                     codimentum.Lorem ipsum dolor sit amet.
                 </p>
 
-                <button type="button" class="btn btn-danger my-btn">我要点外卖</button>
+                <button type="button" class="btn btn-danger my-btn buying">我要点外卖</button>
                 <button type="button" class="btn btn-warning my-btn">我要入驻</button>
             </div>
         </div>
@@ -304,6 +304,10 @@
             }catch (ex){}
         }
         window.setInterval("reinitIframe()", 200);
+        
+        $('.buying').click(function () {
+            location.href='http://127.0.0.1:3000/user_index.html';
+        })
     </script>
 </body>
 

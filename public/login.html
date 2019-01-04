@@ -90,11 +90,25 @@
             color: #999;
         }
         section a {
-            text-decoration: none;
+            text-decoration: none!important;
             color: #e8694c;
         }
-        section a:hover{
+        a:hover{
             text-decoration: none;
+        }
+        
+        .choose_login{
+            margin-bottom: 2%!important;
+            text-align: right;
+            color: #999!important;
+            width: 100%;
+            display: inline-block;
+        }
+        .choose_login i{
+            color: #e8694c;
+        }
+        .choose_login:hover{
+            color: #999;
         }
     </style>
 </head>
@@ -108,18 +122,24 @@
                 </div>
     
                 <div class="input-group mb-3 phone-div">
-                    <input type="text" class="form-control phone-number" placeholder="手机号" maxlength="11">
+                    <input type="text" class="form-control phone-number" placeholder="手机号" maxlength="11" id="uid">
                     <div class="input-group-append get-code">
                         <span class="input-group-text" id="">获取验证码</span>
                     </div>
                 </div>
                 <div class="input-group mb-3 phone-div">
-                    <input type="text" class="form-control phone-number" placeholder="验证码">
+                    <input type="text" class="form-control phone-number" placeholder="验证码" id="upwd">
                 </div>
+                <a class="choose_login" href="#">
+                    <span>
+                        普通方式登录
+                    </span>
+                    <i class="iconfont">&#xe6a2;</i>
+                </a>
                 <p>
                     新用户登录即自动注册，并表示已同意<a href="#">《用户服务协议》</a>
                 </p>
-                <button class="btn form-control">登录</button>
+                <button class="btn form-control" onclick="login()">登录</button>
             </section>
 
         </div>
@@ -128,7 +148,40 @@
             <p>增值电信业务许可证：沪B2-20150033 | 沪ICP备 09007032 | 上海工商行政管理Conpyright @2008-2017 ele me,All Rights Resereved</p>
         </div>
     </div>
+    <script>
+        $('.choose_login').click(function(){
+            if ($('.choose_login span').text().trim() == '普通方式登录') {
+                $('.choose_login span').text('手机验证码登录'); 
+                $('.choose_login i').html('&#xe6b9;'); 
+            } else {
+                $('.choose_login span').text('普通方式登录'); 
+                $('.choose_login i').html('&#xe6a2;'); 
+                // $('.phone-number').html();
+            }
+            // alert($('.choose_login span').text().trim());
+        })
+        function login(){
+            var xhr = new XMLHttpRequest();
 
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState == 4 && xhr.status) {
+                    var result = xhr.responseText;
+                    var arr = JSON.parse(result);
+                    if (arr.code == 200) {
+                        location.href='http://127.0.0.1:3000/index.html';
+                    } else {
+                        alert('登录失败');
+                    }
+                }
+            }
+
+            xhr.open('post', '/user/login', true);
+            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            
+            var data = `name=${uid.value}&password=${upwd.value}`;
+            xhr.send(data);
+        }
+    </script>
 </body>
 
 </html>
