@@ -17,12 +17,9 @@ iframe{
     height: auto;
     width: 100%;
     overflow: hidden;
-    position: relative;
-}
-
-.form-control{
-    padding-top: 24px;
-    padding-bottom: 24px;
+    /* position: relative; */
+    background: url('../img/slider/3.jpg') no-repeat;
+    background-size: cover;
 }
 .search-icon{
     height: 50px;
@@ -129,17 +126,17 @@ ul{
     background: none;
 }
 .address{
-    position: absolute;
-    z-index: 10000;
-    top: 28%;
-    width: 730px;
-    left: 32%;
+    margin-top: 13%;
+    display: flex;
+    justify-content: center;
 }
  .container{
     width: 100%;
 }
 .inner-address{
     height: 550px;
+    width: 38%;
+    /* min-width: 723.13px; */
 }
 .detail-btn div a{
     background: #fff;  
@@ -157,34 +154,41 @@ ul{
 }
 .search-form .form-control {
 
-    width: 72%!important;
+    width: 71%!important;
 
 }
 .search-btn{
+    display: inline-block; 
     background-color: #e54c2a;
     border-radius: 0;
-    height: 48px;
+    height: 100%;
     color: #fff;
     width: 107px;
-    text-align: center;
-    line-height: 2.5;    
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 .main_img>img{
     width: 100%;
     position: relative;
     z-index: -1;
 }
+.search-form{
+    height: 10%;
+}
 .search-form div{
     cursor: pointer;
 }
 .search-form input{
     font-size: 16px;
+    height: 100%;
 }
 .select-btn{
     width: 96px!important;
-    height: 48px;
+    height: 100%;
     float: left;
     background-color: #fff;
+    /* display: inline-block; */
 }
 .select-btn:hover{
     cursor: pointer;

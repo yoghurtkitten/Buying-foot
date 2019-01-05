@@ -2,6 +2,8 @@ const express = require('express');
 var pool = require('../pool');
 var formidable = require('formidable');
 var router = express.Router();
+var request = require('request');
+var querystring = require('querystring');
 
 function validate(body) {
     var mystr = '';
@@ -11,17 +13,56 @@ function validate(body) {
             mystr = `${key} is null !!`;
             break;
         }
-        mycode ++;
+        mycode++;
     }
-    return {code: mycode, str: mystr};
+    return { code: mycode, str: mystr };
 }
+
+function validate_code() {
+    var str = '';
+    for (let i = 0; i < 6; i++) {
+        str += parseInt(Math.random() * 10);
+    }
+    return str;
+}
+
+router.post('/getVCode', (req, res) => {
+    var obj = req.body;
+    v_code = validate_code();
+    res.send({ code: 200, msg: "短信发送成功", vcode: v_code });
+
+    /* var queryData = querystring.stringify({
+        "mobile": obj.phone,  // 接受短信的用户手机号码
+        "tpl_id": "127698",  // 您申请的短信模板ID，根据实际情况修改
+        "tpl_value": `#code#=${v_code}`,  // 您设置的模板变量，根据实际情况修改
+        "key": "5850bb044776fddda1c198bbc6a7a6a8",  // 应用APPKEY(应用详细页查询)
+    });
+    
+    var queryUrl = 'http://v.juhe.cn/sms/send?'+queryData;
+    
+    request(queryUrl, function (error, response, body) {
+        if (!error && response.statusCode == 200) {
+            console.log(body) // 打印接口返回内容
+            
+            var jsonObj = JSON.parse(body); // 解析接口返回的JSON内容
+            if (jsonObj.reason == "操作成功") {
+                res.send({code: 200, msg: "短信发送成功", vcode: v_code});
+            } else {
+                res.send({code: 401, msg: "短信发送失败"});
+            }
+        } else {
+            res.send({code: 400, msg: "请求异常"});
+        }
+    })  */
+
+})
 
 router.post('/regist', (req, res) => {
     var obj = req.body;
     var validateResult = validate(obj);
     if (validateResult.str) {
-        res.send({code: validateResult.code, msg: validateResult.str});
-        return;     
+        res.send({ code: validateResult.code, msg: validateResult.str });
+        return;
     }
     var sql = 'INSERT INTO user SET ?';
     pool.query(sql, [obj], (err, result) => {
@@ -29,11 +70,11 @@ router.post('/regist', (req, res) => {
             throw err;
         }
         if (result.affectedRows) {
-            res.send({code: 200, msg: 'Insert Success!'})
+            res.send({ code: 200, msg: 'Insert Success!' })
         } else {
-            res.send({code: 401, msg: 'Insert Fault!'})
+            res.send({ code: 401, msg: 'Insert Fault!' })
         }
-    }) 
+    })
 });
 
 router.get('/del', (req, res) => {
@@ -44,9 +85,9 @@ router.get('/del', (req, res) => {
             throw err;
         }
         if (result.affectedRows) {
-            res.send(`<script>alert('删除成功');location.href="http://127.0.0.1:3000/user_list.html"</script>`)            
+            res.send(`<script>alert('删除成功');location.href="http://127.0.0.1:3000/user_list.html"</script>`)
         } else {
-            res.send({code: 401, msg: 'Delete Fault!'})
+            res.send({ code: 401, msg: 'Delete Fault!' })
         }
     })
 })
@@ -60,11 +101,11 @@ router.get('/query', (req, res) => {
             throw err;
         }
         if (result.length) {
-            res.send(result);            
+            res.send(result);
         } else {
-            res.send({code: 401, msg: 'Query Fault!'});
+            res.send({ code: 401, msg: 'Query Fault!' });
         }
-    }) 
+    })
 })
 
 router.post('/update', (req, res) => {
@@ -76,8 +117,8 @@ router.post('/update', (req, res) => {
     var obj = req.body;
     var validateResult = validate(obj);
     if (validateResult.str) {
-        res.send({code: validateResult.code, msg: validateResult.str});
-        return;     
+        res.send({ code: validateResult.code, msg: validateResult.str });
+        return;
     }
 
     var sql = 'UPDATE user SET name = ?, email = ?, phone = ?, user_name = ?, gender = ?, password = ? WHERE id = ?';
@@ -114,7 +155,7 @@ router.get('/list/:count/:index', (req, res) => {
                 <img src = ${result[0].avatar}> 
             </body>
         </html>
-        `); 
+        `);
     })
 });
 
@@ -125,7 +166,7 @@ router.get('/list_all', (req, res) => {
         if (err) {
             throw err;
         }
-        res.send(result); 
+        res.send(result);
     })
 });
 
@@ -133,7 +174,7 @@ router.get('/list_all', (req, res) => {
 router.post('/validate', (req, res) => {
     var obj = req.body;
     if (!obj.name) {
-        res.send({code: 402, msg: '用户名不能为空'});        
+        res.send({ code: 402, msg: '用户名不能为空' });
         return;
     }
 
@@ -143,9 +184,9 @@ router.post('/validate', (req, res) => {
             throw err;
         }
         if (result.length) {
-            res.send({code: 401, msg: '该用户名已存在'});
+            res.send({ code: 401, msg: '该用户名已存在' });
         } else {
-            res.send({code: 200, msg: '通过'});
+            res.send({ code: 200, msg: '通过' });
         }
     });
 });
@@ -153,7 +194,7 @@ router.post('/validate', (req, res) => {
 router.post('/update_validate', (req, res) => {
     var obj = req.body;
     if (!obj.name) {
-        res.send({code: 402, msg: '用户名不能为空'});        
+        res.send({ code: 402, msg: '用户名不能为空' });
         return;
     }
 
@@ -164,54 +205,61 @@ router.post('/update_validate', (req, res) => {
         }
         if (result.length) {
             if (result[0].id == obj.id) {
-                res.send({code: 200, msg: '通过'});   
+                res.send({ code: 200, msg: '通过' });
             } else {
-                res.send({code: 401, msg: '该用户名已存在'});
+                res.send({ code: 401, msg: '该用户名已存在' });
             }
         } else {
-            res.send({code: 200, msg: '通过'});
+            res.send({ code: 200, msg: '通过' });
         }
-    }); 
+    });
 });
 
 router.post('/login', (req, res) => {
     var obj = req.body;
     var validateResult = validate(obj);
     if (validateResult.str) {
-        res.send({code: validateResult.code, msg: validateResult.str});
-        return;     
+        res.send({ code: validateResult.code, msg: validateResult.str });
+        return;
     }
-    var sql = 'SELECT * FROM user where name = ? and password = ?';
-    pool.query(sql, [obj.name, obj.password], (err, result) => {
+    var sql = 'SELECT * FROM user where phone = ?';
+    pool.query(sql, [obj.phone], (err, result) => {
         if (err) {
             throw err;
         }
         if (result.length) {
-            res.send({code: 200, msg: 'Login Success!'})
+            if (obj.code == obj.user_code) {
+
+                var user = {
+                    name: obj.phone
+                }
+                req.session.user = user;
+                res.send({ code: 200, msg: 'Login Success!' })
+            } else {
+                res.send({ code: 403, msg: 'Login Error!', code: v_code })
+            }
         } else {
-            var new_user = 'SELECT * FROM user where name = ?';
-            pool.query(new_user, [obj.name], (err, result) => {
+            var sql2 = 'INSERT INTO user (phone) VALUE ( ? )';
+            pool.query(sql2, [obj.phone], (err, result) => {
                 if (err) {
                     throw err;
                 }
-                if (result.length) {
-                    res.send({code: 401, msg: 'Login Fault!'})
+                if (result.affectedRows) {
+                    res.send({ code: 200, msg: 'Insert Success!' })
                 } else {
-                    var insert_sql = 'INSERT INTO user SET ?';
-                    pool.query(insert_sql, [obj], (err, result) => {
-                        if (err) {
-                            throw err;
-                        }
-                        if (result.affectedRows) {
-                            res.send({code: 200, msg: 'Insert Success!'})
-                        } else {
-                            res.send({code: 401, msg: 'Insert Fault!'})
-                        }
-                    }) 
+                    res.send({ code: 402, msg: 'Insert Fault!' })
                 }
             })
-
         }
     })
+})
+
+router.get('/session', (req, res) => {
+    var session_msg = req.session.user;
+    if (session_msg) {
+        res.send({code: 200, msg: session_msg});
+    } else {
+        res.send({code: 400, msg: 'get session Fault'});
+    }
 })
 module.exports = router;

@@ -110,6 +110,9 @@
         .choose_login:hover{
             color: #999;
         }
+        .getcode{
+            color: #e54c2a!important;
+        }
     </style>
 </head>
 
@@ -122,20 +125,15 @@
                 </div>
     
                 <div class="input-group mb-3 phone-div">
-                    <input type="text" class="form-control phone-number" placeholder="手机号" maxlength="11" id="uid">
+                    <input type="text" class="form-control phone-number" placeholder="手机号" maxlength="11" id="phone">
+                    <input type="hidden" id="codeFromUser">
                     <div class="input-group-append get-code">
-                        <span class="input-group-text" id="">获取验证码</span>
+                        <span class="input-group-text" id="validate_code" >获取验证码</span>
                     </div>
                 </div>
                 <div class="input-group mb-3 phone-div">
-                    <input type="text" class="form-control phone-number" placeholder="验证码" id="upwd">
+                    <input type="text" class="form-control phone-number" placeholder="验证码" id="code">
                 </div>
-                <a class="choose_login" href="#">
-                    <span>
-                        普通方式登录
-                    </span>
-                    <i class="iconfont">&#xe6a2;</i>
-                </a>
                 <p>
                     新用户登录即自动注册，并表示已同意<a href="#">《用户服务协议》</a>
                 </p>
@@ -149,17 +147,37 @@
         </div>
     </div>
     <script>
-        $('.choose_login').click(function(){
-            if ($('.choose_login span').text().trim() == '普通方式登录') {
-                $('.choose_login span').text('手机验证码登录'); 
-                $('.choose_login i').html('&#xe6b9;'); 
-            } else {
-                $('.choose_login span').text('普通方式登录'); 
-                $('.choose_login i').html('&#xe6a2;'); 
-                // $('.phone-number').html();
+        function getCode() {
+            var xhr = new XMLHttpRequest();
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState == 4 && xhr.status == 200) {
+                    var result = xhr.responseText;
+                    var arr = JSON.parse(result);
+                    if (arr.code == 200) {
+                        console.log('验证码发送成功！');
+                        $('#codeFromUser').val(arr.vcode)
+                    } else {
+                        console.log('验证码发送失败！');
+                    }
+                }
             }
-            // alert($('.choose_login span').text().trim());
-        })
+            xhr.open('post', 'user/getVCode', true);
+            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            var data = `phone=${phone.value}`;
+            xhr.send(data);
+
+            $('#validate_code').removeClass('getcode');
+            var time = 30;
+            var interval = setInterval(() => {
+                $('#validate_code').text(`( 已发送${time} )`);
+                time--;
+            },1000);
+            setTimeout(() => {
+                clearInterval(interval);
+                $('#validate_code').addClass('getcode');
+                $('#validate_code').text(`重新发送`);
+            },31000);
+        }
         function login(){
             var xhr = new XMLHttpRequest();
 
@@ -168,9 +186,12 @@
                     var result = xhr.responseText;
                     var arr = JSON.parse(result);
                     if (arr.code == 200) {
+                        console.log(arr.msg);
                         location.href='http://127.0.0.1:3000/index.html';
+                    } else if (arr.code == 403) {
+                        alert('验证码有误');
                     } else {
-                        alert('登录失败');
+                        console.log('登录失败');
                     }
                 }
             }
@@ -178,9 +199,22 @@
             xhr.open('post', '/user/login', true);
             xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
             
-            var data = `name=${uid.value}&password=${upwd.value}`;
+            var data = `phone=${phone.value}&code=${code.value}&user_code=${codeFromUser.value}`;
             xhr.send(data);
         }
+
+        $("#phone").bind("input propertychange",function(event){
+            var num= parseInt($('#phone').val());
+            var reg = /^[1][3|4|5|7|8]\d{9}$/g;
+            if (reg.test(num)) {
+                console.log('123');
+                $('#validate_code').addClass('getcode');
+                $('#validate_code').attr('onclick','getCode()')
+            } else {
+                $('#validate_code').attr('onclick','')
+                $('#validate_code').removeClass('getcode');
+            }
+        });
     </script>
 </body>
 

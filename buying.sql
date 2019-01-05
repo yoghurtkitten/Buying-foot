@@ -6,7 +6,6 @@ USE buying;
 CREATE TABLE user(
   id INT PRIMARY KEY AUTO_INCREMENT,
   name VARCHAR(16),
-  password VARCHAR(16),
   gender BOOL,
   email VARCHAR(64),
   phone VARCHAR(11),
