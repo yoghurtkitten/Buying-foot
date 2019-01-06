@@ -135,7 +135,7 @@ ul{
 }
 .inner-address{
     height: 550px;
-    width: 38%;
+    width: 100%;
     /* min-width: 723.13px; */
 }
 .detail-btn div a{
@@ -163,7 +163,7 @@ ul{
     border-radius: 0;
     height: 100%;
     color: #fff;
-    width: 107px;
+    /* width: 107px; */
     display: flex;
     align-items: center;
     justify-content: center;
@@ -175,6 +175,8 @@ ul{
 }
 .search-form{
     height: 10%;
+    width: 60%;
+    margin: 0 auto;
 }
 .search-form div{
     cursor: pointer;
@@ -184,7 +186,7 @@ ul{
     height: 100%;
 }
 .select-btn{
-    width: 96px!important;
+    /* width: 96px!important; */
     height: 100%;
     float: left;
     background-color: #fff;
@@ -205,6 +207,10 @@ ul{
     background-color: #fff;
     overflow: auto;
     display: none;
+}
+.login_list{
+    width: 60%;
+    margin: 0 auto;
 }
 .up-icon{
     width: 10px;
