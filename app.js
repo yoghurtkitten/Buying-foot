@@ -12,7 +12,7 @@ server.listen(3000);
 server.use(cookieParser());
 server.use(session({
     secret: '12345',//与cookieParser中的一致
-    cookie:{maxAge:600000},
+    cookie:{maxAge:300000},
     resave: false,
     saveUninitialized:true
 }));

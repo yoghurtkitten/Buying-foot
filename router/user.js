@@ -159,15 +159,8 @@ router.get('/list/:count/:index', (req, res) => {
     })
 });
 
-router.get('/list_all', (req, res) => {
-
-    var sql = 'SELECT * FROM user';
-    pool.query(sql, (err, result) => {
-        if (err) {
-            throw err;
-        }
-        res.send(result);
-    })
+router.get('/getlist', (req, res) => {
+    res.send(req.query);
 });
 
 

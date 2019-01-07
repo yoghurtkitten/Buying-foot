@@ -13,6 +13,8 @@
     <link rel="stylesheet" href="css/bootstrap3.7.css">
     <link rel="stylesheet" href="css/user-index.css">
     <link rel="stylesheet" href="css/icon/iconfont.css">
+    <link href="css/jquery.city.css" rel="stylesheet" />
+    <link href="css/animate.min.css" rel="stylesheet" />
 
     <script>
         $(function () {
@@ -47,16 +49,6 @@
 
             var fixedDom = $('.header')[0];
 
-            /* window.onscroll = function () {
-                var scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
-                if (scrollTop > fixedDom.offsetTop) {             
-                    fixedDom.classList.add("fixed");
-                }
-                if (scrollTop <= fixedDom.offsetTop + 10) {
-                    fixedDom.classList.remove("fixed");
-                }
-            } */
-
             if ($('.hidden-sm').css('display') == 'none') {
                 $('.show-btn').css('display', 'inline');
             } else {
@@ -71,10 +63,32 @@
                 }
             })
 
-            var obtn = $('.select-btn');
-            obtn.click(function () {
-                $('.address-detail').toggle();
+            $('#txt_city').jcity({
+                urlOrData: 'js/citydata.json',
+                animate: { showClass: 'animated flipInX', hideClass: 'animated flipOutX' },
+                onChoice: function (data) {
+                    console.log(data);
+                }
+            });
+            $('.search-btn').click(function(){
+                var xhr = new XMLHttpRequest();
+
+                xhr.onreadystatechange = function(){
+                    if (xhr.readyState == 4 && xhr.status == 200) {
+                        var result = xhr.responseText;
+                        // var arr = JSON.parse(result);
+                        console.log(result);
+                    }
+                }
+
+                xhr.open('get', '/user/getlist');
+
+                var data = `city=${txt_city.value}`;
+                xhr.send(data);
+                // console.log(txt_city.value);
+                return false;
             })
+            
         })
     </script>
 </head>
@@ -142,11 +156,10 @@
             </div>
         </header>
         <div class="main_img">
-            <!-- <img src="img/slider/3.jpg" class="img-fluid" alt="" /> -->
             <div class="address ">
                 <div class="inner-address p-0">
                     <div class="row login_list">
-                        <div class="col-4 d-flex p-0">
+                        <div class="col-lg-5 col-md-8 col-sm-10 d-flex p-0">
                             <div class="row detail-btn">
                                 <div class="col-md-6 p-0 d-flex">
                                     <a href="login.html" class="btn mr-1 login_user">注册/登录</a>
@@ -160,146 +173,10 @@
                         </div>
                     </div>
                     <div class="input-group mt-2 search-form row">
-                        <div class="select-btn col-lg-2 col-md-3 d-flex justify-content-center align-items-center">
-                            <span>武昌区</span>
-                            <b class="down-icon"></b>
-                        </div>
-                        <input type="text" class="form-control border-0 col-lg-7 col-md-6" placeholder="输入地址搜索周边美食">
-                        <a href="#" class="search-btn col-lg-3 col-md-3">搜索</a>
+                        <input type="text" id="txt_city" class="form-control border-0 col-lg-8 col-md-7 col-sm-8" placeholder="输入地址搜索周边美食">
+                        <a href="#" class="search-btn col-lg-2 col-md-3 col-sm-2">搜索</a>
                     </div>
-                    <div class="address-detail mt-3">
-                        <div class="up-icon"></div>
-                        <div class="row pt-3 ml-3 mr-3 pb-3">
-                            <div class="col-md-3 d-flex align-items-center pl-0">
-                                <span class="mr-3 ">猜您在</span>
-                                <a href="#" class="btn btn-dark city"> 武汉</a>
-                            </div>
-                            <div class="col-md-9">
-                                <input type="text" class="form-control input-city pt-2 pb-2" placeholder="城市名称或拼音">
-                            </div>
-                        </div>
-                        <div class="row pl-3 pr-3 city-detail pt-3">
-                            <div>
-                                <span>A</span>
-                                <ul class="list-unstyled city-list">
-                                    <li class="">阿巴嘎旗</li>
-                                    <li class="">阿贝县</li>
-                                    <li class="">阿城区</li>
-                                    <li class="">阿尔山市</li>
-                                    <li class="">爱辉区</li>
-                                    <li class="">爱民区</li>
-                                    <li class="">阿克塞哈萨克族自治县</li>
-                                    <li class="">阿克苏市</li>
-                                    <li class="">阿拉尔</li>
-                                    <li class="">阿拉尔市</li>
-                                    <li class="">阿拉善盟</li>
-                                    <li class="">阿拉善右旗</li>
-                                    <li class="">阿拉善左旗</li>
-                                    <li class="">阿勒泰市</li>
-                                    <li class="">阿鲁科尔沁旗旗</li>
-                                    <li class="">安次区</li>
-                                    <li class="">安达</li>
-                                    <li class="">安定区</li>
-                                    <li class="">安福</li>
-                                    <li class="">昂昂溪区</li>
-                                    <li class="">安国</li>
-                                    <li class="">安化县</li>
-                                    <li class="">安吉县</li>
-                                    <li class="">安居区</li>
-                                    <li class="">安康</li>
-                                    <li class="">安龙县</li>
-                                    <li class="">安陆</li>
-                                    <li class="">安宁</li>
-                                    <li class="">阿巴嘎旗</li>
-                                    <li class="">阿贝县</li>
-                                    <li class="">阿城区</li>
-                                    <li class="">阿尔山市</li>
-                                    <li class="">爱辉区</li>
-                                    <li class="">爱民区</li>
-                                    <li class="">阿克塞哈萨克族自治县</li>
-                                    <li class="">阿克苏市</li>
-                                    <li class="">阿拉尔</li>
-                                    <li class="">阿拉尔市</li>
-                                    <li class="">阿拉善盟</li>
-                                    <li class="">阿拉善右旗</li>
-                                    <li class="">阿拉善左旗</li>
-                                    <li class="">阿勒泰市</li>
-                                    <li class="">阿鲁科尔沁旗旗</li>
-                                    <li class="">安次区</li>
-                                    <li class="">安达</li>
-                                    <li class="">安定区</li>
-                                    <li class="">安福</li>
-                                    <li class="">昂昂溪区</li>
-                                    <li class="">安国</li>
-                                    <li class="">安化县</li>
-                                    <li class="">安吉县</li>
-                                    <li class="">安居区</li>
-                                    <li class="">安康</li>
-                                    <li class="">安龙县</li>
-                                    <li class="">安陆</li>
-                                    <li class="">安宁</li>
-                                    <li class="">阿巴嘎旗</li>
-                                    <li class="">阿贝县</li>
-                                    <li class="">阿城区</li>
-                                    <li class="">阿尔山市</li>
-                                    <li class="">爱辉区</li>
-                                    <li class="">爱民区</li>
-                                    <li class="">阿克塞哈萨克族自治县</li>
-                                    <li class="">阿克苏市</li>
-                                    <li class="">阿拉尔</li>
-                                    <li class="">阿拉尔市</li>
-                                    <li class="">阿拉善盟</li>
-                                    <li class="">阿拉善右旗</li>
-                                    <li class="">阿拉善左旗</li>
-                                    <li class="">阿勒泰市</li>
-                                    <li class="">阿鲁科尔沁旗旗</li>
-                                    <li class="">安次区</li>
-                                    <li class="">安达</li>
-                                    <li class="">安定区</li>
-                                    <li class="">安福</li>
-                                    <li class="">昂昂溪区</li>
-                                    <li class="">安国</li>
-                                    <li class="">安化县</li>
-                                    <li class="">安吉县</li>
-                                    <li class="">安居区</li>
-                                    <li class="">安康</li>
-                                    <li class="">安龙县</li>
-                                    <li class="">安陆</li>
-                                    <li class="">安宁</li>
-                                    <li class="">阿巴嘎旗</li>
-                                    <li class="">阿贝县</li>
-                                    <li class="">阿城区</li>
-                                    <li class="">阿尔山市</li>
-                                    <li class="">爱辉区</li>
-                                    <li class="">爱民区</li>
-                                    <li class="">阿克塞哈萨克族自治县</li>
-                                    <li class="">阿克苏市</li>
-                                    <li class="">阿拉尔</li>
-                                    <li class="">阿拉尔市</li>
-                                    <li class="">阿拉善盟</li>
-                                    <li class="">阿拉善右旗</li>
-                                    <li class="">阿拉善左旗</li>
-                                    <li class="">阿勒泰市</li>
-                                    <li class="">阿鲁科尔沁旗旗</li>
-                                    <li class="">安次区</li>
-                                    <li class="">安达</li>
-                                    <li class="">安定区</li>
-                                    <li class="">安福</li>
-                                    <li class="">昂昂溪区</li>
-                                    <li class="">安国</li>
-                                    <li class="">安化县</li>
-                                    <li class="">安吉县</li>
-                                    <li class="">安居区</li>
-                                    <li class="">安康</li>
-                                    <li class="">安龙县</li>
-                                    <li class="">安陆</li>
-                                    <li class="">安宁</li>
-                                </ul>
-                            </div>
-
-
-                        </div>
-                    </div>
+                   
                 </div>
             </div>
         </div>
@@ -309,6 +186,8 @@
 
     </div>
     <script src="js/frame.js"></script>
+    <script src="js/jquery-1.10.2.js"></script>
+    <script src="js/jquery.city.js"></script>
 
 </body>
 
