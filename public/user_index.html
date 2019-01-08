@@ -73,19 +73,18 @@
             $('.search-btn').click(function(){
                 var xhr = new XMLHttpRequest();
 
-                xhr.onreadystatechange = function(){
+                xhr.onreadystatechange = function () {
                     if (xhr.readyState == 4 && xhr.status == 200) {
                         var result = xhr.responseText;
-                        // var arr = JSON.parse(result);
+                        // var arr = JSON.parse(result); 
                         console.log(result);
                     }
                 }
+                var data = txt_city.value.replace(/\s*/ig, '');
+                xhr.open('get', `/user/getlist?address=${data}`, true);
 
-                xhr.open('get', '/user/getlist');
-
-                var data = `city=${txt_city.value}`;
-                xhr.send(data);
-                // console.log(txt_city.value);
+                
+                xhr.send(null);
                 return false;
             })
             

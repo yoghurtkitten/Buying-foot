@@ -16,7 +16,6 @@ CREATE TABLE user(
 CREATE TABLE business(
   id INT PRIMARY KEY AUTO_INCREMENT,
   name VARCHAR(8),
-  password VARCHAR(16),
   phone VARCHAR(11),
   shopman_name VARCHAR(8)
 );
@@ -31,6 +30,10 @@ CREATE TABLE shop(
   county VARCHAR(10), #县
   address VARCHAR(64), #详细地址
   license VARCHAR(18), #营业执照号
+  deliver_fee DECIMAL(4,2),
+  deliver_cost DECIMAL(5,2),
+  deliver_time TINYINT,
+  shop_img VARCHAR(64),
   FOREIGN KEY (busine_id) REFERENCES business(id)
 );
 

@@ -160,7 +160,15 @@ router.get('/list/:count/:index', (req, res) => {
 });
 
 router.get('/getlist', (req, res) => {
-    res.send(req.query);
+    var address=req.query.address.split('-');
+    var {province, city, county} = address;
+    var sql = 'SELECT * FROM shop WHERE province=? and city=? and county=?';
+    pool.query(sql, (err,[province,city,county], result) => {
+        if (err) {
+            throw err;
+        }
+    })
+    res.send(address);
 });
 
 
