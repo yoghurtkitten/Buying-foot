@@ -161,14 +161,18 @@ router.get('/list/:count/:index', (req, res) => {
 
 router.get('/getlist', (req, res) => {
     var address=req.query.address.split('-');
-    var {province, city, county} = address;
-    var sql = 'SELECT * FROM shop WHERE province=? and city=? and county=?';
-    pool.query(sql, (err,[province,city,county], result) => {
+    var [province, city, county] = address;
+    var sql = 'SELECT * FROM shop WHERE province=? and city=? and county=? LIMIT ?,20';
+    pool.query(sql, [province, city, county, 0], (err, result) => {
         if (err) {
             throw err;
         }
+        if (result) {
+            res.send(result);
+        } else {
+            res.send('没有商家');
+        }
     })
-    res.send(address);
 });
 
 

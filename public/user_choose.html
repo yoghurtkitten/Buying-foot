@@ -19,18 +19,18 @@
         $(function () {
 
             $.ajax({
-                 type: "GET",
-                 url: "/user/session",
-                 dataType: "json",
-                 success: function(data){
-                             if(data.code == 200){
-                                $('.login_user').html(`<i class="iconfont">&#xe6a2;</i>${data.msg.name}`)
-                                $('.login_user').click(function(){
-                                    return false;
-                                })
-                             }
-                          }
-             });
+                type: "GET",
+                url: "/user/session",
+                dataType: "json",
+                success: function (data) {
+                    if (data.code == 200) {
+                        $('.login_user').html(`<i class="iconfont">&#xe6a2;</i>${data.msg.name}`)
+                        $('.login_user').click(function () {
+                            return false;
+                        })
+                    }
+                }
+            });
             $('#search').click(function () {
                 $('.header-right').fadeOut();
                 $('#search').fadeOut();
@@ -72,10 +72,110 @@
                 }
             })
 
-            $('.select-address').click(function(){
+            $('.select-address').click(function () {
                 $('.change-address').toggle();
             })
 
+            var urlParams = new URLSearchParams(location.search);
+            var data = urlParams.get('address');
+
+            if (data) {
+                var title_address = data.split('-');
+                $('.address-icon+span').text(title_address[1] + ' ' + title_address[2])
+                var xhr = new XMLHttpRequest();
+
+                xhr.onreadystatechange = function () {
+                    if (xhr.readyState == 4 && xhr.status == 200) {
+                        var result = xhr.responseText;
+                        var arr = JSON.parse(result);
+                        for (const obj of arr) {
+
+                            $('.detail-list ul').html(`${$('.detail-list ul').html()}<li>
+                            <img src="${obj.shop_img}" alt="">
+                            <p class="business-title">
+                                ${obj.shop_name}
+                            </p>
+                            <div class="star">
+                                <i class="iconfont">&#xec43;</i>
+                                <i class="iconfont">&#xec43;</i>
+                                <i class="iconfont">&#xec43;</i>
+                                <i class="iconfont">&#xec43;</i>
+                                <i class="iconfont">&#xec43;</i>
+                                <span>
+                                    5分
+                                </span>
+                            </div>
+                            <p class="descript d-flex align-items-center">
+                                <span>起送:￥${obj.deliver_fee}</span>
+                                <span class="pl-3">配送费:￥${obj.deliver_cost}</span>
+                                <span>
+                                    <i class="iconfont">&#xe784;</i>
+                                    ${obj.deliver_time}分钟
+                                </span>
+                            </p>
+                        </li>`);
+
+                        }
+                    }
+                }
+                var data = data.replace(/\s*/ig, '');
+                xhr.open('get', `/user/getlist?address=${data}`, true);
+                xhr.send(null);
+            } else {
+                console.log('34');
+            }
+
+            var shop_type = $('.type-detail div ul li a:not(.all)');
+
+
+
+            for (const shop of shop_type) {
+                shop.onclick = function () {
+                    var shop_type = this.textContent;
+                    var title_address = data.split('-');
+                    $('.address-icon+span').text(title_address[1] + ' ' + title_address[2])
+                    $('.detail-list ul').html('');
+                    var xhr = new XMLHttpRequest();
+
+                    xhr.onreadystatechange = function () {
+                        if (xhr.readyState == 4 && xhr.status == 200) {
+                            var result = xhr.responseText;
+                            var arr = JSON.parse(result);
+                            for (const obj of arr) {
+
+                                $('.detail-list ul').html(`${$('.detail-list ul').html()}<li>
+                            <img src="${obj.shop_img}" alt="">
+                            <p class="business-title">
+                                ${obj.shop_name}
+                            </p>
+                            <div class="star">
+                                <i class="iconfont">&#xec43;</i>
+                                <i class="iconfont">&#xec43;</i>
+                                <i class="iconfont">&#xec43;</i>
+                                <i class="iconfont">&#xec43;</i>
+                                <i class="iconfont">&#xec43;</i>
+                                <span>
+                                    5分
+                                </span>
+                            </div>
+                            <p class="descript d-flex align-items-center">
+                                <span>起送:￥${obj.deliver_fee}</span>
+                                <span class="pl-3">配送费:￥${obj.deliver_cost}</span>
+                                <span>
+                                    <i class="iconfont">&#xe784;</i>
+                                    ${obj.deliver_time}分钟
+                                </span>
+                            </p>
+                        </li>`);
+
+                            }
+                        }
+                    }
+                    var data = data.replace(/\s*/ig, '');
+                    xhr.open('get', `/user/getlist_type?address=${data}&type=${shop_type}`, true);
+                    xhr.send(null);
+                }
+            }
         })
     </script>
 
@@ -148,10 +248,10 @@
                         <div class="col-lg-9 col-md-6 row m-0 position-relative">
                             <div class="col-lg-2 col-md-5 d-flex align-items-center pr-0">
                                 <i class="address-icon"></i>
-                                <span class="ml-2">洪山区 杨家湾</span>
+                                <span class="ml-2"></span>
                             </div>
                             <div class="col-lg-2 col-md-5 d-flex align-items-center p-0">
-                                
+
                                 <a href="user_index.html" class="ml-3 mr-4 select-address">
                                     切换地址
                                 </a>
@@ -181,25 +281,22 @@
                         <div class="col-lg-7 col-md-8 col-sm-12">
                             <ul class="list-unstyled m-0">
                                 <li>
-                                    <a href="#" class="active">全部</a> 
+                                    <a href="javascript:;" class="active all">全部</a>
                                 </li>
                                 <li>
-                                    <a href="#">美食</a> 
+                                    <a href="javascript:;">美食</a>
                                 </li>
                                 <li>
-                                    <a href="#">正餐优选</a> 
+                                    <a href="javascript:;">正餐优选</a>
                                 </li>
                                 <li>
-                                    <a href="#">超市</a> 
+                                    <a href="javascript:;">精选小吃</a>
                                 </li>
                                 <li>
-                                    <a href="#">精选小吃</a> 
+                                    <a href="javascript:;">鲜果购</a>
                                 </li>
                                 <li>
-                                    <a href="#">鲜果购</a> 
-                                </li>
-                                <li>
-                                    <a href="#">下午茶</a> 
+                                    <a href="javascript:;">下午茶</a>
                                 </li>
                             </ul>
                         </div>
@@ -207,504 +304,24 @@
                             <input type="text" placeholder="搜索商家，美食" class="align-self-center pl-3">
                             <a href="#" class="d-flex align-items-center justify-content-center">
                                 <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
-                            </a> 
+                            </a>
                         </div>
                     </div>
                 </div>
                 <div class="detail-list m-0 mt-3">
-                    <ul class="">
-                        <li>
-                            <img src="img/brand/95608b68ffb39943dbe10ac8c5b9aacd15834.jpg" alt="">
-                            <p class="business-title">
-                                必胜客宅急送（雄楚大道店）
-                            </p>
-                            <div class="star">
-                                <i class="iconfont">&#xec43;</i>
-                                <i class="iconfont">&#xec43;</i>
-                                <i class="iconfont">&#xec43;</i>
-                                <i class="iconfont">&#xec43;</i>
-                                <i class="iconfont">&#xec43;</i>
-                                <span>
-                                    5分
-                                </span>
-                            </div>
-                            <p class="descript d-flex align-items-center">
-                                <span>起送:￥0</span>
-                                <span class="pl-3">配送费:￥9</span>
-                                <span>
-                                    <i class="iconfont">&#xe784;</i>
-                                    30分钟
-                                </span>
-                            </p>
-                        </li>
-                        <li>
-                            <img src="img/brand/95608b68ffb39943dbe10ac8c5b9aacd15834.jpg" alt="">
-                            <p class="business-title">
-                                必胜客宅急送（雄楚大道店）
-                            </p>
-                            <div class="star">
-                                <i class="iconfont">&#xec43;</i>
-                                <i class="iconfont">&#xec43;</i>
-                                <i class="iconfont">&#xec43;</i>
-                                <i class="iconfont">&#xec43;</i>
-                                <i class="iconfont">&#xec43;</i>
-                                <span>
-                                    5分
-                                </span>
-                            </div>
-                            <p class="descript d-flex align-items-center">
-                                <span>起送:￥0</span>
-                                <span class="pl-3">配送费:￥9</span>
-                                <span>
-                                    <i class="iconfont">&#xe784;</i>
-                                    30分钟
-                                </span>
-                            </p>
-                        </li>
-                        <li>
-                            <img src="img/brand/95608b68ffb39943dbe10ac8c5b9aacd15834.jpg" alt="">
-                            <p class="business-title">
-                                必胜客宅急送（雄楚大道店）
-                            </p>
-                            <div class="star">
-                                <i class="iconfont">&#xec43;</i>
-                                <i class="iconfont">&#xec43;</i>
-                                <i class="iconfont">&#xec43;</i>
-                                <i class="iconfont">&#xec43;</i>
-                                <i class="iconfont">&#xec43;</i>
-                                <span>
-                                    5分
-                                </span>
-                            </div>
-                            <p class="descript d-flex align-items-center">
-                                <span>起送:￥0</span>
-                                <span class="pl-3">配送费:￥9</span>
-                                <span>
-                                    <i class="iconfont">&#xe784;</i>
-                                    30分钟
-                                </span>
-                            </p>
-                        </li>
-                        <li>
-                            <img src="img/brand/95608b68ffb39943dbe10ac8c5b9aacd15834.jpg" alt="">
-                            <p class="business-title">
-                                必胜客宅急送（雄楚大道店）
-                            </p>
-                            <div class="star">
-                                <i class="iconfont">&#xec43;</i>
-                                <i class="iconfont">&#xec43;</i>
-                                <i class="iconfont">&#xec43;</i>
-                                <i class="iconfont">&#xec43;</i>
-                                <i class="iconfont">&#xec43;</i>
-                                <span>
-                                    5分
-                                </span>
-                            </div>
-                            <p class="descript d-flex align-items-center">
-                                <span>起送:￥0</span>
-                                <span class="pl-3">配送费:￥9</span>
-                                <span>
-                                    <i class="iconfont">&#xe784;</i>
-                                    30分钟
-                                </span>
-                            </p>
-                        </li>
-                        <li>
-                            <img src="img/brand/95608b68ffb39943dbe10ac8c5b9aacd15834.jpg" alt="">
-                            <p class="business-title">
-                                必胜客宅急送（雄楚大道店）
-                            </p>
-                            <div class="star">
-                                <i class="iconfont">&#xec43;</i>
-                                <i class="iconfont">&#xec43;</i>
-                                <i class="iconfont">&#xec43;</i>
-                                <i class="iconfont">&#xec43;</i>
-                                <i class="iconfont">&#xec43;</i>
-                                <span>
-                                    5分
-                                </span>
-                            </div>
-                            <p class="descript d-flex align-items-center">
-                                <span>起送:￥0</span>
-                                <span class="pl-3">配送费:￥9</span>
-                                <span>
-                                    <i class="iconfont">&#xe784;</i>
-                                    30分钟
-                                </span>
-                            </p>
-                        </li>
-                        <li>
-                            <img src="img/brand/95608b68ffb39943dbe10ac8c5b9aacd15834.jpg" alt="">
-                            <p class="business-title">
-                                必胜客宅急送（雄楚大道店）
-                            </p>
-                            <div class="star">
-                                <i class="iconfont">&#xec43;</i>
-                                <i class="iconfont">&#xec43;</i>
-                                <i class="iconfont">&#xec43;</i>
-                                <i class="iconfont">&#xec43;</i>
-                                <i class="iconfont">&#xec43;</i>
-                                <span>
-                                    5分
-                                </span>
-                            </div>
-                            <p class="descript d-flex align-items-center">
-                                <span>起送:￥0</span>
-                                <span class="pl-3">配送费:￥9</span>
-                                <span>
-                                    <i class="iconfont">&#xe784;</i>
-                                    30分钟
-                                </span>
-                            </p>
-                        </li>
-                        <li>
-                            <img src="img/brand/95608b68ffb39943dbe10ac8c5b9aacd15834.jpg" alt="">
-                            <p class="business-title">
-                                必胜客宅急送（雄楚大道店）
-                            </p>
-                            <div class="star">
-                                <i class="iconfont">&#xec43;</i>
-                                <i class="iconfont">&#xec43;</i>
-                                <i class="iconfont">&#xec43;</i>
-                                <i class="iconfont">&#xec43;</i>
-                                <i class="iconfont">&#xec43;</i>
-                                <span>
-                                    5分
-                                </span>
-                            </div>
-                            <p class="descript d-flex align-items-center">
-                                <span>起送:￥0</span>
-                                <span class="pl-3">配送费:￥9</span>
-                                <span>
-                                    <i class="iconfont">&#xe784;</i>
-                                    30分钟
-                                </span>
-                            </p>
-                        </li>
-                        <li>
-                            <img src="img/brand/95608b68ffb39943dbe10ac8c5b9aacd15834.jpg" alt="">
-                            <p class="business-title">
-                                必胜客宅急送（雄楚大道店）
-                            </p>
-                            <div class="star">
-                                <i class="iconfont">&#xec43;</i>
-                                <i class="iconfont">&#xec43;</i>
-                                <i class="iconfont">&#xec43;</i>
-                                <i class="iconfont">&#xec43;</i>
-                                <i class="iconfont">&#xec43;</i>
-                                <span>
-                                    5分
-                                </span>
-                            </div>
-                            <p class="descript d-flex align-items-center">
-                                <span>起送:￥0</span>
-                                <span class="pl-3">配送费:￥9</span>
-                                <span>
-                                    <i class="iconfont">&#xe784;</i>
-                                    30分钟
-                                </span>
-                            </p>
-                        </li>
-                        <li>
-                            <img src="img/brand/95608b68ffb39943dbe10ac8c5b9aacd15834.jpg" alt="">
-                            <p class="business-title">
-                                必胜客宅急送（雄楚大道店）
-                            </p>
-                            <div class="star">
-                                <i class="iconfont">&#xec43;</i>
-                                <i class="iconfont">&#xec43;</i>
-                                <i class="iconfont">&#xec43;</i>
-                                <i class="iconfont">&#xec43;</i>
-                                <i class="iconfont">&#xec43;</i>
-                                <span>
-                                    5分
-                                </span>
-                            </div>
-                            <p class="descript d-flex align-items-center">
-                                <span>起送:￥0</span>
-                                <span class="pl-3">配送费:￥9</span>
-                                <span>
-                                    <i class="iconfont">&#xe784;</i>
-                                    30分钟
-                                </span>
-                            </p>
-                        </li>
-                        <li>
-                            <img src="img/brand/95608b68ffb39943dbe10ac8c5b9aacd15834.jpg" alt="">
-                            <p class="business-title">
-                                必胜客宅急送（雄楚大道店）
-                            </p>
-                            <div class="star">
-                                <i class="iconfont">&#xec43;</i>
-                                <i class="iconfont">&#xec43;</i>
-                                <i class="iconfont">&#xec43;</i>
-                                <i class="iconfont">&#xec43;</i>
-                                <i class="iconfont">&#xec43;</i>
-                                <span>
-                                    5分
-                                </span>
-                            </div>
-                            <p class="descript d-flex align-items-center">
-                                <span>起送:￥0</span>
-                                <span class="pl-3">配送费:￥9</span>
-                                <span>
-                                    <i class="iconfont">&#xe784;</i>
-                                    30分钟
-                                </span>
-                            </p>
-                        </li>
-                        <li>
-                            <img src="img/brand/95608b68ffb39943dbe10ac8c5b9aacd15834.jpg" alt="">
-                            <p class="business-title">
-                                必胜客宅急送（雄楚大道店）
-                            </p>
-                            <div class="star">
-                                <i class="iconfont">&#xec43;</i>
-                                <i class="iconfont">&#xec43;</i>
-                                <i class="iconfont">&#xec43;</i>
-                                <i class="iconfont">&#xec43;</i>
-                                <i class="iconfont">&#xec43;</i>
-                                <span>
-                                    5分
-                                </span>
-                            </div>
-                            <p class="descript d-flex align-items-center">
-                                <span>起送:￥0</span>
-                                <span class="pl-3">配送费:￥9</span>
-                                <span>
-                                    <i class="iconfont">&#xe784;</i>
-                                    30分钟
-                                </span>
-                            </p>
-                        </li>
-                        <li>
-                            <img src="img/brand/95608b68ffb39943dbe10ac8c5b9aacd15834.jpg" alt="">
-                            <p class="business-title">
-                                必胜客宅急送（雄楚大道店）
-                            </p>
-                            <div class="star">
-                                <i class="iconfont">&#xec43;</i>
-                                <i class="iconfont">&#xec43;</i>
-                                <i class="iconfont">&#xec43;</i>
-                                <i class="iconfont">&#xec43;</i>
-                                <i class="iconfont">&#xec43;</i>
-                                <span>
-                                    5分
-                                </span>
-                            </div>
-                            <p class="descript d-flex align-items-center">
-                                <span>起送:￥0</span>
-                                <span class="pl-3">配送费:￥9</span>
-                                <span>
-                                    <i class="iconfont">&#xe784;</i>
-                                    30分钟
-                                </span>
-                            </p>
-                        </li>
-                        <li>
-                            <img src="img/brand/95608b68ffb39943dbe10ac8c5b9aacd15834.jpg" alt="">
-                            <p class="business-title">
-                                必胜客宅急送（雄楚大道店）
-                            </p>
-                            <div class="star">
-                                <i class="iconfont">&#xec43;</i>
-                                <i class="iconfont">&#xec43;</i>
-                                <i class="iconfont">&#xec43;</i>
-                                <i class="iconfont">&#xec43;</i>
-                                <i class="iconfont">&#xec43;</i>
-                                <span>
-                                    5分
-                                </span>
-                            </div>
-                            <p class="descript d-flex align-items-center">
-                                <span>起送:￥0</span>
-                                <span class="pl-3">配送费:￥9</span>
-                                <span>
-                                    <i class="iconfont">&#xe784;</i>
-                                    30分钟
-                                </span>
-                            </p>
-                        </li>
-                        <li>
-                            <img src="img/brand/95608b68ffb39943dbe10ac8c5b9aacd15834.jpg" alt="">
-                            <p class="business-title">
-                                必胜客宅急送（雄楚大道店）
-                            </p>
-                            <div class="star">
-                                <i class="iconfont">&#xec43;</i>
-                                <i class="iconfont">&#xec43;</i>
-                                <i class="iconfont">&#xec43;</i>
-                                <i class="iconfont">&#xec43;</i>
-                                <i class="iconfont">&#xec43;</i>
-                                <span>
-                                    5分
-                                </span>
-                            </div>
-                            <p class="descript d-flex align-items-center">
-                                <span>起送:￥0</span>
-                                <span class="pl-3">配送费:￥9</span>
-                                <span>
-                                    <i class="iconfont">&#xe784;</i>
-                                    30分钟
-                                </span>
-                            </p>
-                        </li>
-                        <li>
-                            <img src="img/brand/95608b68ffb39943dbe10ac8c5b9aacd15834.jpg" alt="">
-                            <p class="business-title">
-                                必胜客宅急送（雄楚大道店）
-                            </p>
-                            <div class="star">
-                                <i class="iconfont">&#xec43;</i>
-                                <i class="iconfont">&#xec43;</i>
-                                <i class="iconfont">&#xec43;</i>
-                                <i class="iconfont">&#xec43;</i>
-                                <i class="iconfont">&#xec43;</i>
-                                <span>
-                                    5分
-                                </span>
-                            </div>
-                            <p class="descript d-flex align-items-center">
-                                <span>起送:￥0</span>
-                                <span class="pl-3">配送费:￥9</span>
-                                <span>
-                                    <i class="iconfont">&#xe784;</i>
-                                    30分钟
-                                </span>
-                            </p>
-                        </li>
-                        <li>
-                            <img src="img/brand/95608b68ffb39943dbe10ac8c5b9aacd15834.jpg" alt="">
-                            <p class="business-title">
-                                必胜客宅急送（雄楚大道店）
-                            </p>
-                            <div class="star">
-                                <i class="iconfont">&#xec43;</i>
-                                <i class="iconfont">&#xec43;</i>
-                                <i class="iconfont">&#xec43;</i>
-                                <i class="iconfont">&#xec43;</i>
-                                <i class="iconfont">&#xec43;</i>
-                                <span>
-                                    5分
-                                </span>
-                            </div>
-                            <p class="descript d-flex align-items-center">
-                                <span>起送:￥0</span>
-                                <span class="pl-3">配送费:￥9</span>
-                                <span>
-                                    <i class="iconfont">&#xe784;</i>
-                                    30分钟
-                                </span>
-                            </p>
-                        </li>
-                        <li>
-                            <img src="img/brand/95608b68ffb39943dbe10ac8c5b9aacd15834.jpg" alt="">
-                            <p class="business-title">
-                                必胜客宅急送（雄楚大道店）
-                            </p>
-                            <div class="star">
-                                <i class="iconfont">&#xec43;</i>
-                                <i class="iconfont">&#xec43;</i>
-                                <i class="iconfont">&#xec43;</i>
-                                <i class="iconfont">&#xec43;</i>
-                                <i class="iconfont">&#xec43;</i>
-                                <span>
-                                    5分
-                                </span>
-                            </div>
-                            <p class="descript d-flex align-items-center">
-                                <span>起送:￥0</span>
-                                <span class="pl-3">配送费:￥9</span>
-                                <span>
-                                    <i class="iconfont">&#xe784;</i>
-                                    30分钟
-                                </span>
-                            </p>
-                        </li>
-                        <li>
-                            <img src="img/brand/95608b68ffb39943dbe10ac8c5b9aacd15834.jpg" alt="">
-                            <p class="business-title">
-                                必胜客宅急送（雄楚大道店）
-                            </p>
-                            <div class="star">
-                                <i class="iconfont">&#xec43;</i>
-                                <i class="iconfont">&#xec43;</i>
-                                <i class="iconfont">&#xec43;</i>
-                                <i class="iconfont">&#xec43;</i>
-                                <i class="iconfont">&#xec43;</i>
-                                <span>
-                                    5分
-                                </span>
-                            </div>
-                            <p class="descript d-flex align-items-center">
-                                <span>起送:￥0</span>
-                                <span class="pl-3">配送费:￥9</span>
-                                <span>
-                                    <i class="iconfont">&#xe784;</i>
-                                    30分钟
-                                </span>
-                            </p>
-                        </li>
-                        <li>
-                            <img src="img/brand/95608b68ffb39943dbe10ac8c5b9aacd15834.jpg" alt="">
-                            <p class="business-title">
-                                必胜客宅急送（雄楚大道店）
-                            </p>
-                            <div class="star">
-                                <i class="iconfont">&#xec43;</i>
-                                <i class="iconfont">&#xec43;</i>
-                                <i class="iconfont">&#xec43;</i>
-                                <i class="iconfont">&#xec43;</i>
-                                <i class="iconfont">&#xec43;</i>
-                                <span>
-                                    5分
-                                </span>
-                            </div>
-                            <p class="descript d-flex align-items-center">
-                                <span>起送:￥0</span>
-                                <span class="pl-3">配送费:￥9</span>
-                                <span>
-                                    <i class="iconfont">&#xe784;</i>
-                                    30分钟
-                                </span>
-                            </p>
-                        </li>
-                        <li>
-                            <img src="img/brand/95608b68ffb39943dbe10ac8c5b9aacd15834.jpg" alt="">
-                            <p class="business-title">
-                                必胜客宅急送（雄楚大道店）
-                            </p>
-                            <div class="star">
-                                <i class="iconfont">&#xec43;</i>
-                                <i class="iconfont">&#xec43;</i>
-                                <i class="iconfont">&#xec43;</i>
-                                <i class="iconfont">&#xec43;</i>
-                                <i class="iconfont">&#xec43;</i>
-                                <span>
-                                    5分
-                                </span>
-                            </div>
-                            <p class="descript d-flex align-items-center">
-                                <span>起送:￥0</span>
-                                <span class="pl-3">配送费:￥9</span>
-                                <span>
-                                    <i class="iconfont">&#xe784;</i>
-                                    30分钟
-                                </span>
-                            </p>
-                        </li>
+                    <ul>
                     </ul>
                 </div>
                 <nav class="d-flex justify-content-end row">
                     <ul class="pagination col-lg-4 col-md-5 p-0 pl-4">
                         <li class="page-item disabled">
-                        <a class="page-link" href="#" tabindex="-1">Previous</a>
+                            <a class="page-link" href="#" tabindex="-1">Previous</a>
                         </li>
                         <li class="page-item active"><a class="page-link" href="#">1</a></li>
                         <li class="page-item"><a class="page-link" href="#">2</a></li>
                         <li class="page-item"><a class="page-link" href="#">3</a></li>
                         <li class="page-item">
-                        <a class="page-link" href="#">Next</a>
+                            <a class="page-link" href="#">Next</a>
                         </li>
                     </ul>
                 </nav>
