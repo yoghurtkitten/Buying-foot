@@ -79,64 +79,36 @@
             var urlParams = new URLSearchParams(location.search);
             var data = urlParams.get('address');
 
-            if (data) {
-                var title_address = data.split('-');
-                $('.address-icon+span').text(title_address[1] + ' ' + title_address[2])
-                var xhr = new XMLHttpRequest();
+            var title_address = data.split('-');
+            $('.address-icon+span').text(title_address[1] + ' ' + title_address[2])
+            xhr_get_data('getlist', data, 0)
 
-                xhr.onreadystatechange = function () {
-                    if (xhr.readyState == 4 && xhr.status == 200) {
-                        var result = xhr.responseText;
-                        var arr = JSON.parse(result);
-                        for (const obj of arr) {
-
-                            $('.detail-list ul').html(`${$('.detail-list ul').html()}<li>
-                            <img src="${obj.shop_img}" alt="">
-                            <p class="business-title">
-                                ${obj.shop_name}
-                            </p>
-                            <div class="star">
-                                <i class="iconfont">&#xec43;</i>
-                                <i class="iconfont">&#xec43;</i>
-                                <i class="iconfont">&#xec43;</i>
-                                <i class="iconfont">&#xec43;</i>
-                                <i class="iconfont">&#xec43;</i>
-                                <span>
-                                    5分
-                                </span>
-                            </div>
-                            <p class="descript d-flex align-items-center">
-                                <span>起送:￥${obj.deliver_fee}</span>
-                                <span class="pl-3">配送费:￥${obj.deliver_cost}</span>
-                                <span>
-                                    <i class="iconfont">&#xe784;</i>
-                                    ${obj.deliver_time}分钟
-                                </span>
-                            </p>
-                        </li>`);
-
-                        }
-                    }
-                }
-                var data = data.replace(/\s*/ig, '');
-                xhr.open('get', `/user/getlist?address=${data}`, true);
-                xhr.send(null);
-            } else {
-                console.log('34');
-            }
+            $('.all').click(function(){
+                $('.detail-list ul').html('');
+                xhr_get_data('getlist', data, 0)
+            })
 
             var shop_type = $('.type-detail div ul li a:not(.all)');
 
-
-
+            var title_address = data.split('-');
             for (const shop of shop_type) {
                 shop.onclick = function () {
-                    var shop_type = this.textContent;
-                    var title_address = data.split('-');
-                    $('.address-icon+span').text(title_address[1] + ' ' + title_address[2])
+                    console.log(data)
+                    var text_content = this.textContent;
                     $('.detail-list ul').html('');
-                    var xhr = new XMLHttpRequest();
+                    var addre = data.replace(/\s*/ig, '');
+                    xhr_get_data('getlist_type', addre, text_content, 0)
+                }
+            }
 
+            function xhr_get_data(...arr) {
+                var queryStr = '';
+                if (arr.length == 3) {
+                    queryStr = `/${arr[0]}?address=${arr[1]}&n=${arr[2]}`
+                } else {
+                    queryStr = `/${arr[0]}?address=${arr[1]}&type=${arr[2]}&n=${arr[3]}`
+                }
+                var xhr = new XMLHttpRequest();
                     xhr.onreadystatechange = function () {
                         if (xhr.readyState == 4 && xhr.status == 200) {
                             var result = xhr.responseText;
@@ -144,37 +116,38 @@
                             for (const obj of arr) {
 
                                 $('.detail-list ul').html(`${$('.detail-list ul').html()}<li>
-                            <img src="${obj.shop_img}" alt="">
-                            <p class="business-title">
-                                ${obj.shop_name}
-                            </p>
-                            <div class="star">
-                                <i class="iconfont">&#xec43;</i>
-                                <i class="iconfont">&#xec43;</i>
-                                <i class="iconfont">&#xec43;</i>
-                                <i class="iconfont">&#xec43;</i>
-                                <i class="iconfont">&#xec43;</i>
-                                <span>
-                                    5分
-                                </span>
-                            </div>
-                            <p class="descript d-flex align-items-center">
-                                <span>起送:￥${obj.deliver_fee}</span>
-                                <span class="pl-3">配送费:￥${obj.deliver_cost}</span>
-                                <span>
-                                    <i class="iconfont">&#xe784;</i>
-                                    ${obj.deliver_time}分钟
-                                </span>
-                            </p>
-                        </li>`);
+                                    <img src="${obj.shop_img}" alt="">
+                                    <p class="business-title">
+                                        ${obj.shop_name}
+                                    </p>
+                                    <div class="star">
+                                        <i class="iconfont">&#xec43;</i>
+                                        <i class="iconfont">&#xec43;</i>
+                                        <i class="iconfont">&#xec43;</i>
+                                        <i class="iconfont">&#xec43;</i>
+                                        <i class="iconfont">&#xec43;</i>
+                                        <span>
+                                            5分
+                                        </span>
+                                    </div>
+                                    <p class="descript d-flex align-items-center">
+                                        <span>起送:￥${obj.deliver_fee}</span>
+                                        <span class="pl-3">配送费:￥${obj.deliver_cost}</span>
+                                        <span>
+                                            <i class="iconfont">&#xe784;</i>
+                                            ${obj.deliver_time}分钟
+                                        </span>
+                                    </p>
+                                    </li>`);
 
                             }
+
                         }
                     }
-                    var data = data.replace(/\s*/ig, '');
-                    xhr.open('get', `/user/getlist_type?address=${data}&type=${shop_type}`, true);
+                    var addre = data.replace(/\s*/ig, '');
+                    xhr.open('get', `/user${queryStr}`, true);
                     xhr.send(null);
-                }
+                
             }
         })
     </script>
@@ -183,64 +156,8 @@
 
 <body>
     <div class="container-fluid">
-        <header class="header">
-            <div class="nav container navbar-light">
-                <div class="col-md-2 col-sm-3 col-xs-6">
-                    <div class="logo"><a href="index.html"><img src="img/logo.png" alt=""></a></div>
-                </div>
-
-                <div class="col-md-10 col-sm-9 col-xs-6">
-                    <div class="mgea-full-width">
-                        <div class="header-right">
-                            <div class="card">
-                                <div class="card-header">
-                                    <button type="button" class="btn show-btn navbar-toggler" data-toggle="collapse"
-                                        data-target="#p2">
-                                        <span class="navbar-toggler-icon"></span>
-                                    </button>
-                                </div>
-
-                                <div id="p2" class="collapse" data-parent="#parent">
-                                    <div class="card-body">
-                                        <ul class="list-unstyled">
-                                            <li>
-                                                <a href="#"> 首页</a></li>
-                                            <li>
-                                                <a href="#"> 加盟</a></li>
-                                            <li>
-                                                <a href="#"> 点外卖</a></li>
-                                            <li>
-                                                <a href="#"> 关于我们</a></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="header-menu hidden-sm hidden-xs list-info">
-                                <ul>
-                                    <li><a href="#">首页</a></li>
-                                    <li><a href="#">加盟</a></li>
-                                    <li><a href="#">点外卖</a></li>
-                                    <li><a href="#">关于我们</a></li>
-                                    <li id="search"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="test">
-                            <div class="input-group inner-test">
-                                <input type="search" class="form-control search-cotain" placeholder="Search for...">
-                                <span class="input-group-btn">
-                                    <button class="btn btn-default search-icon" type="button"><span class="glyphicon glyphicon-search"
-                                            aria-hidden="true"></span></button>
-                                    <button class="btn btn-default search-icon" type="button"><span class="glyphicon glyphicon-remove close"
-                                            aria-hidden="true"></span></button>
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </header>
+    <iframe src="./header.html" frameborder="0" scrolling="no" class="frame-div" onload="this.height=100"></iframe>
+        
         <div class="container">
             <div class="section">
                 <div class="business-type">
@@ -312,19 +229,9 @@
                     <ul>
                     </ul>
                 </div>
-                <nav class="d-flex justify-content-end row">
-                    <ul class="pagination col-lg-4 col-md-5 p-0 pl-4">
-                        <li class="page-item disabled">
-                            <a class="page-link" href="#" tabindex="-1">Previous</a>
-                        </li>
-                        <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                        <li class="page-item"><a class="page-link" href="#">2</a></li>
-                        <li class="page-item"><a class="page-link" href="#">3</a></li>
-                        <li class="page-item">
-                            <a class="page-link" href="#">Next</a>
-                        </li>
-                    </ul>
-                </nav>
+                <div class="load">
+
+                </div>
             </div>
         </div>
         <iframe src="./footer.html" frameborder="0" scrolling="no" class="frame-div" onload="this.height=100"></iframe>

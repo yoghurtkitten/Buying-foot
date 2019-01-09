@@ -28,7 +28,7 @@ body, iframe{
     float: left;
 }
 a{
-    text-decoration: none;
+    text-decoration: none!important;
 }
 a:hover{
     text-decoration: none;
@@ -129,7 +129,7 @@ a:hover{
 }
 .detail-list{
     width: 100%;
-    height: 1650px;
+    /* height: 1650px; */
     background: #fff;
     overflow: auto;
 }
@@ -168,22 +168,7 @@ a:hover{
 .descript span:last-child{
     margin-left: auto;
 }
-nav{
-    width: 100%;
-}
-nav ul li a{
-    border-radius: 5px;
-}
-.pagination > li > a, .pagination > li > span{
-    color: #707070;
-}
-nav ul{
-    width: 23.5%;
-}
-.pagination > li > a{
-    margin-left: 2%;
-}
-.page-item.active .page-link{
-    background-color: #e54c2a;
-    border: none;
+.load{
+    height: 50px;
+    border: 1px solid #000;
 }

@@ -24,14 +24,15 @@
             margin: 0;
             padding: 0;
         }
+        iframe{
+            width: 100%;
+        }
         .login{
            width: 300px;
            height: 86%;
            margin: 0 auto;
            display: flex;
            align-items: center;
-           /* border-left: 1px solid #000; */
-           /* border-right: 1px solid #000; */
         }
         .footer{
             width: 100%;
@@ -141,11 +142,9 @@
             </section>
 
         </div>
-        <div class="footer">
-            <p>所有方：个人作品</p>
-            <p>增值电信业务许可证：沪B2-20150033 | 沪ICP备 09007032 | 上海工商行政管理Conpyright @2008-2017 ele me,All Rights Resereved</p>
-        </div>
+        <iframe src="./footer.html" frameborder="0" scrolling="no" class="frame-div" onload="this.height=100"></iframe>        
     </div>
+    <script src="js/frame.js"></script>
     <script>
         function getCode() {
             var xhr = new XMLHttpRequest();

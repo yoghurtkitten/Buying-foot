@@ -137,33 +137,15 @@ router.post('/update', (req, res) => {
     });
 });
 
-router.get('/list/:count/:index', (req, res) => {
-    var count = parseInt(req.params.count);
-    var index = parseInt(req.params.index);
-    var start = (index - 1) * count;
-    var sql = 'SELECT * FROM user LIMIT ?, ?';
-    pool.query(sql, [start, count], (err, result) => {
-        if (err) {
-            throw err;
-        }
-        res.send(`<!doctype html>
-        <html>
-            <body>
-                <p>${result[0].id}<p>
-                <p>${result[0].name}<p>
-                <p>${result[0].name}<p>
-                <img src = ${result[0].avatar}> 
-            </body>
-        </html>
-        `);
-    })
-});
 
 router.get('/getlist', (req, res) => {
     var address=req.query.address.split('-');
+    var n =parseInt(req.query.n);
+    n = n*20;
     var [province, city, county] = address;
+    // res.send(req.query)
     var sql = 'SELECT * FROM shop WHERE province=? and city=? and county=? LIMIT ?,20';
-    pool.query(sql, [province, city, county, 0], (err, result) => {
+    pool.query(sql, [province, city, county, n], (err, result) => {
         if (err) {
             throw err;
         }
@@ -174,6 +156,24 @@ router.get('/getlist', (req, res) => {
         }
     })
 });
+
+router.get('/getlist_type', (req, res) => {
+    var address=req.query.address.split('-');
+    var shop_type = req.query.type;
+    var n =parseInt(req.query.n);
+    var [province, city, county] = address;
+    var sql = 'SELECT * FROM shop WHERE province=? and city=? and county=? and shop_type=? LIMIT ?,20';
+    pool.query(sql, [province, city, county, shop_type, n], (err, result) => {
+        if (err) {
+            throw err;
+        }
+        if (result) {
+            res.send(result);
+        } else {
+            res.send('没有商家');
+        }
+    })
+})
 
 
 router.post('/validate', (req, res) => {
