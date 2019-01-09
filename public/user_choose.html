@@ -17,7 +17,7 @@
 
     <script>
         $(function () {
-
+            //获取session中的用户名
             $.ajax({
                 type: "GET",
                 url: "/user/session",
@@ -31,73 +31,32 @@
                     }
                 }
             });
-            $('#search').click(function () {
-                $('.header-right').fadeOut();
-                $('#search').fadeOut();
-                setTimeout(() => {
-                    $('.test').fadeIn();
-                }, 500)
 
-            });
-            $('.close').click(function () {
-                $('.test').fadeOut();
-                setTimeout(() => {
-                    $('.header-right').fadeIn();
-                    $('#search').fadeIn();
-                }, 500)
-            })
-
-            var fixedDom = $('.header')[0];
-            window.onscroll = function () {
-                var scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
-                if (scrollTop > fixedDom.offsetTop) {
-                    fixedDom.classList.add("fixed");
-                }
-                if (scrollTop <= fixedDom.offsetTop + 10) {
-                    fixedDom.classList.remove("fixed");
-                }
-            }
-
-            if ($('.hidden-sm').css('display') == 'none') {
-                $('.show-btn').css('display', 'inline');
-            } else {
-                $('.show-btn').css('display', 'none')
-            }
-            $(window).resize(function () {
-                if ($('.hidden-sm').css('display') == 'none') {
-                    $('.show-btn').css('display', 'inline')
-                } else {
-                    $('#p2').removeClass('show');
-                    $('.show-btn').css('display', 'none')
-                }
-            })
-
-            $('.select-address').click(function () {
-                $('.change-address').toggle();
-            })
-
+            //获取url中传入的地址
             var urlParams = new URLSearchParams(location.search);
-            var data = urlParams.get('address');
 
+            //处理数据
+            var data = urlParams.get('address');
             var title_address = data.split('-');
             $('.address-icon+span').text(title_address[1] + ' ' + title_address[2])
-            xhr_get_data('getlist', data, 0)
 
-            $('.all').click(function(){
+            //在页面加载的时候就将全部商家渲染到页面中
+            // xhr_get_data('getlist', data, 0)
+
+            //在点击"全部的时候显示所有商家数据"
+            $('.all').click(function () {
                 $('.detail-list ul').html('');
                 xhr_get_data('getlist', data, 0)
             })
 
+            //分类显示商家数据
             var shop_type = $('.type-detail div ul li a:not(.all)');
 
-            var title_address = data.split('-');
             for (const shop of shop_type) {
                 shop.onclick = function () {
-                    console.log(data)
                     var text_content = this.textContent;
                     $('.detail-list ul').html('');
-                    var addre = data.replace(/\s*/ig, '');
-                    xhr_get_data('getlist_type', addre, text_content, 0)
+                    xhr_get_data('getlist', data, text_content, 0)
                 }
             }
 
@@ -109,13 +68,13 @@
                     queryStr = `/${arr[0]}?address=${arr[1]}&type=${arr[2]}&n=${arr[3]}`
                 }
                 var xhr = new XMLHttpRequest();
-                    xhr.onreadystatechange = function () {
-                        if (xhr.readyState == 4 && xhr.status == 200) {
-                            var result = xhr.responseText;
-                            var arr = JSON.parse(result);
-                            for (const obj of arr) {
+                xhr.onreadystatechange = function () {
+                    if (xhr.readyState == 4 && xhr.status == 200) {
+                        var result = xhr.responseText;
+                        var arr = JSON.parse(result);
+                        for (const obj of arr) {
 
-                                $('.detail-list ul').html(`${$('.detail-list ul').html()}<li>
+                            $('.detail-list ul').html(`${$('.detail-list ul').html()}<li>
                                     <img src="${obj.shop_img}" alt="">
                                     <p class="business-title">
                                         ${obj.shop_name}
@@ -140,15 +99,73 @@
                                     </p>
                                     </li>`);
 
-                            }
+                        }
 
+                    }
+                }
+                var addre = data.replace(/\s*/ig, '');
+                xhr.open('get', `/user${queryStr}`, true);
+                xhr.send(null);
+
+            }
+
+            //控制"商家分类"选项的样式
+            $('.type-detail div ul li a').click(function () {
+                $('.type-detail div ul li a').each(function () {
+                    $(this).removeClass('active');
+                })
+                $(this).addClass('active');
+            })
+
+
+            //根据类别名为"加载更多"添加事件
+
+            function loadMore() {
+                var typeIndex = {
+                    "全部": 0,
+                    "美食": 0,
+                    "正餐优选": 0,
+                    "精选小吃": 0,
+                    "下午茶": 0
+                };
+                return function (str) {
+                    typeIndex[str] ++;
+                    return typeIndex;
+                }
+            }
+            var loading = loadMore();
+            $('.load').click(function () {
+                var typeName = $('.active').text();
+                var obj = loading(typeName);
+                if (typeName == '全部') {
+                    xhr_get_data('getlist', data, obj[typeName])                    
+                } else {
+                    xhr_get_data('getlist', data, typeName, obj[typeName])
+                }        
+            })
+
+            //根据商家名来搜索
+            $('#search_business+a').click(function(){
+                var business = search_business.value;
+                if(business){
+                    var xhr = new XMLHttpRequest();
+                    xhr.onreadystatechange = function () {
+                        if (xhr.readyState == 4 && xhr.status == 200) {
+                            var result = xhr.responseText;
+                            var arr = JSON.parse(result);
+                            for (const obj of arr) {
+                                console.log(obj);
+                            }
+                            $('#busi_list').addClass('search-mode');
                         }
                     }
                     var addre = data.replace(/\s*/ig, '');
-                    xhr.open('get', `/user${queryStr}`, true);
+                    xhr.open('get', `/user/searchByBusiness?address=${data}&business=${business}`, true);
                     xhr.send(null);
-                
-            }
+                } else {
+                    console.log('123');
+                }
+            })
         })
     </script>
 
@@ -156,8 +173,8 @@
 
 <body>
     <div class="container-fluid">
-    <iframe src="./header.html" frameborder="0" scrolling="no" class="frame-div" onload="this.height=100"></iframe>
-        
+        <iframe src="./header.html" frameborder="0" scrolling="no" class="frame-div" onload="this.height=100"></iframe>
+
         <div class="container">
             <div class="section">
                 <div class="business-type">
@@ -170,14 +187,8 @@
                             <div class="col-lg-2 col-md-5 d-flex align-items-center p-0">
 
                                 <a href="user_index.html" class="ml-3 mr-4 select-address">
-                                    切换地址
+                                    [切换地址]
                                 </a>
-                            </div>
-                            <div class="position-absolute change-address">
-                                <ul class="list-unstyled list-group m-0 p-0">
-                                    <li class="list-group-item">武昌区</li>
-                                    <li class="list-group-item">切换至新地址</li>
-                                </ul>
                             </div>
                         </div>
                         <div class="col-lg-3 col-md-6 row detail-btn m-0">
@@ -210,27 +221,44 @@
                                     <a href="javascript:;">精选小吃</a>
                                 </li>
                                 <li>
-                                    <a href="javascript:;">鲜果购</a>
-                                </li>
-                                <li>
                                     <a href="javascript:;">下午茶</a>
                                 </li>
                             </ul>
                         </div>
                         <div class="col-lg-4 col-md-4 col-sm-12 d-flex">
-                            <input type="text" placeholder="搜索商家，美食" class="align-self-center pl-3">
+                            <input type="text" placeholder="搜索商家，美食" class="align-self-center pl-3" id="search_business">
                             <a href="#" class="d-flex align-items-center justify-content-center">
                                 <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
                             </a>
                         </div>
                     </div>
                 </div>
-                <div class="detail-list m-0 mt-3">
+                <div class="detail-list m-0 mt-3 search-mode" id="busi_list">
                     <ul>
+                        <li>
+                            <h4>醉得意（楚康路）</h4>
+                            <div class="star">
+                                <i class="iconfont">&#xec43;</i>
+                                <i class="iconfont">&#xec43;</i>
+                                <i class="iconfont">&#xec43;</i>
+                                <i class="iconfont">&#xec43;</i>
+                                <i class="iconfont">&#xec43;</i>
+                                <span>
+                                    平均30分钟送达
+                                </span>
+                            </div>
+                            <ul>
+                                <li>1</li>
+                                <li>2</li>
+                                <li>3</li>
+                            </ul>
+                        </li>
+                        <li>2</li>
+                        <li>3</li>
                     </ul>
                 </div>
                 <div class="load">
-
+                    <p>点击加载更多商家...</p>
                 </div>
             </div>
         </div>

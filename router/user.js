@@ -143,9 +143,17 @@ router.get('/getlist', (req, res) => {
     var n =parseInt(req.query.n);
     n = n*20;
     var [province, city, county] = address;
-    // res.send(req.query)
-    var sql = 'SELECT * FROM shop WHERE province=? and city=? and county=? LIMIT ?,20';
-    pool.query(sql, [province, city, county, n], (err, result) => {
+    var shop_type = req.query.type;
+    var sql = '';
+    var queryPara = [province, city, county, n];
+    if (req.query.type) {
+        queryPara = [province, city, county, shop_type, n]
+        sql = 'SELECT * FROM shop WHERE province=? and city=? and county=? and shop_type=? LIMIT ?,20';
+    } else {
+        sql = 'SELECT * FROM shop WHERE province=? and city=? and county=? LIMIT ?,20';
+    }
+
+    pool.query(sql, queryPara, (err, result) => {
         if (err) {
             throw err;
         }
@@ -157,13 +165,13 @@ router.get('/getlist', (req, res) => {
     })
 });
 
-router.get('/getlist_type', (req, res) => {
+router.get('/searchByBusiness', (req, res) => {
     var address=req.query.address.split('-');
-    var shop_type = req.query.type;
-    var n =parseInt(req.query.n);
     var [province, city, county] = address;
-    var sql = 'SELECT * FROM shop WHERE province=? and city=? and county=? and shop_type=? LIMIT ?,20';
-    pool.query(sql, [province, city, county, shop_type, n], (err, result) => {
+    var sql = 'SELECT * FROM shop WHERE province=? and city=? and county=? and shop_name like ?';
+    var queryPara = [province, city, county, req.query.business];
+    
+    pool.query(sql, queryPara, (err, result) => {
         if (err) {
             throw err;
         }
@@ -174,7 +182,6 @@ router.get('/getlist_type', (req, res) => {
         }
     })
 })
-
 
 router.post('/validate', (req, res) => {
     var obj = req.body;
