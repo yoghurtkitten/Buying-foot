@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="js/jquery-3.3.1.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/popper.min.js"></script>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/bootstrap3.7.css">
+    <link rel="stylesheet" href="css/content/header.css">
+    <link rel="stylesheet" href="css/icon/iconfont.css">
+    <link rel="stylesheet" href="css/user_choose.css">
+    <script>
+        $(function () {
+            $.ajax({
+                type: "GET",
+                url: "/user/session",
+                dataType: "json",
+                success: function (data) {
+                    if (data.code == 200) {
+                        $('.login_user').html(`<i class="iconfont">&#xe6a2;</i>${data.msg.name}`)
+                        $('.login_user').click(function () {
+                            return false;
+                        })
+                    }
+                }
+            });
+            var urlParams = new URLSearchParams(location.search);
+            var address = urlParams.get('address');
+            var business = urlParams.get('business');
+
+            var xhr = new XMLHttpRequest();
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState == 4 && xhr.status == 200) {
+                    var result = xhr.responseText;
+                    var arr = JSON.parse(result);
+                    $('.detail-list ul').html('');
+                    for (const obj of arr) {
+                        $('.detail-list ul').html(`${$('.detail-list ul').html()}<li>
+                        <h4>${obj.shop_name}</h4>
+                        <div class="star">
+                            <i class="iconfont">&#xec43;</i>
+                            <i class="iconfont">&#xec43;</i>
+                            <i class="iconfont">&#xec43;</i>
+                            <i class="iconfont">&#xec43;</i>
+                            <i class="iconfont">&#xec43;</i>
+                            <span>
+                                平均${obj.deliver_cost}分钟送达
+                            </span>
+                        </div>
+                        <ul>
+                            <li>
+                                <div>
+                                    <span>醉得意排骨</span>
+                                </div>
+                                <div class="right-choose">
+                                    <span>￥10</span>
+                                    <span class="buying">去购买</span>
+                                    <div>
+                                        <p>
+                                            <i class="iconfont">&#xec43;</i>
+                                            <i class="iconfont">&#xec43;</i>
+                                            <i class="iconfont">&#xec43;</i>
+                                            <i class="iconfont">&#xec43;</i>
+                                            <i class="iconfont">&#xec43;</i>
+                                        </p>
+                                        <p>
+                                            月售68份
+                                        </p>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </li>`);
+                    }
+
+                }
+            }
+            var addre = address.replace(/\s*/ig, '');
+            xhr.open('get', `/user/searchByBusiness?address=${addre}&business=${business}`, true);
+            xhr.send(null);
+
+        })
+    </script>
+
+</head>
+
+<body>
+    <iframe src="./header.html" frameborder="0" scrolling="no" class="frame-div" onload="this.height=100"></iframe>
+    <div class="container">
+        <div class="business-type">
+            <div class="row m-0 mt-5">
+                <div class="col-lg-9 col-md-6 row m-0 position-relative">
+                    <div class="col-lg-2 col-md-5 d-flex align-items-center pr-0">
+                        <i class="address-icon"></i>
+                        <span class="ml-2">武汉 武昌区</span>
+                    </div>
+                    <div class="col-lg-2 col-md-5 d-flex align-items-center p-0">
+
+                        <a href="user_index.html" class="ml-3 mr-4 select-address">
+                            [切换地址]
+                        </a>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 row detail-btn m-0">
+                    <div class="col-md-6 col-sm-3 col-xs-6 offset-6 p-0 m-0">
+                        <a href="login.html" class="btn mr-1 login_user">注册/登录</a>
+                    </div>
+                    <div class="col-md-6 col-sm-3 col-xs-6 p-0 ">
+                        <a href="#" class="new-list-btn fr btn">
+                            我的订单
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="detail-list m-0 mt-3 search-mode" id="busi_list">
+            <ul>
+                
+
+            </ul>
+        </div>
+    </div>
+    <iframe src="./footer.html" frameborder="0" scrolling="no" class="frame-div" onload="this.height=100"></iframe>
+    <script src="js/frame.js"></script>
+</body>
+
+</html>
+
