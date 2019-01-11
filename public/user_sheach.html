@@ -32,6 +32,8 @@
             var urlParams = new URLSearchParams(location.search);
             var address = urlParams.get('address');
             var business = urlParams.get('business');
+            var title_address = address.split('-');
+            $('.address-icon+span').text(title_address[1] + ' ' + title_address[2])
 
             var xhr = new XMLHttpRequest();
             xhr.onreadystatechange = function () {
@@ -97,7 +99,7 @@
                 <div class="col-lg-9 col-md-6 row m-0 position-relative">
                     <div class="col-lg-2 col-md-5 d-flex align-items-center pr-0">
                         <i class="address-icon"></i>
-                        <span class="ml-2">武汉 武昌区</span>
+                        <span class="ml-2"></span>
                     </div>
                     <div class="col-lg-2 col-md-5 d-flex align-items-center p-0">
 

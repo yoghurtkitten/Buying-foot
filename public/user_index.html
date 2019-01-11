@@ -31,37 +31,6 @@
                              }
                           }
              });
-
-            $('#search').click(function () {
-                $('.header-right').fadeOut();
-                setTimeout(() => {
-                    $('.test').fadeIn();
-                }, 500)
-
-            });
-            $('.close').click(function () {
-                $('.test').fadeOut();
-                setTimeout(() => {
-                    $('.header-right').fadeIn();
-                }, 500)
-            })
-
-            var fixedDom = $('.header')[0];
-
-            if ($('.hidden-sm').css('display') == 'none') {
-                $('.show-btn').css('display', 'inline');
-            } else {
-                $('.show-btn').css('display', 'none')
-            }
-            $(window).resize(function () {
-                if ($('.hidden-sm').css('display') == 'none') {
-                    $('.show-btn').css('display', 'inline')
-                } else {
-                    $('#p2').removeClass('show');
-                    $('.show-btn').css('display', 'none')
-                }
-            })
-
             $('#txt_city').jcity({
                 urlOrData: 'js/citydata.json',
                 animate: { showClass: 'animated flipInX', hideClass: 'animated flipOutX' },
@@ -81,79 +50,33 @@
 
 <body>
     <div class="container-fluid">
-        <!-- <iframe src="./header.html" frameborder="0" scrolling="no" class="frame-div" onload="this.height=100"></iframe> -->
-        <header class="header">
-            <div class="nav container navbar-light">
-                <div class="col-md-2 col-sm-3 col-xs-6">
-                    <div class="logo"><a href="index.html"><img src="img/logo.png" alt=""></a></div>
-                </div>
-
-                <div class="col-md-10 col-sm-9 col-xs-6">
-                    <div class="mgea-full-width">
-                        <div class="header-right">
-                            <div class="card">
-                                <div class="card-header">
-                                    <button type="button" class="btn show-btn navbar-toggler" data-toggle="collapse"
-                                        data-target="#p2">
-                                        <span class="navbar-toggler-icon"></span>
-                                    </button>
-                                </div>
-
-                                <div id="p2" class="collapse" data-parent="#parent">
-                                    <div class="card-body">
-                                        <ul class="list-unstyled">
-                                            <li>
-                                                <a href="#"> 首页</a></li>
-                                            <li>
-                                                <a href="#"> 加盟</a></li>
-                                            <li>
-                                                <a href="#"> 点外卖</a></li>
-                                            <li>
-                                                <a href="#"> 关于我们</a></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="header-menu hidden-sm hidden-xs list-info">
-                                <ul>
-                                    <li><a href="#">首页</a></li>
-                                    <li><a href="#">加盟</a></li>
-                                    <li><a href="#">点外卖</a></li>
-                                    <li><a href="#">公告</a></li>
-                                    <li><a href="#">关于我们</a></li>
-                                    <li id="search"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="test">
-                            <div class="input-group inner-test">
-                                <input type="search" class="form-control search-cotain" placeholder="Search for...">
-                                <span class="input-group-btn">
-                                    <button class="btn btn-default search-icon" type="button"><span class="glyphicon glyphicon-search"
-                                            aria-hidden="true"></span></button>
-                                    <button class="btn btn-default search-icon" type="button"><span class="glyphicon glyphicon-remove close"
-                                            aria-hidden="true"></span></button>
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </header>
+        <iframe src="./header.html" frameborder="0" scrolling="no" class="frame-div" onload="this.height=100"></iframe>
         <div class="main_img">
             <div class="address ">
                 <div class="inner-address p-0">
                     <div class="row login_list">
                         <div class="col-lg-5 col-md-8 col-sm-10 d-flex p-0">
                             <div class="row detail-btn">
-                                <div class="col-md-6 p-0 d-flex">
+                                <div class="col-md-6 p-0 d-flex user">
                                     <a href="login.html" class="btn mr-1 login_user">注册/登录</a>
                                 </div>
                                 <div class="col-md-6 p-0 pl-4">
                                     <a href="#" class="new-list-btn fr btn">
                                         我的订单
                                     </a>
+                                </div>
+                                <div class="user-info">
+                                    <ul>
+                                        <li>
+                                            个人中心
+                                        </li>
+                                        <li>
+                                            我的收藏
+                                        </li>
+                                        <li>
+                                            退出登录
+                                        </li>
+                                    </ul>
                                 </div>
                             </div>
                         </div>
