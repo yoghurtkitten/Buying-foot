@@ -15,37 +15,6 @@
     <link rel="stylesheet" href="css/icon/iconfont.css">
     <link href="css/jquery.city.css" rel="stylesheet" />
     <link href="css/animate.min.css" rel="stylesheet" />
-
-    <script>
-        $(function () {
-            $.ajax({
-                 type: "GET",
-                 url: "/user/session",
-                 dataType: "json",
-                 success: function(data){
-                             if(data.code == 200){
-                                $('.login_user').html(`${data.msg.name}<i class="iconfont">&#xeb6d;</i>`)
-                                $('.login_user').click(function(){
-                                    return false;
-                                })
-                             }
-                          }
-             });
-            $('#txt_city').jcity({
-                urlOrData: 'js/citydata.json',
-                animate: { showClass: 'animated flipInX', hideClass: 'animated flipOutX' },
-                onChoice: function (data) {
-                    console.log(data);
-                }
-            });
-            $('.search-btn').click(function(){
-                var data = txt_city.value.replace(/\s*/ig, '');
-                location.href=`http://127.0.0.1:3000/user_choose.html?address=${data}`;
-                return false;
-            })
-            
-        })
-    </script>
 </head>
 
 <body>
@@ -68,13 +37,16 @@
                                 <div class="user-info">
                                     <ul>
                                         <li>
+                                            <i class="iconfont">&#xe6a2;</i>
                                             个人中心
                                         </li>
                                         <li>
+                                            <i class="iconfont">&#xec43;</i>
                                             我的收藏
                                         </li>
                                         <li>
-                                            退出登录
+                                            <i class="iconfont">&#xe78c;</i>
+                                            <a href="login.html" class="exit_login">退出登录</a>
                                         </li>
                                     </ul>
                                 </div>
@@ -82,10 +54,11 @@
                         </div>
                     </div>
                     <div class="input-group mt-2 search-form row">
-                        <input type="text" id="txt_city" class="form-control border-0 col-lg-8 col-md-7 col-sm-8" placeholder="输入地址搜索周边美食">
+                        <input type="text" id="txt_city" class="form-control border-0 col-lg-8 col-md-7 col-sm-8"
+                            placeholder="输入地址搜索周边美食">
                         <a href="#" class="search-btn col-lg-2 col-md-3 col-sm-2">搜索</a>
                     </div>
-                   
+
                 </div>
             </div>
         </div>
@@ -97,6 +70,68 @@
     <script src="js/frame.js"></script>
     <script src="js/jquery-1.10.2.js"></script>
     <script src="js/jquery.city.js"></script>
+    <script>
+        $(function () {
+            $.ajax({
+                type: "GET",
+                url: "/user/session",
+                dataType: "json",
+                success: function (data) {
+                    if (data.code == 200) {
+                        $('.login_user').html(`${data.msg.name}<i class="iconfont">&#xeb6d;</i>`)
+                        $('.login_user').click(function () {
+                            return false;
+                        })
+                    }
+                }
+            });
+            $('#txt_city').jcity({
+                urlOrData: 'js/citydata.json',
+                animate: { showClass: 'animated flipInX', hideClass: 'animated flipOutX' },
+                onChoice: function (data) {
+                    console.log(data);
+                }
+            });
+            $('.search-btn').click(function () {
+                var data = txt_city.value.replace(/\s*/ig, '');
+                location.href = `http://127.0.0.1:3000/user_choose.html?address=${data}`;
+                return false;
+            })
+
+            $('.btn').mouseenter(function () {
+                if ($('.login_user').text() == '注册/登录') {
+                    console.log('当前未注册')
+                } else {
+                    $('.user-info').show();
+                }
+            })
+            $('.btn').mouseleave(function () {
+                $('.user-info').hide();
+            })
+            $('.user-info').mouseenter(function () {
+                $('.user-info').show();
+            })
+            $('.user-info').mouseleave(function () {
+                $('.user-info').hide();
+            })
+
+            /* $('.user-info').click(function () {
+                $.ajax({
+                    type:'get',
+                    url:'/user/exit_login',
+                    success:function(result){
+                        if(result.success){
+                            console.log('success');
+                        } else{
+                            console.log('falult');
+                        }
+                    }
+                })
+                return false;
+            }) */
+        })
+
+    </script>
 
 </body>
 

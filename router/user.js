@@ -257,6 +257,10 @@ router.post('/login', (req, res) => {
                     throw err;
                 }
                 if (result.affectedRows) {
+                    var user = {
+                        name: obj.phone
+                    }
+                    req.session.user = user;
                     res.send({ code: 200, msg: 'Insert Success!' })
                 } else {
                     res.send({ code: 402, msg: 'Insert Fault!' })
@@ -274,4 +278,10 @@ router.get('/session', (req, res) => {
         res.send({code: 400, msg: 'get session Fault'});
     }
 })
+
+/* router.get('/exit_login', (req, res) => {
+    req.session.destroy();
+    res.send('123')
+}) */
+
 module.exports = router;
