@@ -279,9 +279,4 @@ router.get('/session', (req, res) => {
     }
 })
 
-/* router.get('/exit_login', (req, res) => {
-    req.session.destroy();
-    res.send('123')
-}) */
-
 module.exports = router;

@@ -7,7 +7,7 @@ var session = require('express-session');
 
 const server = express();
 
-server.listen(3000);
+server.listen(5050);
 
 server.use(cookieParser());
 server.use(session({
