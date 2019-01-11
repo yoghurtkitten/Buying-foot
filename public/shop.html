@@ -14,9 +14,18 @@
     <link rel="stylesheet" href="css/content/header.css">
     <link rel="stylesheet" href="css/icon/iconfont.css">
     <link rel="stylesheet" href="css/shop.css">
+    <style>
+        .fixed-div{
+            position: fixed;
+            top: 0;
+            margin-top: 0px!important;
+            width: 56.2%!important;
+            box-shadow: 0px 0px 5px #ccc;
+        }
+    </style>
 </head>
 
-<body>
+<body oncontextmenu="return false;" onselectstart="return false">
     <iframe src="./header.html" frameborder="0" scrolling="no" class="frame-div" onload="this.height=100"></iframe>
     <div class="container">
         <div class="business-info row m-0 mt-3">
@@ -656,25 +665,38 @@
         });
 
         $('.taggle-btn').click(function () {
-            if ($('.right-b').css('display')=='none') {
-                $('.right-b').css('border-width','1px')
-                $('.right-b').css('border-style','solid')
-                $('.right-b').css('border-color','#ccc')
-                $('.right-b').css('border-top-color','#fff')
-                $('.right-b').css('display','inherit')
+            if ($('.right-b').css('display') == 'none') {
+                $('.right-b').css('border-width', '1px')
+                $('.right-b').css('border-style', 'solid')
+                $('.right-b').css('border-color', '#ccc')
+                $('.right-b').css('border-top-color', '#fff')
+                $('.right-b').css('display', 'inherit')
             } else {
-                $('.right-b').css('display','none')
-                $('.right-b').css('border','none')
+                $('.right-b').css('display', 'none')
+                $('.right-b').css('border', 'none')
             }
         })
         $(window).resize(function () {
             if ($('.taggle-btn').css('display') == 'none') {
-                $('.right-b').css('display','inherit')
-                $('.right-b').css('border','none')
+                $('.right-b').css('display', 'inherit')
+                $('.right-b').css('border', 'none')
             } else {
                 $('.right-b').css('display', 'none')
             }
         })
+        window.onscroll = function () {
+            var scrollTop = document.body.scrollTop || document.documentElement.scrollTop;
+            console.log(scrollTop)
+            if(scrollTop < 500){
+                var div = document.getElementsByClassName('category')[0]
+                div.classList.remove('fixed-div');
+            };
+            if(scrollTop >= 500){
+                var div = document.getElementsByClassName('category')[0]
+                div.classList.add('fixed-div');
+            };
+
+        }
 
     </script>
 </body>
