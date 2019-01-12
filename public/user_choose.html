@@ -149,8 +149,9 @@
 
             $('.detail-list ul').on('click', 'li', function () {
                 var sid = this.querySelector("input").value;
-
-                location.href=`http://127.0.0.1:5050/shop.html?sid=${sid}`;
+                var reg = /\d{11}/ig;
+                var phone = $(".login_user").text().match(reg)[0]
+                location.href=`http://127.0.0.1:5050/shop.html?sid=${sid}&user=${phone}`;
             })
         })
     </script>

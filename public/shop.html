@@ -15,11 +15,11 @@
     <link rel="stylesheet" href="css/icon/iconfont.css">
     <link rel="stylesheet" href="css/shop.css">
     <style>
-        .fixed-div{
+        .fixed-div {
             position: fixed;
             top: 0;
-            margin-top: 0px!important;
-            width: 56.2%!important;
+            margin-top: 0px !important;
+            width: 56.2% !important;
             box-shadow: 0px 0px 5px #ccc;
         }
     </style>
@@ -131,46 +131,11 @@
                 </p>
                 <i class="iconfont">&#xe640;</i>
             </div>
-            <div class="shop-item">
-                <ul>
-                    <li>
-                        <span class="goods-name">
-                            烤肉筋
-                        </span>
-                        <p>
-                            <button>+</button>
-                            <input type="text" value="1">
-                            <button>-</button>
-                        </p>
-                        <span class="unprice">
-                            ￥5
-                        </span>
-
-                    </li>
-                </ul>
-            </div>
-            <div class="shop-item">
-                <ul>
-                    <li>
-                        <span class="goods-name">
-                            烤肉筋
-                        </span>
-                        <p>
-                            <button>+</button>
-                            <input type="text" value="1">
-                            <button>-</button>
-                        </p>
-                        <span class="unprice">
-                            ￥5
-                        </span>
-
-                    </li>
-                </ul>
-            </div>
+            <div></div>
             <div>
                 <a href="#">
                     <i class="iconfont">&#xe63f;</i>
-                    <i class="number">1</i>
+                    <i class="number">0</i>
                     <span>￥</span>
                     <span class="total">146.3</span>
                     <span>| 配送费￥3.1</span>
@@ -190,7 +155,8 @@
     <script>
         $(function () {
             var urlParams = new URLSearchParams(location.search);
-            var sid = urlParams.get("sid")
+            var sid = urlParams.get("sid");
+            var user = urlParams.get('user');
 
             function load_food() {
                 return new Promise(function (open) {
@@ -259,14 +225,16 @@
                                                 <i class="iconfont">&#xec43;</i>
                                                 <span>
                                                     (30)月售200+份
-                                                </span>
-                                            </div>
-                                            <p>
-                                                <span class="price">￥2</span>
-                                                <a href="javascript:;">加入购物车</a>
-                                            </p>
+                                                    </span>
+                                                    </div>
+                                                    <p>
+                                                        <span class="price">￥2</span>
+                                                        <a href="javascript:;">加入购物车</a>
+                                                    </p>
                                         </div>
-                                    </li>`
+                                        <input type="hidden" class="food_id" value="${obj.food_id}">
+                                    </li>
+                                    `
                                 }
                             }
                         }
@@ -275,6 +243,52 @@
             }
 
             load_food().then(load_type);
+
+            $('.food_item').on('click', 'div', function (e) {
+                e.stopPropagation();
+                var a = e.target.nodeName;
+                if (a == 'A') {
+                    $('.number').html(parseInt($('.number').text()) + 1);
+                    var g_name = e.target.parentElement.parentElement.firstElementChild.innerHTML;
+                    var un_price = e.target.previousElementSibling.innerHTML;
+                    $('.shop-car>div:nth-child(2)').html(`
+                ${ $('.shop-car>div:nth-child(2)').html()}
+                <div class="shop-item">
+                    <ul>
+                        <li>
+                            <span class="goods-name">${g_name}</span>
+                            <p>
+                                <button>-</button>
+                                <input type="text" value="1">
+                                <button>+</button>
+                            </p>
+                            <span class="unprice">
+                            ${un_price}
+                            </span>
+
+                        </li>
+                    </ul>
+                </div>`);
+
+                    ajax({
+                        url: "/user/setShopCar",
+                        type: "post",
+                        data: `foods_id=${$('.food_id').val()}&un_price=${un_price}&user=${user}`,
+                        dataType: "json"
+                    }).then(function (data) {
+                        console.log(data);
+                    })
+                }
+            })
+
+           /*  $('.shop-car>div:nth-child(2)').click(function (e) {
+                if (e.target.nodeName == 'BUTTON') {
+                    if (condition) {
+                        
+                    }
+                }
+            }) */
+
         })
 
         var title = $('.left-inner');
@@ -318,7 +332,6 @@
         })
         window.onscroll = function () {
             var scrollTop = document.body.scrollTop || document.documentElement.scrollTop;
-            // console.log(scrollTop)
             if (scrollTop < 500) {
                 var div = document.getElementsByClassName('category')[0]
                 div.classList.remove('fixed-div');

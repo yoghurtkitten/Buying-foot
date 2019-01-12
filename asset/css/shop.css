@@ -450,6 +450,9 @@ h4{
     line-height: 80px;
     cursor: pointer;
 }
+.shop-item ul{
+    width: 100%;
+}
 .shop-item ul li {
     display: flex;
     border-bottom: 1px solid #eee;
@@ -482,5 +485,6 @@ h4{
     text-align: center;
     color: #666;
 }
+
 
 

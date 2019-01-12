@@ -308,4 +308,8 @@ router.get('/getFoodsCatagory', (req, res) => {
     })
 })
 
+router.post('/setShopCar', (req, res) => {
+    res.send(req.body)
+})
+
 module.exports = router;
