@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: 2019-01-12 05:02:49
+-- Generation Time: 2019-01-12 11:08:36
 -- 服务器版本： 10.1.28-MariaDB
 -- PHP Version: 5.6.32
 
@@ -62,49 +62,50 @@ INSERT INTO `business` (`id`, `name`, `password`, `phone`, `shopman_name`) VALUE
 --
 
 CREATE TABLE `food` (
-  `id` int(11) NOT NULL,
+  `food_id` int(11) NOT NULL,
   `shop_id` int(11) DEFAULT NULL,
   `name` varchar(16) DEFAULT NULL,
   `price` decimal(6,0) DEFAULT NULL,
   `ingredients` varchar(64) DEFAULT NULL,
   `foot_type` varchar(16) NOT NULL,
   `food_start` tinyint(4) NOT NULL,
-  `sell_number` smallint(6) NOT NULL
+  `sell_number` smallint(6) NOT NULL,
+  `food_img` varchar(128) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- 转存表中的数据 `food`
 --
 
-INSERT INTO `food` (`id`, `shop_id`, `name`, `price`, `ingredients`, `foot_type`, `food_start`, `sell_number`) VALUES
-(3, 1, '土豆炖牛腩', '59', NULL, '热销', 5, 25),
-(4, 1, '铁板牛肉', '49', NULL, '热销', 4, 25),
-(5, 1, '土豆炖牛腩', '59', NULL, '热销', 5, 18),
-(6, 1, '铁板牛肉', '49', NULL, '新品', 4, 30),
-(7, 1, '土豆炖牛腩', '59', NULL, '新品', 5, 28),
-(8, 1, '土豆炖牛腩', '59', NULL, '新品', 5, 35),
-(9, 1, '铁板牛肉', '49', NULL, '靓粥', 4, 24),
-(10, 1, '土豆炖牛腩', '59', NULL, '靓粥', 5, 19),
-(11, 1, '铁板牛肉', '49', NULL, '靓粥', 4, 28),
-(12, 1, '土豆炖牛腩', '59', NULL, '饮品', 5, 32),
-(13, 1, '铁板牛肉', '49', NULL, '饮品', 4, 37),
-(14, 1, '土豆炖牛腩', '59', NULL, '饮品', 5, 35),
-(15, 1, '土豆炖牛腩', '59', NULL, '小食', 5, 28),
-(16, 1, '铁板牛肉', '49', NULL, '小食', 4, 27),
-(17, 1, '土豆炖牛腩', '59', NULL, '小食', 5, 34),
-(18, 1, '铁板牛肉', '49', NULL, '套餐', 4, 26),
-(19, 1, '土豆炖牛腩', '59', NULL, '套餐', 5, 18),
-(20, 1, '铁板牛肉', '49', NULL, '套餐', 4, 37),
-(21, 1, '土豆炖牛腩', '59', NULL, '冷藏', 5, 28),
-(22, 1, '土豆炖牛腩', '59', '', '冷藏', 5, 25),
-(23, 1, '铁板牛肉', '49', NULL, '暖汤', 4, 34),
-(24, 1, '土豆炖牛腩', '59', NULL, '暖汤', 5, 28),
-(25, 1, '铁板牛肉', '49', NULL, '暖汤', 4, 35),
-(26, 1, '土豆炖牛腩', '59', NULL, '优惠', 5, 27),
-(27, 1, '铁板牛肉', '49', NULL, '小份热菜', 4, 29),
-(28, 1, '土豆炖牛腩', '59', NULL, '热销', 5, 0),
-(29, 1, '土豆炖牛腩', '59', NULL, '热销', 5, 0),
-(30, 1, '铁板牛肉', '49', NULL, '新品', 4, 0);
+INSERT INTO `food` (`food_id`, `shop_id`, `name`, `price`, `ingredients`, `foot_type`, `food_start`, `sell_number`, `food_img`) VALUES
+(3, 1, '土豆炖牛腩', '59', NULL, '热销', 5, 25, 'img/goods/agg.webp'),
+(4, 1, '铁板牛肉', '49', NULL, '热销', 4, 25, 'img/goods/agg.webp'),
+(5, 1, '土豆炖牛腩', '59', NULL, '热销', 5, 18, 'img/goods/agg.webp'),
+(6, 1, '铁板牛肉', '49', NULL, '新品', 4, 30, 'img/goods/agg.webp'),
+(7, 1, '土豆炖牛腩', '59', NULL, '新品', 5, 28, 'img/goods/agg.webp'),
+(8, 1, '土豆炖牛腩', '59', NULL, '新品', 5, 35, 'img/goods/agg.webp'),
+(9, 1, '铁板牛肉', '49', NULL, '靓粥', 4, 24, 'img/goods/agg.webp'),
+(10, 1, '土豆炖牛腩', '59', NULL, '靓粥', 5, 19, 'img/goods/agg.webp'),
+(11, 1, '铁板牛肉', '49', NULL, '靓粥', 4, 28, 'img/goods/agg.webp'),
+(12, 1, '土豆炖牛腩', '59', NULL, '饮品', 5, 32, 'img/goods/agg.webp'),
+(13, 1, '铁板牛肉', '49', NULL, '饮品', 4, 37, 'img/goods/agg.webp'),
+(14, 1, '土豆炖牛腩', '59', NULL, '饮品', 5, 35, 'img/goods/agg.webp'),
+(15, 1, '土豆炖牛腩', '59', NULL, '小食', 5, 28, 'img/goods/agg.webp'),
+(16, 1, '铁板牛肉', '49', NULL, '小食', 4, 27, 'img/goods/agg.webp'),
+(17, 1, '土豆炖牛腩', '59', NULL, '小食', 5, 34, 'img/goods/agg.webp'),
+(18, 1, '铁板牛肉', '49', NULL, '套餐', 4, 26, 'img/goods/agg.webp'),
+(19, 1, '土豆炖牛腩', '59', NULL, '套餐', 5, 18, 'img/goods/agg.webp'),
+(20, 1, '铁板牛肉', '49', NULL, '套餐', 4, 37, 'img/goods/agg.webp'),
+(21, 1, '土豆炖牛腩', '59', NULL, '冷藏', 5, 28, 'img/goods/agg.webp'),
+(22, 1, '土豆炖牛腩', '59', '', '冷藏', 5, 25, 'img/goods/agg.webp'),
+(23, 1, '铁板牛肉', '49', NULL, '暖汤', 4, 34, 'img/goods/agg.webp'),
+(24, 1, '土豆炖牛腩', '59', NULL, '暖汤', 5, 28, 'img/goods/agg.webp'),
+(25, 1, '铁板牛肉', '49', NULL, '暖汤', 4, 35, 'img/goods/agg.webp'),
+(26, 1, '土豆炖牛腩', '59', NULL, '优惠', 5, 27, 'img/goods/agg.webp'),
+(27, 1, '铁板牛肉', '49', NULL, '小份热菜', 4, 29, 'img/goods/agg.webp'),
+(28, 1, '土豆炖牛腩', '59', NULL, '热销', 5, 0, 'img/goods/agg.webp'),
+(29, 1, '土豆炖牛腩', '59', NULL, '热销', 5, 0, 'img/goods/agg.webp'),
+(30, 1, '铁板牛肉', '49', NULL, '新品', 4, 0, 'img/goods/agg.webp');
 
 -- --------------------------------------------------------
 
@@ -294,7 +295,7 @@ ALTER TABLE `business`
 -- Indexes for table `food`
 --
 ALTER TABLE `food`
-  ADD PRIMARY KEY (`id`),
+  ADD PRIMARY KEY (`food_id`),
   ADD KEY `busine_id` (`shop_id`);
 
 --
@@ -360,7 +361,7 @@ ALTER TABLE `business`
 -- 使用表AUTO_INCREMENT `food`
 --
 ALTER TABLE `food`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
+  MODIFY `food_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
 
 --
 -- 使用表AUTO_INCREMENT `food_catagory`
@@ -418,7 +419,7 @@ ALTER TABLE `food_catagory`
 -- 限制表 `order_`
 --
 ALTER TABLE `order_`
-  ADD CONSTRAINT `order__ibfk_1` FOREIGN KEY (`fid`) REFERENCES `food` (`id`),
+  ADD CONSTRAINT `order__ibfk_1` FOREIGN KEY (`fid`) REFERENCES `food` (`food_id`),
   ADD CONSTRAINT `order__ibfk_2` FOREIGN KEY (`uid`) REFERENCES `user` (`id`);
 
 --
@@ -438,7 +439,7 @@ ALTER TABLE `shop`
 --
 ALTER TABLE `shop_car`
   ADD CONSTRAINT `shop_car_ibfk_1` FOREIGN KEY (`uid`) REFERENCES `user` (`id`),
-  ADD CONSTRAINT `shop_car_ibfk_2` FOREIGN KEY (`fid`) REFERENCES `food` (`id`);
+  ADD CONSTRAINT `shop_car_ibfk_2` FOREIGN KEY (`fid`) REFERENCES `food` (`food_id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
