@@ -96,6 +96,7 @@
                                             ${obj.deliver_time}分钟
                                         </span>
                                     </p>
+                                    <input type="hidden" value="${obj.id}" id="busi_id">
                                     </li>`);
                         }
                     }
@@ -143,9 +144,15 @@
             //根据商家名来搜索
             $('#search_business+a').click(function () {
                 var business = search_business.value;
-                location.href=`http://127.0.0.1:5050/user_sheach.html?address=${data}&business=${business}`;                
+                location.href = `http://127.0.0.1:5050/user_sheach.html?address=${data}&business=${business}`;
             })
-         })
+
+            $('.detail-list ul').on('click', 'li', function () {
+                var sid = this.querySelector("input").value;
+
+                location.href=`http://127.0.0.1:5050/shop.html?sid=${sid}`;
+            })
+        })
     </script>
 
 </head>

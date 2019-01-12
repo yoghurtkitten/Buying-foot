@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: 2019-01-11 13:58:33
+-- Generation Time: 2019-01-12 05:02:49
 -- 服务器版本： 10.1.28-MariaDB
 -- PHP Version: 5.6.32
 
@@ -68,42 +68,71 @@ CREATE TABLE `food` (
   `price` decimal(6,0) DEFAULT NULL,
   `ingredients` varchar(64) DEFAULT NULL,
   `foot_type` varchar(16) NOT NULL,
-  `start` tinyint(4) NOT NULL
+  `food_start` tinyint(4) NOT NULL,
+  `sell_number` smallint(6) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- 转存表中的数据 `food`
 --
 
-INSERT INTO `food` (`id`, `shop_id`, `name`, `price`, `ingredients`, `foot_type`, `start`) VALUES
-(3, 1, '土豆炖牛腩', '59', NULL, '热销', 5),
-(4, 1, '铁板牛肉', '49', NULL, '热销', 4),
-(5, 1, '土豆炖牛腩', '59', NULL, '热销', 5),
-(6, 1, '铁板牛肉', '49', NULL, '新品', 4),
-(7, 1, '土豆炖牛腩', '59', NULL, '新品', 5),
-(8, 1, '土豆炖牛腩', '59', NULL, '新品', 5),
-(9, 1, '铁板牛肉', '49', NULL, '靓粥', 4),
-(10, 1, '土豆炖牛腩', '59', NULL, '靓粥', 5),
-(11, 1, '铁板牛肉', '49', NULL, '靓粥', 4),
-(12, 1, '土豆炖牛腩', '59', NULL, '饮品', 5),
-(13, 1, '铁板牛肉', '49', NULL, '饮品', 4),
-(14, 1, '土豆炖牛腩', '59', NULL, '饮品', 5),
-(15, 1, '土豆炖牛腩', '59', NULL, '小食', 5),
-(16, 1, '铁板牛肉', '49', NULL, '小食', 4),
-(17, 1, '土豆炖牛腩', '59', NULL, '小食', 5),
-(18, 1, '铁板牛肉', '49', NULL, '套餐', 4),
-(19, 1, '土豆炖牛腩', '59', NULL, '套餐', 5),
-(20, 1, '铁板牛肉', '49', NULL, '套餐', 4),
-(21, 1, '土豆炖牛腩', '59', NULL, '冷藏', 5),
-(22, 1, '土豆炖牛腩', '59', NULL, '冷藏', 5),
-(23, 1, '铁板牛肉', '49', NULL, '暖汤', 4),
-(24, 1, '土豆炖牛腩', '59', NULL, '暖汤', 5),
-(25, 1, '铁板牛肉', '49', NULL, '暖汤', 4),
-(26, 1, '土豆炖牛腩', '59', NULL, '优惠', 5),
-(27, 1, '铁板牛肉', '49', NULL, '小份热菜', 4),
-(28, 1, '土豆炖牛腩', '59', NULL, '热销', 5),
-(29, 1, '土豆炖牛腩', '59', NULL, '热销', 5),
-(30, 1, '铁板牛肉', '49', NULL, '新品', 4);
+INSERT INTO `food` (`id`, `shop_id`, `name`, `price`, `ingredients`, `foot_type`, `food_start`, `sell_number`) VALUES
+(3, 1, '土豆炖牛腩', '59', NULL, '热销', 5, 25),
+(4, 1, '铁板牛肉', '49', NULL, '热销', 4, 25),
+(5, 1, '土豆炖牛腩', '59', NULL, '热销', 5, 18),
+(6, 1, '铁板牛肉', '49', NULL, '新品', 4, 30),
+(7, 1, '土豆炖牛腩', '59', NULL, '新品', 5, 28),
+(8, 1, '土豆炖牛腩', '59', NULL, '新品', 5, 35),
+(9, 1, '铁板牛肉', '49', NULL, '靓粥', 4, 24),
+(10, 1, '土豆炖牛腩', '59', NULL, '靓粥', 5, 19),
+(11, 1, '铁板牛肉', '49', NULL, '靓粥', 4, 28),
+(12, 1, '土豆炖牛腩', '59', NULL, '饮品', 5, 32),
+(13, 1, '铁板牛肉', '49', NULL, '饮品', 4, 37),
+(14, 1, '土豆炖牛腩', '59', NULL, '饮品', 5, 35),
+(15, 1, '土豆炖牛腩', '59', NULL, '小食', 5, 28),
+(16, 1, '铁板牛肉', '49', NULL, '小食', 4, 27),
+(17, 1, '土豆炖牛腩', '59', NULL, '小食', 5, 34),
+(18, 1, '铁板牛肉', '49', NULL, '套餐', 4, 26),
+(19, 1, '土豆炖牛腩', '59', NULL, '套餐', 5, 18),
+(20, 1, '铁板牛肉', '49', NULL, '套餐', 4, 37),
+(21, 1, '土豆炖牛腩', '59', NULL, '冷藏', 5, 28),
+(22, 1, '土豆炖牛腩', '59', '', '冷藏', 5, 25),
+(23, 1, '铁板牛肉', '49', NULL, '暖汤', 4, 34),
+(24, 1, '土豆炖牛腩', '59', NULL, '暖汤', 5, 28),
+(25, 1, '铁板牛肉', '49', NULL, '暖汤', 4, 35),
+(26, 1, '土豆炖牛腩', '59', NULL, '优惠', 5, 27),
+(27, 1, '铁板牛肉', '49', NULL, '小份热菜', 4, 29),
+(28, 1, '土豆炖牛腩', '59', NULL, '热销', 5, 0),
+(29, 1, '土豆炖牛腩', '59', NULL, '热销', 5, 0),
+(30, 1, '铁板牛肉', '49', NULL, '新品', 4, 0);
+
+-- --------------------------------------------------------
+
+--
+-- 表的结构 `food_catagory`
+--
+
+CREATE TABLE `food_catagory` (
+  `id` int(11) NOT NULL,
+  `type_name` varchar(32) NOT NULL,
+  `shop_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- 转存表中的数据 `food_catagory`
+--
+
+INSERT INTO `food_catagory` (`id`, `type_name`, `shop_id`) VALUES
+(1, '热销', 1),
+(2, '新品', 1),
+(3, '靓粥', 1),
+(4, '饮品', 1),
+(5, '小食', 1),
+(6, '套餐', 1),
+(7, '冷藏', 1),
+(8, '暖汤', 1),
+(9, '优惠', 1),
+(10, '小份热菜', 1);
 
 -- --------------------------------------------------------
 
@@ -148,7 +177,7 @@ CREATE TABLE `re_address` (
 
 CREATE TABLE `shop` (
   `id` int(11) NOT NULL,
-  `busine_id` int(11) DEFAULT NULL,
+  `business_id` int(11) DEFAULT NULL,
   `shop_name` varchar(16) DEFAULT NULL,
   `shop_type` varchar(16) DEFAULT NULL,
   `province` varchar(12) DEFAULT NULL,
@@ -160,36 +189,37 @@ CREATE TABLE `shop` (
   `deliver_cost` decimal(10,0) NOT NULL,
   `deliver_time` tinyint(11) NOT NULL,
   `shop_img` varchar(64) NOT NULL,
-  `start` tinyint(4) NOT NULL
+  `shop_start` tinyint(4) NOT NULL,
+  `shop_phone` varchar(16) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- 转存表中的数据 `shop`
 --
 
-INSERT INTO `shop` (`id`, `busine_id`, `shop_name`, `shop_type`, `province`, `city`, `county`, `address`, `license`, `deliver_fee`, `deliver_cost`, `deliver_time`, `shop_img`, `start`) VALUES
-(1, 1, '叮咚叮咚早餐店（杨家湾店）', '正餐优选', '湖北', '武汉', '武昌区', '湖北省武汉市武昌区', '654654131', '8', '20', 30, 'img/brand/95608b68ffb39943dbe10ac8c5b9aacd15834.jpg', 3),
-(2, 1, '咕叽快餐', '下午茶', '湖北', '武汉', '武昌区', '湖北省武汉市武昌区杨家湾五环天地', '458453135486', '10', '15', 30, 'img/brand/95608b68ffb39943dbe10ac8c5b9aacd15834.jpg', 5),
-(3, 1, '四美包子', '精选小吃', '湖北', '武汉', '武昌区', '湖北省武汉市武昌区杨家湾', '74867654154', '5', '30', 20, 'img/business/business-icon.png', 4),
-(4, 1, '华莱士', '下午茶', '湖北', '武汉', '武昌区', '湖北省武汉市武昌区白沙洲大道', '86745645', '11', '30', 15, 'img/business/hualaishi.jpg', 4),
-(5, 1, '华莱士', '精选小吃', '湖北', '武汉', '武昌区', '湖北省武汉市武昌区白沙洲', '78457546', '12', '20', 30, 'img/business/business-icon.png', 5),
-(6, 1, '华莱士', '正餐优选', '湖北', '武汉', '武昌区', '湖北省武汉市武昌区白沙洲', '66541351', '10', '21', 35, 'img/business/business-icon.png', 4),
-(7, 1, '华莱士', '美食', '湖北', '武汉', '武昌区', '湖北省武汉市武昌区白沙洲', '66541351', '10', '21', 35, 'img/business/business-icon.png', 3),
-(8, 1, '华莱士', '美食', '湖北', '武汉', '武昌区', '湖北省武汉市武昌区白沙洲', '66541351', '10', '21', 35, 'img/business/business-icon.png', 5),
-(9, 1, '华莱士', '美食', '湖北', '武汉', '武昌区', '湖北省武汉市武昌区白沙洲', '66541351', '10', '21', 35, 'img/business/business-icon.png', 4),
-(10, 1, '华莱士', '美食', '湖北', '武汉', '武昌区', '湖北省武汉市武昌区白沙洲', '66541351', '10', '21', 35, 'img/business/business-icon.png', 5),
-(11, 1, '华莱士', '美食', '湖北', '武汉', '武昌区', '湖北省武汉市武昌区白沙洲', '66541351', '10', '21', 35, 'img/business/business-icon.png', 3),
-(12, 1, '华莱士', '美食', '湖北', '武汉', '武昌区', '湖北省武汉市武昌区白沙洲', '66541351', '10', '21', 35, 'img/business/business-icon.png', 4),
-(13, 1, '华莱士', '美食', '湖北', '武汉', '武昌区', '湖北省武汉市武昌区白沙洲', '66541351', '10', '21', 35, 'img/business/business-icon.png', 5),
-(14, 1, '华莱士', '美食', '湖北', '武汉', '武昌区', '湖北省武汉市武昌区白沙洲', '66541351', '10', '21', 35, 'img/business/business-icon.png', 3),
-(15, 1, '华莱士', '美食', '湖北', '武汉', '武昌区', '湖北省武汉市武昌区白沙洲', '66541351', '10', '21', 35, 'img/business/business-icon.png', 5),
-(16, 1, '华莱士', '美食', '湖北', '武汉', '武昌区', '湖北省武汉市武昌区白沙洲', '66541351', '10', '21', 35, 'img/business/business-icon.png', 3),
-(17, 1, '华莱士', '美食', '湖北', '武汉', '武昌区', '湖北省武汉市武昌区白沙洲', '66541351', '10', '21', 35, 'img/business/business-icon.png', 4),
-(18, 1, '华莱士', '美食', '湖北', '武汉', '武昌区', '湖北省武汉市武昌区白沙洲', '66541351', '10', '21', 35, 'img/business/business-icon.png', 5),
-(19, 1, '华莱士', '美食', '湖北', '武汉', '武昌区', '湖北省武汉市武昌区白沙洲', '66541351', '10', '21', 35, 'img/business/business-icon.png', 5),
-(20, 1, '华莱士', '美食', '湖北', '武汉', '武昌区', '湖北省武汉市武昌区白沙洲', '66541351', '10', '21', 35, 'img/business/business-icon.png', 4),
-(21, 1, '四美包子', '正餐优选', '湖北', '武汉', '武昌区', '湖北省武汉市武昌区杨家湾', '74867654154', '5', '30', 20, 'img/business/business-icon.png', 3),
-(22, 1, '叮咚早餐店', '下午茶', '湖北', '武汉', '武昌区', '湖北省武汉市武昌区', '654654131', '8', '20', 30, 'img/brand/95608b68ffb39943dbe10ac8c5b9aacd15834.jpg', 4);
+INSERT INTO `shop` (`id`, `business_id`, `shop_name`, `shop_type`, `province`, `city`, `county`, `address`, `license`, `deliver_fee`, `deliver_cost`, `deliver_time`, `shop_img`, `shop_start`, `shop_phone`) VALUES
+(1, 1, '叮咚叮咚早餐店（杨家湾店）', '正餐优选', '湖北', '武汉', '武昌区', '湖北省武汉市武昌区', '654654131', '8', '20', 30, 'img/brand/95608b68ffb39943dbe10ac8c5b9aacd15834.jpg', 3, '15912345678'),
+(2, 1, '咕叽快餐', '下午茶', '湖北', '武汉', '武昌区', '湖北省武汉市武昌区杨家湾五环天地', '458453135486', '10', '15', 30, 'img/brand/95608b68ffb39943dbe10ac8c5b9aacd15834.jpg', 5, '15912345678'),
+(3, 1, '四美包子', '精选小吃', '湖北', '武汉', '武昌区', '湖北省武汉市武昌区杨家湾', '74867654154', '5', '30', 20, 'img/business/business-icon.png', 4, '15912345678'),
+(4, 1, '华莱士', '下午茶', '湖北', '武汉', '武昌区', '湖北省武汉市武昌区白沙洲大道', '86745645', '11', '30', 15, 'img/business/hualaishi.jpg', 4, '15912345678'),
+(5, 1, '华莱士', '精选小吃', '湖北', '武汉', '武昌区', '湖北省武汉市武昌区白沙洲', '78457546', '12', '20', 30, 'img/business/business-icon.png', 5, '15912345678'),
+(6, 1, '华莱士', '正餐优选', '湖北', '武汉', '武昌区', '湖北省武汉市武昌区白沙洲', '66541351', '10', '21', 35, 'img/business/business-icon.png', 4, '15912345678'),
+(7, 1, '华莱士', '美食', '湖北', '武汉', '武昌区', '湖北省武汉市武昌区白沙洲', '66541351', '10', '21', 35, 'img/business/business-icon.png', 3, '15912345678'),
+(8, 1, '华莱士', '美食', '湖北', '武汉', '武昌区', '湖北省武汉市武昌区白沙洲', '66541351', '10', '21', 35, 'img/business/business-icon.png', 5, '15912345678'),
+(9, 1, '华莱士', '美食', '湖北', '武汉', '武昌区', '湖北省武汉市武昌区白沙洲', '66541351', '10', '21', 35, 'img/business/business-icon.png', 4, '15912345678'),
+(10, 1, '华莱士', '美食', '湖北', '武汉', '武昌区', '湖北省武汉市武昌区白沙洲', '66541351', '10', '21', 35, 'img/business/business-icon.png', 5, '15912345678'),
+(11, 1, '华莱士', '美食', '湖北', '武汉', '武昌区', '湖北省武汉市武昌区白沙洲', '66541351', '10', '21', 35, 'img/business/business-icon.png', 3, '15912345678'),
+(12, 1, '华莱士', '美食', '湖北', '武汉', '武昌区', '湖北省武汉市武昌区白沙洲', '66541351', '10', '21', 35, 'img/business/business-icon.png', 4, '15912345678'),
+(13, 1, '华莱士', '美食', '湖北', '武汉', '武昌区', '湖北省武汉市武昌区白沙洲', '66541351', '10', '21', 35, 'img/business/business-icon.png', 5, '15912345678'),
+(14, 1, '华莱士', '美食', '湖北', '武汉', '武昌区', '湖北省武汉市武昌区白沙洲', '66541351', '10', '21', 35, 'img/business/business-icon.png', 3, '15912345678'),
+(15, 1, '华莱士', '美食', '湖北', '武汉', '武昌区', '湖北省武汉市武昌区白沙洲', '66541351', '10', '21', 35, 'img/business/business-icon.png', 5, '15912345678'),
+(16, 1, '华莱士', '美食', '湖北', '武汉', '武昌区', '湖北省武汉市武昌区白沙洲', '66541351', '10', '21', 35, 'img/business/business-icon.png', 3, '15912345678'),
+(17, 1, '华莱士', '美食', '湖北', '武汉', '武昌区', '湖北省武汉市武昌区白沙洲', '66541351', '10', '21', 35, 'img/business/business-icon.png', 4, '15912345678'),
+(18, 1, '华莱士', '美食', '湖北', '武汉', '武昌区', '湖北省武汉市武昌区白沙洲', '66541351', '10', '21', 35, 'img/business/business-icon.png', 5, '15912345678'),
+(19, 1, '华莱士', '美食', '湖北', '武汉', '武昌区', '湖北省武汉市武昌区白沙洲', '66541351', '10', '21', 35, 'img/business/business-icon.png', 5, ''),
+(20, 1, '华莱士', '美食', '湖北', '武汉', '武昌区', '湖北省武汉市武昌区白沙洲', '66541351', '10', '21', 35, 'img/business/business-icon.png', 4, ''),
+(21, 1, '四美包子', '正餐优选', '湖北', '武汉', '武昌区', '湖北省武汉市武昌区杨家湾', '74867654154', '5', '30', 20, 'img/business/business-icon.png', 3, ''),
+(22, 1, '叮咚早餐店', '下午茶', '湖北', '武汉', '武昌区', '湖北省武汉市武昌区', '654654131', '8', '20', 30, 'img/brand/95608b68ffb39943dbe10ac8c5b9aacd15834.jpg', 4, '');
 
 -- --------------------------------------------------------
 
@@ -268,6 +298,13 @@ ALTER TABLE `food`
   ADD KEY `busine_id` (`shop_id`);
 
 --
+-- Indexes for table `food_catagory`
+--
+ALTER TABLE `food_catagory`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `shop_id` (`shop_id`);
+
+--
 -- Indexes for table `order_`
 --
 ALTER TABLE `order_`
@@ -287,7 +324,7 @@ ALTER TABLE `re_address`
 --
 ALTER TABLE `shop`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `busine_id` (`busine_id`);
+  ADD KEY `busine_id` (`business_id`);
 
 --
 -- Indexes for table `shop_car`
@@ -324,6 +361,12 @@ ALTER TABLE `business`
 --
 ALTER TABLE `food`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
+
+--
+-- 使用表AUTO_INCREMENT `food_catagory`
+--
+ALTER TABLE `food_catagory`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- 使用表AUTO_INCREMENT `order_`
@@ -366,6 +409,12 @@ ALTER TABLE `food`
   ADD CONSTRAINT `food_ibfk_1` FOREIGN KEY (`shop_id`) REFERENCES `business` (`id`);
 
 --
+-- 限制表 `food_catagory`
+--
+ALTER TABLE `food_catagory`
+  ADD CONSTRAINT `food_catagory_ibfk_1` FOREIGN KEY (`shop_id`) REFERENCES `shop` (`id`);
+
+--
 -- 限制表 `order_`
 --
 ALTER TABLE `order_`
@@ -382,7 +431,7 @@ ALTER TABLE `re_address`
 -- 限制表 `shop`
 --
 ALTER TABLE `shop`
-  ADD CONSTRAINT `shop_ibfk_1` FOREIGN KEY (`busine_id`) REFERENCES `business` (`id`);
+  ADD CONSTRAINT `shop_ibfk_1` FOREIGN KEY (`business_id`) REFERENCES `business` (`id`);
 
 --
 -- 限制表 `shop_car`

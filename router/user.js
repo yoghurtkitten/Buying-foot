@@ -279,4 +279,22 @@ router.get('/session', (req, res) => {
     }
 })
 
+router.get('/getFoods', (req, res) => {
+    var sid = req.query.sid;
+    var sql = 'SELECT * FROM shop JOIN food ON shop.id=food.shop_id WHERE food.shop_id=?';
+    pool.query(sql, [sid], (err, result) => {
+        if (err) {
+            throw err;
+        }
+        if (result) {
+            res.send(result)
+        } else {
+            res.send('err');
+        }
+    })
+})
+router.get('/getFoodsCatagory', (err, result) => {
+        
+})
+
 module.exports = router;

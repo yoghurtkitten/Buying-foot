@@ -34,18 +34,11 @@
                     <img src="img/business/business-icon.png" class="icon" alt="">
                     <div class="ml-2">
                         <p class="busin-title">
-                            四美包子（虎泉店）
+                            <span></span>
                             <i class="iconfont">&#xeb6d;</i>
                         </p>
                         <div class="star">
-                            <i class="iconfont">&#xec43;</i>
-                            <i class="iconfont">&#xec43;</i>
-                            <i class="iconfont">&#xec43;</i>
-                            <i class="iconfont">&#xec43;</i>
-                            <i class="iconfont">&#xec43;</i>
-                            <span>
-                                5分
-                            </span>
+                            <span></span>
                         </div>
                     </div>
                 </div>
@@ -58,12 +51,12 @@
                     <p>
                         <i class="iconfont">&#xec3f;</i>
                         <span>商家地址</span>
-                        <span>虎泉街91号虎泉时尚中心创意坊1楼特1-1号</span>
+                        <span class="shop_address"></span>
                     </p>
                     <p>
                         <i class="iconfont">&#xe678;</i>
                         <span>商家电话</span>
-                        <span>15968432165</span>
+                        <span class="shop_tel"></span>
                     </p>
                 </div>
             </div>
@@ -72,17 +65,17 @@
             </div>
             <div class="right-b col-md-6 col-sm-5 p-0 ">
                 <div class="d-flex justify-content-between align-items-center detail-info">
-                    <div>
+                    <div class="deliver_time">
                         <p>平均送餐时间</p>
-                        <p><span>33</span>分钟</p>
+                        <p><span></span>分钟</p>
                     </div>
-                    <div>
+                    <div class="deliver_cost">
                         <p>起送</p>
-                        <p><span>15</span>元</p>
+                        <p><span></span>元</p>
                     </div>
-                    <div>
+                    <div class="deliver_fee">
                         <p>配送费</p>
-                        <p><span>3</span>元</p>
+                        <p><span></span>元</p>
                     </div>
                 </div>
                 <div class="save d-flex justify-content-center p-0 m-0">
@@ -644,7 +637,41 @@
     </div>
     <iframe src="./footer.html" frameborder="0" scrolling="no" class="frame-div" onload="this.height=100"></iframe>
     <script src="js/frame.js"></script>
+    <script src="js/ajax.js"></script>
     <script>
+        $(function () {
+            var urlParams = new URLSearchParams(location.search);
+            var sid = urlParams.get("sid")
+            ajax({
+                url: "/user/getFoods",
+                type: "get",
+                data: `sid=${sid}`,
+                dataType: "json"
+            }).then(function (data) {
+                $('.busin-title span').html(data[0].shop_name)
+                var start_icon = '';
+                for (let i = 0; i < data[0].shop_start; i++) {
+                    start_icon += '<i class="iconfont">&#xec43;</i>';
+                }
+                $('.star').html(`${start_icon} <span>${data[0].shop_start}分</span>`);
+                $('.shop_address').html(data[0].address);
+                $('.shop_tel').html(data[0].shop_phone);
+                $('.deliver_time p span').html(data[0].deliver_time);
+                $('.deliver_cost p span').html(data[0].deliver_cost);
+                $('.deliver_fee p span').html(data[0].deliver_fee);
+            })
+
+            ajax({
+                url: "/user/getFoodsCatagory",
+                type: "get",
+                data: `sid=${sid}`,
+                dataType: "json"
+            }).then(function (data) {
+                
+            })
+            
+        })
+
         var title = $('.left-inner');
         var heart = $('.save>div>i');
 
@@ -686,12 +713,12 @@
         })
         window.onscroll = function () {
             var scrollTop = document.body.scrollTop || document.documentElement.scrollTop;
-            console.log(scrollTop)
-            if(scrollTop < 500){
+            // console.log(scrollTop)
+            if (scrollTop < 500) {
                 var div = document.getElementsByClassName('category')[0]
                 div.classList.remove('fixed-div');
             };
-            if(scrollTop >= 500){
+            if (scrollTop >= 500) {
                 var div = document.getElementsByClassName('category')[0]
                 div.classList.add('fixed-div');
             };
