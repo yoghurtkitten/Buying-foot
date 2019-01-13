@@ -215,8 +215,8 @@
                                     element.parentNode.lastElementChild.innerHTML += `<li>
                                         <img src="${obj.food_img}" alt="" class="goods-img">
                                         <div>
-                                            <p>台湾茶叶蛋</p>
-                                            <p>台湾茶叶蛋-营养丰富，味道鲜美</p>
+                                            <p>${obj.name}</p>
+                                            <p>${obj.ingredients}</p>
                                             <div class="star">
                                                 <i class="iconfont">&#xec43;</i>
                                                 <i class="iconfont">&#xec43;</i>
@@ -224,15 +224,15 @@
                                                 <i class="iconfont">&#xec43;</i>
                                                 <i class="iconfont">&#xec43;</i>
                                                 <span>
-                                                    (30)月售200+份
+                                                    (${obj.food_start}分)月售200+份
                                                     </span>
                                                     </div>
                                                     <p>
-                                                        <span class="price">￥2</span>
+                                                        <span class="price">￥${obj.price}</span>
                                                         <a href="javascript:;">加入购物车</a>
+                                                        <input type="hidden" class="food_id" value="${obj.food_id}">
                                                     </p>
                                         </div>
-                                        <input type="hidden" class="food_id" value="${obj.food_id}">
                                     </li>
                                     `
                                 }
@@ -251,29 +251,30 @@
                     $('.number').html(parseInt($('.number').text()) + 1);
                     var g_name = e.target.parentElement.parentElement.firstElementChild.innerHTML;
                     var un_price = e.target.previousElementSibling.innerHTML;
+                    var f_id = e.target.nextElementSibling.value;
                     $('.shop-car>div:nth-child(2)').html(`
-                ${ $('.shop-car>div:nth-child(2)').html()}
-                <div class="shop-item">
-                    <ul>
-                        <li>
-                            <span class="goods-name">${g_name}</span>
-                            <p>
-                                <button>-</button>
-                                <input type="text" value="1">
-                                <button>+</button>
-                            </p>
-                            <span class="unprice">
-                            ${un_price}
-                            </span>
-
-                        </li>
-                    </ul>
-                </div>`);
+                    ${ $('.shop-car>div:nth-child(2)').html()}
+                    <div class="shop-item">
+                        <ul>
+                            <li>
+                                <span class="goods-name">${g_name}</span>
+                                <p>
+                                    <button>-</button>
+                                    <input type="text" value="1">
+                                    <button>+</button>
+                                    <input type="text" value="${f_id}">
+                                </p>
+                                <span class="unprice">
+                                ${un_price}
+                                </span>
+                            </li>
+                        </ul>
+                    </div>`);
 
                     ajax({
                         url: "/user/setShopCar",
                         type: "post",
-                        data: `foods_id=${$('.food_id').val()}&un_price=${un_price}&user=${user}`,
+                        data: `foods_id=${f_id}&un_price=${un_price}&user=${user}`,
                         dataType: "json"
                     }).then(function (data) {
                         console.log(data);

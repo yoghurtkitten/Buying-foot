@@ -73,7 +73,7 @@
                     var str = $(this).parent().prev().css("background-image");
                     str = str.replace('-no', '-');
                     str = str.replace('.png', 'ed.png');
-                    str = str.replace('http://127.0.0.1:3000', '..');
+                    str = str.replace('http://127.0.0.1:5050', '..');
                     $(this).parent().prev().css("background-image", str);
 
                     if (str.indexOf('Delicacy') != -1) {
@@ -108,7 +108,7 @@
                     var str = $(this).parent().prev().css("background-image");
                     str = str.replace('-', '-no');
                     str = str.replace('ed.png', '.png');
-                    str = str.replace('http://127.0.0.1:3000', '..');
+                    str = str.replace('http://127.0.0.1:5050', '..');
                     $(this).parent().prev().css("background-image", str);
                 })
             })
@@ -306,7 +306,7 @@
         window.setInterval("reinitIframe()", 200);
         
         $('.buying').click(function () {
-            location.href='http://127.0.0.1:3000/user_index.html';
+            location.href='http://127.0.0.1:5050/user_index.html';
         })
     </script>
 </body>
