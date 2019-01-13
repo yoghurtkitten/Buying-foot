@@ -309,7 +309,7 @@ router.get('/getFoodsCatagory', (req, res) => {
 })
 
 router.post('/setShopCar', (req, res) => {
-    var obj = req.body;
+    /* var obj = req.body;
     var sql = `INSERT INTO shop_car VALUES (null, (SELECT user.id FROM user WHERE user.phone = ?), ?, 1, ?)`
     pool.query(sql, [obj.user,parseInt(obj.foods_id),parseFloat(obj.un_price.substring(1))], (err, result) => {
         if (err) {
@@ -320,7 +320,8 @@ router.post('/setShopCar', (req, res) => {
         } else {
             res.send({code: 400, msg: 'fault'})
         }
-    })
+    }) */
+    res.send('123');
 })
 
 module.exports = router;

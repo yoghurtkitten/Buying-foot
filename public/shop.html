@@ -282,13 +282,28 @@
                 }
             })
 
-           /*  $('.shop-car>div:nth-child(2)').click(function (e) {
+            $('.shop-car>div:nth-child(2)').click(function (e) {
                 if (e.target.nodeName == 'BUTTON') {
-                    if (condition) {
-                        
+                    var fid = e.target.parentNode.lastElementChild.value;
+                    var count = parseInt(e.target.parentNode.firstElementChild.nextElementSibling.value);
+                    if (e.target.innerHTML == '+') {
+                        count = e.target.parentNode.firstElementChild.nextElementSibling.value = count + 1;
+                        /*  ajax({
+                             url: "/user/update_shopCar",
+                             type: "post",
+                             data: `foods_id=${fid}&number=${count}`,
+                             dataType: "json"
+                         }).then(function (data) {
+                             console.log(data);
+                         }) */
+                    } else {
+                        if (count > 1) {
+                            count = e.target.parentNode.firstElementChild.nextElementSibling.value = count - 1;
+                        }
                     }
+                    
                 }
-            }) */
+            })
 
         })
 
