@@ -85,7 +85,7 @@ router.get('/del', (req, res) => {
             throw err;
         }
         if (result.affectedRows) {
-            res.send(`<script>alert('删除成功');location.href="http://127.0.0.1:3000/user_list.html"</script>`)
+            res.send(`<script>alert('删除成功');location.href="http://127.0.0.1:5050/user_list.html"</script>`)
         } else {
             res.send({ code: 401, msg: 'Delete Fault!' })
         }
@@ -107,35 +107,6 @@ router.get('/query', (req, res) => {
         }
     })
 })
-
-router.post('/update', (req, res) => {
-    /* var form = new formidable.IncomingForm();
-    form.parse(req, function(err, fields, files) {
-        console.log('fields',fields);//表单传递的input数据
-        console.log(files.Filedata.name);//上传文件数据
-    }); */
-    var obj = req.body;
-    var validateResult = validate(obj);
-    if (validateResult.str) {
-        res.send({ code: validateResult.code, msg: validateResult.str });
-        return;
-    }
-
-    var sql = 'UPDATE user SET name = ?, email = ?, phone = ?, user_name = ?, gender = ?, password = ? WHERE id = ?';
-
-    pool.query(sql, [obj.name, obj.email, obj.phone, obj.user_name, obj.gender, obj.password, obj.id], (err, result) => {
-        if (err) {
-            throw err;
-        }
-        // res.send(result);
-        if (result.affectedRows) {
-            // res.send(`<script>alert('修改成功');location.href='http://127.0.0.1:3000/user_list.html'</script>`)
-            res.send('Update Success!!');
-        } else {
-            res.send('Update Error!!');
-        }
-    });
-});
 
 
 router.get('/getlist', (req, res) => {
@@ -326,13 +297,13 @@ router.post('/setShopCar', (req, res) => {
 
 router.post('/update_shopCar', (req, res) => {
     var obj = req.body;
-    var sql = `UPDATE shop_car SET number=? WHERE id=?`
+    var sql = `UPDATE shop_car SET number=? WHERE fid=?`
     pool.query(sql, [obj.number, obj.foods_id], (err, result) => {
         if (err) {
             throw err;
         }
         if (result.affectedRows) {
-            var sql2 = `SELECT un_price FROM shop_car WHERE id=?`;
+            var sql2 = `SELECT un_price FROM shop_car WHERE fid=?`;
             pool.query(sql2, [obj.foods_id], (err, result) => {
                 if (err) {
                     throw err;
@@ -345,6 +316,34 @@ router.post('/update_shopCar', (req, res) => {
             })
         } else {
             res.send({code: 400, msg: 'fault'})
+        }
+    })
+})
+
+router.get('/load_shop_car', (req, res) => {
+    var sql = 'SELECT fid,name,number,un_price FROM shop_car JOIN food on shop_car.fid = food.food_id';
+    pool.query(sql, (err, result) => {
+        if (err) {
+            throw err;
+        }
+        if (result) {
+            res.send(result);
+        } else {
+            result({code:400, msg:'select Fault'})
+        }
+    });
+})
+
+router.get('/delete_shop_car', (req, res) => {
+    var sql = 'DELETE FROM shop_car';
+    pool.query(sql,(err, result) => {
+        if (err) {
+            throw err;
+        }
+        if (result.affectedRows) {
+            res.send({code:200, msg:'Success'});
+        } else {
+            res.send({code:400, msg:'Fault'});
         }
     })
 })

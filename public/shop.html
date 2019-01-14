@@ -19,7 +19,6 @@
             position: fixed;
             top: 0;
             margin-top: 0px !important;
-            width: 56.2% !important;
             box-shadow: 0px 0px 5px #ccc;
         }
     </style>
@@ -137,8 +136,8 @@
                     <i class="iconfont">&#xe63f;</i>
                     <i class="number">0</i>
                     <span>￥</span>
-                    <span class="total">146.3</span>
-                    <span>| 配送费￥3.1</span>
+                    <span class="total">000.00</span>
+                    <span></span>
                 </a>
                 <a href="#">
                     <span>
@@ -205,6 +204,7 @@
                         $('.concat div p').html(`配送费：￥ ${parseFloat(data[0].deliver_fee).toFixed(2)}`);
                         $('.deliver_cost p span').html(data[0].deliver_cost);
                         $('.deliver_fee p span').html(data[0].deliver_fee);
+                        $('.total').next().html(`| 配送费￥${data[0].deliver_fee}`)
                         var food_items = '';
                         var goods_title = document.querySelectorAll(".goods>.goods-type>.goods-title")
                         for (const obj of data) {
@@ -277,7 +277,7 @@
                         data: `foods_id=${f_id}&un_price=${un_price}&user=${user}`,
                         dataType: "json"
                     }).then(function (data) {
-                        console.log(data);
+                        cal_total();
                     })
                 }
             })
@@ -288,6 +288,8 @@
                     var count = parseInt(e.target.parentNode.firstElementChild.nextElementSibling.value);
                     if (e.target.innerHTML == '+') {
                         count = e.target.parentNode.firstElementChild.nextElementSibling.value = count + 1;
+                        var n = parseInt($('.number').text()) + 1;
+                        $('.number').text(n)
                     } else {
                         if (count > 1) {
                             count = e.target.parentNode.firstElementChild.nextElementSibling.value = count - 1;
@@ -300,14 +302,47 @@
                         dataType: "json"
                     }).then(function (data) {
                         var obj = data[0];
-                        var reg = /(^\s*[￥])|(\s*$)/g;
                         var un_tatle = e.target.parentNode.nextElementSibling;
-                        un_tatle.innerHTML = `￥${parseFloat(count*obj.un_price)}`;
+                        un_tatle.innerHTML = `￥${parseFloat(count * obj.un_price)}`;
+                        setTimeout(() => {
+                            cal_total();
+                        }, 500);
+
                     })
-                    
+
                 }
             })
 
+            ajax({
+                url: "/user/load_shop_car",
+                type: "get",
+                dataType: "json"
+            }).then(function (data) {
+                var food_count = 0;
+                for (const key in data) {
+                    $('.shop-car>div:nth-child(2)').html(`
+                    ${ $('.shop-car>div:nth-child(2)').html()}
+                    <div class="shop-item">
+                        <ul>
+                            <li>
+                                <span class="goods-name">${data[key].name}</span>
+                                <p>
+                                    <button>-</button>
+                                    <input type="text" value="${data[key].number}">
+                                    <button>+</button>
+                                    <input type="text" value="${data[key].fid}">
+                                </p>
+                                <span class="unprice">
+                                ￥${data[key].un_price*data[key].number}
+                                </span>
+                            </li>
+                        </ul>
+                    </div>`);
+                    cal_total()
+                    food_count += parseInt(data[key].number); 
+                }
+                $('.number').html(food_count)
+            })
         })
 
         var title = $('.left-inner');
@@ -359,9 +394,31 @@
                 var div = document.getElementsByClassName('category')[0]
                 div.classList.add('fixed-div');
             };
-
+        }
+        function cal_total() {
+            var moneys = $('.unprice');
+            var total = 0;;
+            moneys.each(function () {
+                var str = $(this).text();
+                var reg = /(^\s*[￥])|(\s*$)/g;
+                str = str.replace(reg, '');
+                total += parseFloat(str);
+            })
+            $('.total').html(`${total.toFixed(2)}`)
         }
 
+        $('.shop-car>div>p>span>a').click(function(){
+            $('.shop-car>div:nth-child(2)').html('');
+            $('.number').html('0');
+            $('.total').html('00.00');
+            ajax({
+                url: '/user/delete_shop_car',
+                type: 'get',
+                dataType: 'json'
+            }).then(function(data){
+                console.log(data);
+            })
+        })
     </script>
 </body>
 
