@@ -309,19 +309,44 @@ router.get('/getFoodsCatagory', (req, res) => {
 })
 
 router.post('/setShopCar', (req, res) => {
-    /* var obj = req.body;
+    var obj = req.body;
     var sql = `INSERT INTO shop_car VALUES (null, (SELECT user.id FROM user WHERE user.phone = ?), ?, 1, ?)`
     pool.query(sql, [obj.user,parseInt(obj.foods_id),parseFloat(obj.un_price.substring(1))], (err, result) => {
         if (err) {
             throw err;
         }
-        if (result) {
+        if (result.affectedRows) {
             res.send(result);
         } else {
             res.send({code: 400, msg: 'fault'})
         }
-    }) */
-    res.send('123');
+    })
+    // res.send('123');
+})
+
+router.post('/update_shopCar', (req, res) => {
+    var obj = req.body;
+    var sql = `UPDATE shop_car SET number=? WHERE id=?`
+    pool.query(sql, [obj.number, obj.foods_id], (err, result) => {
+        if (err) {
+            throw err;
+        }
+        if (result.affectedRows) {
+            var sql2 = `SELECT un_price FROM shop_car WHERE id=?`;
+            pool.query(sql2, [obj.foods_id], (err, result) => {
+                if (err) {
+                    throw err;
+                }
+                if(result){
+                    res.send(result);
+                } else {
+                    res.send({code: 400, msg: 'fault_select'})
+                }
+            })
+        } else {
+            res.send({code: 400, msg: 'fault'})
+        }
+    })
 })
 
 module.exports = router;

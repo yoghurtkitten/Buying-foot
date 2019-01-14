@@ -288,19 +288,22 @@
                     var count = parseInt(e.target.parentNode.firstElementChild.nextElementSibling.value);
                     if (e.target.innerHTML == '+') {
                         count = e.target.parentNode.firstElementChild.nextElementSibling.value = count + 1;
-                        /*  ajax({
-                             url: "/user/update_shopCar",
-                             type: "post",
-                             data: `foods_id=${fid}&number=${count}`,
-                             dataType: "json"
-                         }).then(function (data) {
-                             console.log(data);
-                         }) */
                     } else {
                         if (count > 1) {
                             count = e.target.parentNode.firstElementChild.nextElementSibling.value = count - 1;
                         }
                     }
+                    ajax({
+                        url: "/user/update_shopCar",
+                        type: "post",
+                        data: `foods_id=${fid}&number=${count}`,
+                        dataType: "json"
+                    }).then(function (data) {
+                        var obj = data[0];
+                        var reg = /(^\s*[￥])|(\s*$)/g;
+                        var un_tatle = e.target.parentNode.nextElementSibling;
+                        un_tatle.innerHTML = `￥${parseFloat(count*obj.un_price)}`;
+                    })
                     
                 }
             })
