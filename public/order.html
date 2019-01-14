@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,12 +12,199 @@
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/bootstrap3.7.css">
     <link rel="stylesheet" href="css/icon/iconfont.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background: #f5f5f5;
+            font-size: 14px;
+            color: #666;
+            font-family: "Microsoft Yahei", Arial, Helvetica, sans-serif;
+        }
+
+        iframe {
+            width: 100%;
+        }
+
+        section {
+            width: 100%;
+        }
+        
+        a{
+            text-decoration: none!important;
+        }
+
+        section>div:first-child {
+            display: flex;
+        }
+
+        section div:first-child p{
+            margin-right: 1%;
+        }
+
+        section div:first-child>p:first-child {
+            display: inline-block;
+            width: 0.6%;
+            height: 21px;
+            background: #000;
+        }
+
+        section div:first-child>p:last-child{
+            font-weight: bold;
+        }
+        
+
+        section>div:nth-child(2) {
+            width: 100%;
+            display: flex;
+        }
+
+        section>div:nth-child(2)>div:first-child{
+            width: 33%;
+            /* box-shadow: 0px 0px 5px #ccc; */
+        }
+
+        ul {
+            list-style: none;
+            background: #fff;
+            margin: 0px;
+            padding: 0px;
+        }
+
+        section>div:nth-child(2)>div:first-child>div {
+            width: 100%;
+            height: 22px;
+            background: url('img/order-bot-bg1.png') no-repeat;
+        }
+
+        section>div:nth-child(2)>div:first-child>ul>li {
+            width: 100%;
+            height: 54px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: nowrap;
+            border-bottom: 1px solid #eee;
+            padding-left: 8%;
+            padding-right: 8%;
+        }
+
+        section>div:nth-child(2)>div:first-child>ul>li:last-child {
+            justify-content: flex-end;
+            border-bottom: none;
+
+        }
+
+        section>div:nth-child(2)>div:first-child>ul>li>span {
+            display: inline-block;
+        }
+        section>div:nth-child(2)>div:first-child>ul>li:first-child{
+            padding-top: 10px;
+            padding-bottom: 10px;
+        }
+        section>div:nth-child(2)>div:first-child>ul>li:first-child>span:first-child{
+            font-size: 16px;
+            color: #333;
+            font-weight: 700;
+        }
+        section>div:nth-child(2)>div:first-child>ul>li:first-child>span:last-child a{
+            color: #666;
+        }
+        section>div:nth-child(2)>div:first-child>ul>li:nth-child(2){
+            font-weight: bold;
+        }
+        section>div:nth-child(2)>div:first-child>ul>li:nth-child(3){
+            background: #fcfaf8
+        }
+        section>div:nth-child(2)>div:first-child>ul>li:last-child{
+            color: #e54c2a;
+            /* font-weight: bold; */
+            font-size: 24px;
+            padding-top: 20%;
+            padding-bottom: 15%;
+        }
+        section>div:nth-child(2)>div:first-child>ul>li:last-child>span>span{
+            font-size: 46px;
+        }
+
+        section>div:nth-child(2)>div:last-child{
+            width: 65%;
+            border: 1px solid #000;
+            margin-left: 2%;
+        }
+    </style>
 </head>
+
 <body>
-    <div class="container-fluid">
-        <nav>
-            
-        </nav>
+    <iframe src="./header.html" frameborder="0" scrolling="no" class="frame-div" onload="this.height=100"></iframe>
+
+    <div class="container">
+        <section>
+            <div>
+                <p></p>
+                <p>半秋山西餐厅（鲁广店） ></p>
+                <p> 确认购买</p>
+            </div>
+            <div>
+                <div>
+                    <ul>
+                        <li>
+                            <span>
+                                订单详情
+                            </span>
+                            <span>
+                                <a href="javascript:;">< 返回商家修改</a>
+                            </span>
+                        </li>
+                        <li>
+                            <span>
+                                菜品
+                            </span>
+                            <span>
+                                份数/价格
+                            </span>
+                        </li>
+                        <li>
+                            <span>
+                                迷你全家福
+                            </span>
+                            <span>
+                                ￥52*2
+                            </span>
+                        </li>
+                        <li>
+                            <span>包装费</span>
+                            <span>￥2</span>
+                        </li>
+                        <li>
+                            <span>配送费</span>
+                            <span>￥3.5</span>
+                        </li>
+                        <li>
+                            <span>￥
+                                <span>92.00</span> 
+                            </span>
+                        </li>
+                    </ul>
+                    <div></div>
+                </div>
+                <div>
+                    <div>
+                        <h2>
+                            收货地址
+                            <a href="javascript:;">
+                                添加新地址
+                            </a>
+                        </h2>
+                    </div>
+                </div>
+            </div>
+        </section>
     </div>
+    <script src="js/frame.js"></script>
 </body>
+
 </html>
