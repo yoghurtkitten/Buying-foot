@@ -39,6 +39,7 @@
 
         section>div:first-child {
             display: flex;
+            margin-top: 2%;
         }
 
         section div:first-child p {
@@ -64,6 +65,10 @@
 
         section>div:nth-child(2)>div:first-child {
             width: 33%;
+        }
+
+        section>div:nth-child(2)>div:first-child ul{
+            box-shadow: 0px 0px 5px #ccc;
         }
 
         ul {
@@ -273,8 +278,45 @@
         .another-info>div>p>i{
             color: #ccc;
         }
-        .another-info>div{
+        .another-info>div:not(:nth-child(3)){
             position: relative;
+        }
+        .another-info>div>div{
+            position: absolute;
+            width: 22.5%;
+            border: 1px solid #e0e0e0;
+            z-index: 10;
+            height: 17rem;
+            overflow: auto;
+            display: none;
+        }
+        .another-info>div>div::-webkit-scrollbar{
+            width: 5px;
+            background: #fff;
+        }
+        .another-info>div>div::-webkit-scrollbar-thumb{
+            background: #ccc;
+        }
+        .another-info>div>div>ul>li{
+            padding-left: 9%;
+            padding-top: 8%;
+            padding-bottom: 5%;
+        }
+        .another-info>div>div>ul>li:hover{
+            background: #e0e0e0;
+        }
+        .another-info>div>div:last-child i{
+            color: #1ec971;
+            font-size: 26px;
+        }
+        .another-info>div:nth-child(2)>div{
+            left: 11%;
+            top: 1%;
+        }
+
+        .another-info>div:nth-child(4)>div{
+            left: 18%;
+            top: 24%;
         }
     </style>
 </head>
@@ -298,17 +340,13 @@
                             </span>
                             <span>
                                 <a href="javascript:;">
-                                    < 返回商家修改
-                                </a> 
-                            </span> 
-                        </li> 
-                        <li>
-                            <span>
-                                菜品
-                            </span>
-                            <span>
-                                份数/价格
-                            </span>
+                                    < 返回商家修改 </a> </span> </li> <li>
+                                        <span>
+                                            菜品
+                                        </span>
+                                        <span>
+                                            份数/价格
+                                        </span>
                         </li>
                         <li>
                             <span>
@@ -368,7 +406,6 @@
                                 <h2>
                                     其他信息
                                 </h2>
-
                                 <div>
                                     <span>送达时间</span>
                                     <p>
@@ -377,10 +414,13 @@
                                     </p>
                                     <div>
                                         <ul>
+                                            <li>立即送达</li>
                                             <li>16:30</li>
                                             <li>17:00</li>
                                             <li>17:30</li>
                                             <li>18:00</li>
+                                            <li>18:30</li>
+                                            <li>19:00</li>
                                         </ul>
                                     </div>
                                 </div>
@@ -395,7 +435,20 @@
                                         未选择
                                         <i class="iconfont">&#xeb6d;</i>
                                     </p>
-                                    <div></div>
+                                    <div>
+                                        <ul>
+                                            <li>
+                                                <i class="iconfont">&#xe601;</i>
+                                                无需餐具
+                                            </li>
+                                            <li>1份</li>
+                                            <li>2份</li>
+                                            <li>3份</li>
+                                            <li>4份</li>
+                                            <li>5份</li>
+                                            <li>6份</li>
+                                        </ul>
+                                    </div>
                                 </div>
                                 <button>确认下单</button>
 
@@ -409,6 +462,14 @@
     <iframe src="./footer.html" frameborder="0" scrolling="no" class="frame-div" onload="this.height=100"></iframe>
 
     <script src="js/frame.js"></script>
+    <script>
+        $('.another-info>div>p').mouseenter(function () {
+            $(this).next().fadeIn();
+        })
+        $('.another-info>div>div').mouseleave(function(){
+            $(this).fadeOut();
+        })
+    </script>
 </body>
 
 </html>
