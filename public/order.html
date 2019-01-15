@@ -32,39 +32,38 @@
         section {
             width: 100%;
         }
-        
-        a{
-            text-decoration: none!important;
+
+        a {
+            text-decoration: none !important;
         }
 
         section>div:first-child {
             display: flex;
         }
 
-        section div:first-child p{
+        section div:first-child p {
             margin-right: 1%;
         }
 
-        section div:first-child>p:first-child {
+        section>div:first-child>p:first-child {
             display: inline-block;
             width: 0.6%;
             height: 21px;
             background: #000;
         }
 
-        section div:first-child>p:last-child{
+        section div:first-child>p:last-child {
             font-weight: bold;
         }
-        
+
 
         section>div:nth-child(2) {
             width: 100%;
             display: flex;
         }
 
-        section>div:nth-child(2)>div:first-child{
+        section>div:nth-child(2)>div:first-child {
             width: 33%;
-            /* box-shadow: 0px 0px 5px #ccc; */
         }
 
         ul {
@@ -101,39 +100,181 @@
         section>div:nth-child(2)>div:first-child>ul>li>span {
             display: inline-block;
         }
-        section>div:nth-child(2)>div:first-child>ul>li:first-child{
+
+        section>div:nth-child(2)>div:first-child>ul>li:first-child {
             padding-top: 10px;
             padding-bottom: 10px;
         }
-        section>div:nth-child(2)>div:first-child>ul>li:first-child>span:first-child{
+
+        section>div:nth-child(2)>div:first-child>ul>li:first-child>span:first-child {
             font-size: 16px;
             color: #333;
             font-weight: 700;
         }
-        section>div:nth-child(2)>div:first-child>ul>li:first-child>span:last-child a{
+
+        section>div:nth-child(2)>div:first-child>ul>li:first-child>span:last-child a {
             color: #666;
         }
-        section>div:nth-child(2)>div:first-child>ul>li:nth-child(2){
+
+        section>div:nth-child(2)>div:first-child>ul>li:nth-child(2) {
             font-weight: bold;
         }
-        section>div:nth-child(2)>div:first-child>ul>li:nth-child(3){
+
+        section>div:nth-child(2)>div:first-child>ul>li:nth-child(3) {
             background: #fcfaf8
         }
-        section>div:nth-child(2)>div:first-child>ul>li:last-child{
+
+        section>div:nth-child(2)>div:first-child>ul>li:last-child {
             color: #e54c2a;
             /* font-weight: bold; */
             font-size: 24px;
             padding-top: 20%;
             padding-bottom: 15%;
         }
-        section>div:nth-child(2)>div:first-child>ul>li:last-child>span>span{
+
+        section>div:nth-child(2)>div:first-child>ul>li:last-child>span>span {
             font-size: 46px;
         }
 
-        section>div:nth-child(2)>div:last-child{
+        section>div:nth-child(2)>div:last-child {
             width: 65%;
-            border: 1px solid #000;
+            /* border: 1px solid #000; */
             margin-left: 2%;
+            padding-left: 2%;
+            padding-right: 2%;
+            height: 60rem;
+            box-shadow: 0px 0px 5px #ccc;
+            background: #fff;
+            margin-bottom: 5%;
+        }
+
+        h2 {
+            font-size: 16px;
+            font-weight: 700;
+            color: #000;
+            margin-top: 6%;
+            margin-bottom: 3%;
+        }
+
+        section>div:nth-child(2)>div:last-child>h2 {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 4% !important;
+        }
+
+        section>div:nth-child(2)>div:last-child h2>a {
+            font-weight: normal;
+        }
+
+        section>div:nth-child(2)>div:last-child>div {
+            width: 100%;
+            height: 94%;
+        }
+
+        .add-address {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0 !important;
+            padding: 0;
+            height: 7rem;
+            background: #f1f1f1;
+            font-weight: normal !important;
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+        .add-address>i {
+            font-size: 20px;
+            margin-right: 0.5%;
+        }
+
+        .add-address>i,
+        .add-address>span {
+            font-style: normal;
+            display: inline-block;
+        }
+
+        .add-address+div>h2>span {
+            font-weight: normal;
+            font-size: 12px;
+            margin-left: 1%;
+            color: #ff9c00;
+        }
+
+        .add-address+div>div {
+            width: 50%;
+            height: 20%;
+            border: 1px solid #e54c2a;
+            padding-left: 3%;
+            padding-top: 2%;
+            position: relative;
+        }
+
+        .add-address+div>div>div {
+            display: inline-block;
+            position: absolute;
+            border: 17px solid transparent;
+            border-right: 17px solid #e54c2a;
+            border-bottom: 17px solid #e54c2a;
+            top: 52%;
+            right: 0%;
+        }
+
+        .add-address+div>div>div>i {
+            position: absolute;
+            font-weight: bold;
+            color: #fff;
+            top: -5px;
+        }
+
+        .add-address+div>div>p:first-child {
+            margin-bottom: 2%;
+            color: #000;
+        }
+        .another-info>div{
+            color: #333;
+            margin-bottom: 3%;
+            display: flex;
+            align-items: center;
+        }
+        .another-info>div>span{
+            margin-right: 3%;
+        }
+        .another-info>div>input{
+            border: 1px solid #e0e0e0;
+            width: 32%;   
+            padding: 5px 7px;         
+        }
+        .another-info>button{
+            margin-top: 4%;
+            border: none;
+            background: #e54c2a;
+            color: #fff;
+            font-size: 16px;
+            padding: 12px 30px;
+        }
+        .another-info>div>i{
+            color: #1ec971;
+            font-size: 48px;
+        }
+        .another-info>div>p{
+            margin: 0;
+            border: 1px solid #e0e0e0;  
+            width: 22%;
+            height: 3rem;
+            line-height: 3rem;
+            padding-left: 1%;
+            padding-right: 1%;
+            color: #666;
+            display: flex;
+            justify-content: space-between;
+        }
+        .another-info>div>p>i{
+            color: #ccc;
+        }
+        .another-info>div{
+            position: relative;
         }
     </style>
 </head>
@@ -156,9 +297,11 @@
                                 订单详情
                             </span>
                             <span>
-                                <a href="javascript:;">< 返回商家修改</a>
-                            </span>
-                        </li>
+                                <a href="javascript:;">
+                                    < 返回商家修改
+                                </a> 
+                            </span> 
+                        </li> 
                         <li>
                             <span>
                                 菜品
@@ -185,25 +328,86 @@
                         </li>
                         <li>
                             <span>￥
-                                <span>92.00</span> 
+                                <span>92.00</span>
                             </span>
                         </li>
                     </ul>
                     <div></div>
                 </div>
                 <div>
+                    <h2>
+                        收货地址
+                        <a href="javascript:;">
+                            添加新地址
+                        </a>
+                    </h2>
                     <div>
-                        <h2>
-                            收货地址
-                            <a href="javascript:;">
-                                添加新地址
-                            </a>
-                        </h2>
+                        <div>
+                            <p class="add-address">
+                                <i>+</i>
+                                <span>
+                                    添加新地址
+                                </span>
+                            </p>
+                            <div>
+                                <h2>
+                                    付款方式
+                                    <span>
+                                        推荐使用在线支付，不用找零，优惠更多
+                                    </span>
+                                </h2>
+                                <div>
+                                    <p>在线支付</p>
+                                    <p>支持微信、支付宝、QQ钱包及大部分银行卡</p>
+                                    <div>
+                                        <i class="iconfont">&#xebe6;</i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="another-info">
+                                <h2>
+                                    其他信息
+                                </h2>
+
+                                <div>
+                                    <span>送达时间</span>
+                                    <p>
+                                        立即送达
+                                        <i class="iconfont">&#xeb6d;</i>
+                                    </p>
+                                    <div>
+                                        <ul>
+                                            <li>16:30</li>
+                                            <li>17:00</li>
+                                            <li>17:30</li>
+                                            <li>18:00</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div>
+                                    <span>订单备注</span>
+                                    <input type="text" name="order_descript" id="order_descript">
+                                </div>
+                                <div>
+                                    <span>餐具份数</span>
+                                    <i class="iconfont">&#xe601;</i>
+                                    <p>
+                                        未选择
+                                        <i class="iconfont">&#xeb6d;</i>
+                                    </p>
+                                    <div></div>
+                                </div>
+                                <button>确认下单</button>
+
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </section>
     </div>
+    <iframe src="./footer.html" frameborder="0" scrolling="no" class="frame-div" onload="this.height=100"></iframe>
+
     <script src="js/frame.js"></script>
 </body>
 
