@@ -333,15 +333,20 @@
                                     <input type="text" value="${data[key].fid}">
                                 </p>
                                 <span class="unprice">
-                                ￥${data[key].un_price*data[key].number}
+                                ￥${data[key].un_price * data[key].number}
                                 </span>
                             </li>
                         </ul>
                     </div>`);
                     cal_total()
-                    food_count += parseInt(data[key].number); 
+                    food_count += parseInt(data[key].number);
                 }
                 $('.number').html(food_count)
+            })
+
+            $('.shop-car div:last-child a:last-child').click(function (e) {
+                e.preventDefault();
+                location.href = `http://127.0.0.1:5050/order.html?sid=${sid}&user=${user}`;
             })
         })
 
@@ -407,7 +412,7 @@
             $('.total').html(`${total.toFixed(2)}`)
         }
 
-        $('.shop-car>div>p>span>a').click(function(){
+        $('.shop-car>div>p>span>a').click(function () {
             $('.shop-car>div:nth-child(2)').html('');
             $('.number').html('0');
             $('.total').html('00.00');
@@ -415,7 +420,7 @@
                 url: '/user/delete_shop_car',
                 type: 'get',
                 dataType: 'json'
-            }).then(function(data){
+            }).then(function (data) {
                 console.log(data);
             })
         })

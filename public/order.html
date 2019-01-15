@@ -12,313 +12,7 @@
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/bootstrap3.7.css">
     <link rel="stylesheet" href="css/icon/iconfont.css">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-        }
-
-        body {
-            background: #f5f5f5;
-            font-size: 14px;
-            color: #666;
-            font-family: "Microsoft Yahei", Arial, Helvetica, sans-serif;
-        }
-
-        iframe {
-            width: 100%;
-        }
-
-        section {
-            width: 100%;
-        }
-
-        a {
-            text-decoration: none !important;
-        }
-
-        section>div:first-child {
-            display: flex;
-            margin-top: 2%;
-        }
-
-        section div:first-child p {
-            margin-right: 1%;
-        }
-
-        section>div:first-child>p:first-child {
-            display: inline-block;
-            width: 0.6%;
-            height: 21px;
-            background: #000;
-        }
-
-        section div:first-child>p:last-child {
-            font-weight: bold;
-        }
-
-
-        section>div:nth-child(2) {
-            width: 100%;
-            display: flex;
-        }
-
-        section>div:nth-child(2)>div:first-child {
-            width: 33%;
-        }
-
-        section>div:nth-child(2)>div:first-child ul{
-            box-shadow: 0px 0px 5px #ccc;
-        }
-
-        ul {
-            list-style: none;
-            background: #fff;
-            margin: 0px;
-            padding: 0px;
-        }
-
-        section>div:nth-child(2)>div:first-child>div {
-            width: 100%;
-            height: 22px;
-            background: url('img/order-bot-bg1.png') no-repeat;
-        }
-
-        section>div:nth-child(2)>div:first-child>ul>li {
-            width: 100%;
-            height: 54px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: nowrap;
-            border-bottom: 1px solid #eee;
-            padding-left: 8%;
-            padding-right: 8%;
-        }
-
-        section>div:nth-child(2)>div:first-child>ul>li:last-child {
-            justify-content: flex-end;
-            border-bottom: none;
-
-        }
-
-        section>div:nth-child(2)>div:first-child>ul>li>span {
-            display: inline-block;
-        }
-
-        section>div:nth-child(2)>div:first-child>ul>li:first-child {
-            padding-top: 10px;
-            padding-bottom: 10px;
-        }
-
-        section>div:nth-child(2)>div:first-child>ul>li:first-child>span:first-child {
-            font-size: 16px;
-            color: #333;
-            font-weight: 700;
-        }
-
-        section>div:nth-child(2)>div:first-child>ul>li:first-child>span:last-child a {
-            color: #666;
-        }
-
-        section>div:nth-child(2)>div:first-child>ul>li:nth-child(2) {
-            font-weight: bold;
-        }
-
-        section>div:nth-child(2)>div:first-child>ul>li:nth-child(3) {
-            background: #fcfaf8
-        }
-
-        section>div:nth-child(2)>div:first-child>ul>li:last-child {
-            color: #e54c2a;
-            /* font-weight: bold; */
-            font-size: 24px;
-            padding-top: 20%;
-            padding-bottom: 15%;
-        }
-
-        section>div:nth-child(2)>div:first-child>ul>li:last-child>span>span {
-            font-size: 46px;
-        }
-
-        section>div:nth-child(2)>div:last-child {
-            width: 65%;
-            /* border: 1px solid #000; */
-            margin-left: 2%;
-            padding-left: 2%;
-            padding-right: 2%;
-            height: 60rem;
-            box-shadow: 0px 0px 5px #ccc;
-            background: #fff;
-            margin-bottom: 5%;
-        }
-
-        h2 {
-            font-size: 16px;
-            font-weight: 700;
-            color: #000;
-            margin-top: 6%;
-            margin-bottom: 3%;
-        }
-
-        section>div:nth-child(2)>div:last-child>h2 {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 4% !important;
-        }
-
-        section>div:nth-child(2)>div:last-child h2>a {
-            font-weight: normal;
-        }
-
-        section>div:nth-child(2)>div:last-child>div {
-            width: 100%;
-            height: 94%;
-        }
-
-        .add-address {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin: 0 !important;
-            padding: 0;
-            height: 7rem;
-            background: #f1f1f1;
-            font-weight: normal !important;
-            font-size: 14px;
-            cursor: pointer;
-        }
-
-        .add-address>i {
-            font-size: 20px;
-            margin-right: 0.5%;
-        }
-
-        .add-address>i,
-        .add-address>span {
-            font-style: normal;
-            display: inline-block;
-        }
-
-        .add-address+div>h2>span {
-            font-weight: normal;
-            font-size: 12px;
-            margin-left: 1%;
-            color: #ff9c00;
-        }
-
-        .add-address+div>div {
-            width: 50%;
-            height: 20%;
-            border: 1px solid #e54c2a;
-            padding-left: 3%;
-            padding-top: 2%;
-            position: relative;
-        }
-
-        .add-address+div>div>div {
-            display: inline-block;
-            position: absolute;
-            border: 17px solid transparent;
-            border-right: 17px solid #e54c2a;
-            border-bottom: 17px solid #e54c2a;
-            top: 52%;
-            right: 0%;
-        }
-
-        .add-address+div>div>div>i {
-            position: absolute;
-            font-weight: bold;
-            color: #fff;
-            top: -5px;
-        }
-
-        .add-address+div>div>p:first-child {
-            margin-bottom: 2%;
-            color: #000;
-        }
-        .another-info>div{
-            color: #333;
-            margin-bottom: 3%;
-            display: flex;
-            align-items: center;
-        }
-        .another-info>div>span{
-            margin-right: 3%;
-        }
-        .another-info>div>input{
-            border: 1px solid #e0e0e0;
-            width: 32%;   
-            padding: 5px 7px;         
-        }
-        .another-info>button{
-            margin-top: 4%;
-            border: none;
-            background: #e54c2a;
-            color: #fff;
-            font-size: 16px;
-            padding: 12px 30px;
-        }
-        .another-info>div>i{
-            color: #1ec971;
-            font-size: 48px;
-        }
-        .another-info>div>p{
-            margin: 0;
-            border: 1px solid #e0e0e0;  
-            width: 22%;
-            height: 3rem;
-            line-height: 3rem;
-            padding-left: 1%;
-            padding-right: 1%;
-            color: #666;
-            display: flex;
-            justify-content: space-between;
-        }
-        .another-info>div>p>i{
-            color: #ccc;
-        }
-        .another-info>div:not(:nth-child(3)){
-            position: relative;
-        }
-        .another-info>div>div{
-            position: absolute;
-            width: 22.5%;
-            border: 1px solid #e0e0e0;
-            z-index: 10;
-            height: 17rem;
-            overflow: auto;
-            display: none;
-        }
-        .another-info>div>div::-webkit-scrollbar{
-            width: 5px;
-            background: #fff;
-        }
-        .another-info>div>div::-webkit-scrollbar-thumb{
-            background: #ccc;
-        }
-        .another-info>div>div>ul>li{
-            padding-left: 9%;
-            padding-top: 8%;
-            padding-bottom: 5%;
-        }
-        .another-info>div>div>ul>li:hover{
-            background: #e0e0e0;
-        }
-        .another-info>div>div:last-child i{
-            color: #1ec971;
-            font-size: 26px;
-        }
-        .another-info>div:nth-child(2)>div{
-            left: 11%;
-            top: 1%;
-        }
-
-        .another-info>div:nth-child(4)>div{
-            left: 18%;
-            top: 24%;
-        }
-    </style>
+    <link rel="stylesheet" href="css/order.css">
 </head>
 
 <body>
@@ -340,33 +34,16 @@
                             </span>
                             <span>
                                 <a href="javascript:;">
-                                    < 返回商家修改 </a> </span> </li> <li>
-                                        <span>
-                                            菜品
-                                        </span>
-                                        <span>
-                                            份数/价格
-                                        </span>
-                        </li>
+                                    < 返回商家修改 
+                                </a> 
+                            </span> 
+                        </li> 
                         <li>
                             <span>
-                                迷你全家福
+                                菜品
                             </span>
                             <span>
-                                ￥52*2
-                            </span>
-                        </li>
-                        <li>
-                            <span>包装费</span>
-                            <span>￥2</span>
-                        </li>
-                        <li>
-                            <span>配送费</span>
-                            <span>￥3.5</span>
-                        </li>
-                        <li>
-                            <span>￥
-                                <span>92.00</span>
+                                份数/价格
                             </span>
                         </li>
                     </ul>
@@ -462,7 +139,57 @@
     <iframe src="./footer.html" frameborder="0" scrolling="no" class="frame-div" onload="this.height=100"></iframe>
 
     <script src="js/frame.js"></script>
+    <script src="js/ajax.js"></script>
+
     <script>
+        $(function(){
+            var urlParams = new URLSearchParams(location.search);
+            var sid = urlParams.get('sid');
+            var user = urlParams.get('user');
+            ajax({
+                url: '/user/getOrderInfo',
+                type: 'post',
+                data: `sid=${sid}&user=${user}`,
+                dataType: 'json'
+            }).then(function(data){
+                console.log(data);
+                $('section>div:first-child>p:nth-child(2)').html(`${data[0].shop_name} >`);
+                var li_content = '';
+                var total_price = 0;
+                for (let i = 0; i < data.length; i++) {
+                    const obj = data[i];
+                    li_content += `
+                    <li>
+                        <span>
+                            ${obj.name}
+                        </span>
+                        <span>
+                            ￥${obj.un_price}*${obj.number}
+                        </span>
+                    </li>
+                    `;
+                    total_price += parseFloat(obj.un_price) * parseFloat(obj.number);
+                }
+                li_content += `
+                    <li>
+                    <span>包装费</span>
+                    <span>￥2</span>
+                    </li>
+                    <li>
+                        <span>配送费</span>
+                        <span>￥${data[0].deliver_fee}</span>
+                    </li>
+                    <li>
+                        <span>￥
+                            <span>${total_price.toFixed(2)}</span>
+                        </span>
+                    </li>
+                `;
+                var ul = $('section>div:last-child>div:first-child>ul');
+                ul.html(`${ul.html()}${li_content}`)
+                // alert(ul.html())
+            })
+        })
         $('.another-info>div>p').mouseenter(function () {
             $(this).next().fadeIn();
         })
