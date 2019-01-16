@@ -189,18 +189,12 @@ iframe{
     margin-bottom: -23px;
     margin-right: 150px;
 }
-.test{
-    padding-top: 30px;
-    display: none;
-    margin-left: 0;
-}
 .slider{
     width: 100%;
     height: auto;
     float: left;
     margin-top: -28.5%;
     margin-left: 17.5%;
-    
 }
 @keyframes welcomeAnimate{
     0%{

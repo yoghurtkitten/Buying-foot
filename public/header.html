@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,6 +12,7 @@
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/bootstrap.css">
     <link rel="stylesheet" href="css/content/header.css">
+    <link rel="stylesheet" href="css/icon/iconfont.css">
 
     <script>
         $(function () {
@@ -23,26 +25,33 @@
                 if (scrollTop <= fixedDom.offsetTop + 10) {
                     fixedDom.classList.remove("fixed");
                 }
-            } 
-
-            if ($('.hidden-sm').css('display') == 'none') {
-                $('.show-btn').css('display', 'inline');
-            } else {
-                $('.show-btn').css('display', 'none')
             }
-            $(window).resize(function () {
-                if ($('.hidden-sm').css('display') == 'none') {
-                    $('.show-btn').css('display', 'inline')
+
+            $('.show-btn').click(function(){
+                if ($('.header-info').is(':visible')) {
+                    $('.header-info').hide();
                 } else {
-                    $('#p2').removeClass('show');
-                    $('.show-btn').css('display', 'none')
+                    $('.header-info').show();
                 }
+            })
+            function header() {
+                if ($('.header-menu').is(':hidden')) {
+                    $('.show-btn').show()
+                } else {
+                    $('.show-btn').hide()
+                    $('.header-info').hide()
+                }
+            }
+            header()
+            $(window).resize(function () {
+                header()
             })
 
         })
     </script>
 
 </head>
+
 <body>
     <div class="container-fluid">
         <header class="header">
@@ -50,47 +59,33 @@
                 <div class="col-md-2 col-sm-3 col-xs-6">
                     <div class="logo"><a href="index.html"><img src="img/logo.png" alt=""></a></div>
                 </div>
-
                 <div class="col-md-10 col-sm-9 col-xs-6">
-                    <div class="mgea-full-width">
-                        <div class="header-right">
-                            <div class="card">
-                                <div class="card-header">
-                                    <button type="button" class="btn show-btn navbar-toggler" data-toggle="collapse" data-target="#p2">
-                                        <span class="navbar-toggler-icon"></span>
-                                    </button>
-                                </div>
-                    
-                                <div id="p2" class="collapse" data-parent="#parent">
-                                    <div class="card-body hide-list">
-                                        <ul class="list-unstyled m-0">
-                                            <li>
-                                                <a href="#"> 首页</a></li>
-                                            <li>
-                                                <a href="#"> 加盟</a></li>
-                                            <li>
-                                                <a href="#"> 点外卖</a></li>
-                                            <li>
-                                                <a href="#"> 关于我们</a></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="header-menu hidden-sm hidden-xs list-info">
-                                <ul>
-                                    <li><a href="#">首页</a></li>
-                                    <li><a href="#">加盟</a></li>
-                                    <li><a href="#">点外卖</a></li>
-                                    <li><a href="#">关于我们</a></li>
-                                </ul>
-                            </div>
+                    <div class="header-right">
+                        <div class="show-btn">
+                            <i class="iconfont">&#xebd8;</i>
+                        </div>
+                        <div class="header-info">
+                            <ul>
+                                <li><a href="#">首页</a></li>
+                                <li><a href="#">加盟</a></li>
+                                <li><a href="user_index.html">点外卖</a></li>
+                                <li><a href="#">关于我们</a></li>
+                            </ul>
+                        </div>
+                        <div class="header-menu list-info">
+                            <ul>
+                                <li><a href="#">首页</a></li>
+                                <li><a href="#">加盟</a></li>
+                                <li><a href="user_index.html">点外卖</a></li>
+                                <li><a href="#">关于我们</a></li>
+                            </ul>
                         </div>
                     </div>
                 </div>
             </div>
         </header>
-    </div> 
-      
+    </div>
+
 </body>
+
 </html>

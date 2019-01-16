@@ -17,12 +17,11 @@
 
 <body>
     <iframe src="./header.html" frameborder="0" scrolling="no" class="frame-div" onload="this.height=100"></iframe>
-
     <div class="container">
         <section>
             <div>
                 <p></p>
-                <p>半秋山西餐厅（鲁广店） ></p>
+                <p></p>
                 <p> 确认购买</p>
             </div>
             <div>
@@ -56,34 +55,6 @@
                             添加新地址
                         </a>
                     </h2>
-                    <slider id="modal">
-                        <h2>添加新地址</h2>
-                        <div>
-                            <span>姓名</span>
-                            <input type="text" name="" id="uname" placeholder="请输入您的姓名">
-                        </div>
-                        <div>
-                            <span>性别</span>
-                            <input type="radio" name="gender">先生
-                            <input type="radio" name="gender">女士
-                        </div>
-                        <div>
-                            <span>位置</span>
-                            <input type="text" name="" id="address" placeholder="请输入小区、大厦或者学校">
-                        </div>
-                        <div>
-                            <span>详细地址</span>
-                            <input type="text" name="" id="detail_address" placeholder="单元、门牌号">
-                        </div>
-                        <div>
-                            <span>手机号</span>
-                            <input type="text" name="" id="user_phone" placeholder="请输入您的手机号">
-                        </div>
-                        <div>
-                            <button>保存</button>
-                            <button>取消</button>
-                        </div>
-                    </slider>
                     <div>
                         <div>
                             <p class="add-address">
@@ -163,10 +134,38 @@
                 </div>
             </div>
         </section>
-
     </div>
     <iframe src="./footer.html" frameborder="0" scrolling="no" class="frame-div" onload="this.height=100"></iframe>
-
+    <div class="modal-bg"></div>
+    <slider id="modal">
+        <h2>添加新地址</h2>
+        <div>
+            <label>姓名</label>
+            <input type="text" name="" id="uname" placeholder="请输入您的姓名">
+        </div>
+        <div>
+            <label>性别</label>
+            <input type="radio" name="gender" value="0"><span>先生</span>
+            <input type="radio" name="gender" value="1"><span>女士</span>
+        </div>
+        <div>
+            <label>位置</label>
+            <input type="text" name="" id="address" placeholder="请输入小区、大厦或者学校">
+        </div>
+        <div>
+            <label>详细地址</label>
+            <input type="text" name="" id="detail_address" placeholder="单元、门牌号">
+            <i class="iconfont">&#xe64d;</i>
+        </div>
+        <div>
+            <label>手机号</label>
+            <input type="text" name="" id="user_phone" placeholder="请输入您的手机号">
+        </div>
+        <div>
+            <button data-save="">保存</button>
+            <span data-cancal="">取消</span>
+        </div>
+    </slider>
     <script src="js/frame.js"></script>
     <script src="js/ajax.js"></script>
 
@@ -224,12 +223,31 @@
             $('[data-cover]').on('click', 'li', function () {
                 $(this).parent().parent().prev().html(`${$(this).html()} <i class="iconfont">&#xebe6;</i>`);
             })
-        })
-        $('.another-info>div>p').mouseenter(function () {
-            $(this).next().show();
-        })
-        $('.another-info>div>div').mouseleave(function () {
-            $(this).hide();
+            $('.add-address').click(function () {
+                $('#modal').show();
+                $('.modal-bg').show();
+            })
+            $('span[data-cancal]').click(function(){
+                $('.modal-bg').hide();
+                $('#modal').hide();
+            })
+            $('.another-info>div>p').mouseenter(function () {
+                $(this).next().show();
+            })
+            $('.another-info>div>div').mouseleave(function () {
+                $(this).hide();
+            })
+            $('button[data-save]').click(function(){
+                var gender = $('input[name=gender]:checked').val();
+                /* ajax({
+                    url:'/user/save_address',
+                    type:'post',
+                    data:`phone=${user}&receiver=${uname.value}&province=`,
+                    dataType:'json'
+                }).then(function(data){
+                    console.log(data)
+                }) */
+            })
         })
     </script>
 </body>
