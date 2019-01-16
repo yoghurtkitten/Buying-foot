@@ -10,52 +10,44 @@
     <script src="js/bootstrap.min.js"></script>
     <script src="js/popper.min.js"></script>
     <link rel="stylesheet" href="css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/bootstrap3.7.css">
+    <link rel="stylesheet" href="css/bootstrap.css">
     <link rel="stylesheet" href="css/index.css">
     <link rel="stylesheet" href="css/icon/iconfont.css">
 
     <script>
         $(function () {
 
-            $('#search').click(function () {
-                $('.header-right').fadeOut();
-                $('#search').fadeOut();
-                setTimeout(() => {
-                    $('.test').fadeIn();
-                }, 500)
-
-            });
-            $('.close').click(function () {
-                $('.test').fadeOut();
-                setTimeout(() => {
-                    $('.header-right').fadeIn();
-                    $('#search').fadeIn();
-                }, 500)
+            $('.show-btn').click(function(){
+                if ($('.header-info').is(':visible')) {
+                    $('.header-info').hide();
+                } else {
+                    $('.header-info').show();
+                }
             })
 
             var fixedDom = $('.header')[0];
 
-            $('.server-img').css('opacity','0');
-            $('.server-title').css('opacity','0');
-            $('.server-list').css('opacity','0');
-            $('.phone-image').css('display','none');
+            $('.server-img').css('opacity', '0');
+            $('.server-title').css('opacity', '0');
+            $('.server-list').css('opacity', '0');
+            $('.phone-image').css('display', 'none');
 
 
             window.onscroll = function () {
                 var scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
                 if (scrollTop > fixedDom.offsetTop) {
-                    $('.server-img').css({'opacity':'1','animation-name':'upAnimate','animation-duration':'2s','animation-timing-function':'ease','animation-iteration-count':'1','animation-fill-mode':'forwards'});
-                    $('.server-title').css({'opacity':'1','animation-name':'upAnimate','animation-duration':'2s','animation-timing-function':'ease','animation-iteration-count':'1','animation-fill-mode':'forwards'});
-                    $('.server-list').css({'opacity':'1','animation-name':'upAnimate','animation-duration':'2s','animation-timing-function':'ease','animation-iteration-count':'1','animation-fill-mode':'forwards'});
-                    $('.phone-image').css({'opacity':'1','animation-name':'upAnimate','animation-duration':'2s','animation-timing-function':'ease','animation-iteration-count':'1','animation-fill-mode':'forwards','display':'inline'});
+                    $('.server-img').css({ 'opacity': '1', 'animation-name': 'upAnimate', 'animation-duration': '2s', 'animation-timing-function': 'ease', 'animation-iteration-count': '1', 'animation-fill-mode': 'forwards' });
+                    $('.server-title').css({ 'opacity': '1', 'animation-name': 'upAnimate', 'animation-duration': '2s', 'animation-timing-function': 'ease', 'animation-iteration-count': '1', 'animation-fill-mode': 'forwards' });
+                    $('.server-list').css({ 'opacity': '1', 'animation-name': 'upAnimate', 'animation-duration': '2s', 'animation-timing-function': 'ease', 'animation-iteration-count': '1', 'animation-fill-mode': 'forwards' });
+                    $('.phone-image').css({ 'opacity': '1', 'animation-name': 'upAnimate', 'animation-duration': '2s', 'animation-timing-function': 'ease', 'animation-iteration-count': '1', 'animation-fill-mode': 'forwards', 'display': 'inline' });
 
                     fixedDom.classList.add("fixed");
                 }
                 if (scrollTop <= fixedDom.offsetTop + 10) {
-                    $('.server-img').css({'opacity':'0','animation':'none'});
-                    $('.server-title').css({'opacity':'0','animation':'none'});
-                    $('.server-list').css({'opacity':'0','animation':'none'});
-                    $('.phone-image').css({'opacity':'0','animation':'none'});
+                    $('.server-img').css({ 'opacity': '0', 'animation': 'none' });
+                    $('.server-title').css({ 'opacity': '0', 'animation': 'none' });
+                    $('.server-list').css({ 'opacity': '0', 'animation': 'none' });
+                    $('.phone-image').css({ 'opacity': '0', 'animation': 'none' });
 
                     fixedDom.classList.remove("fixed");
                 }
@@ -113,20 +105,18 @@
                 })
             })
 
-            if ($('.hidden-sm').css('display') == 'none') {
-                $('.show-btn').css('display', 'inline');
-            } else {
-                $('.show-btn').css('display', 'none')
-            }
-            $(window).resize(function () {
-                if ($('.hidden-sm').css('display') == 'none') {
-                    $('.show-btn').css('display', 'inline')
+            function header() {
+                if ($('.header-menu').is(':hidden')) {
+                    $('.show-btn').show()
                 } else {
-                    $('#p2').removeClass('show');
-                    $('.show-btn').css('display', 'none')
+                    $('.show-btn').hide()
+                    $('.header-info').hide()
                 }
+            }
+            header()
+            $(window).resize(function () {
+                header()
             })
-
         })
     </script>
 </head>
@@ -139,53 +129,26 @@
                 <div class="col-md-2 col-sm-3 col-xs-6">
                     <div class="logo"><a href="index.html"><img src="img/logo.png" alt=""></a></div>
                 </div>
-
                 <div class="col-md-10 col-sm-9 col-xs-6">
-                    <div class="mgea-full-width">
-                        <div class="header-right">
-                            <div class="card">
-                                <div class="card-header">
-                                    <button type="button" class="btn show-btn navbar-toggler" data-toggle="collapse" data-target="#p2">
-                                        <span class="navbar-toggler-icon"></span>
-                                    </button>
-                                </div>
-                    
-                                <div id="p2" class="collapse" data-parent="#parent">
-                                    <div class="card-body">
-                                        <ul class="list-unstyled">
-                                            <li>
-                                                <a href="#"> 首页</a></li>
-                                            <li>
-                                                <a href="#"> 加盟</a></li>
-                                            <li>
-                                                <a href="user_index.html"> 点外卖</a></li>
-                                            <li>
-                                                <a href="#"> 关于我们</a></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="header-menu hidden-sm hidden-xs list-info">
-                                <ul>
-                                    <li><a href="#">首页</a></li>
-                                    <li><a href="#">加盟</a></li>
-                                    <li><a href="user_index.html">点外卖</a></li>
-                                    <li><a href="#">关于我们</a></li>
-                                    <li id="search"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></li>
-                                </ul>
-                            </div>
+                    <div class="header-right">
+                        <div class="show-btn">
+                            <i class="iconfont">&#xebd8;</i>
                         </div>
-                        <div class="test">
-                            <div class="input-group inner-test">
-                                <input type="search" class="form-control search-cotain" placeholder="Search for...">
-                                <span class="input-group-btn">
-                                    <button class="btn btn-default search-icon" type="button"><span class="glyphicon glyphicon-search"
-                                            aria-hidden="true"></span></button>
-                                    <button class="btn btn-default search-icon" type="button"><span class="glyphicon glyphicon-remove close"
-                                            aria-hidden="true"></span></button>
-                                </span>
-                            </div>
+                        <div class="header-info">
+                            <ul>
+                                <li><a href="#">首页</a></li>
+                                <li><a href="#">加盟</a></li>
+                                <li><a href="user_index.html">点外卖</a></li>
+                                <li><a href="#">关于我们</a></li>
+                            </ul>
+                        </div>
+                        <div class="header-menu list-info">
+                            <ul>
+                                <li><a href="#">首页</a></li>
+                                <li><a href="#">加盟</a></li>
+                                <li><a href="user_index.html">点外卖</a></li>
+                                <li><a href="#">关于我们</a></li>
+                            </ul>
                         </div>
                     </div>
                 </div>
@@ -289,24 +252,24 @@
 
     </div>
     <script type="text/javascript">
-        function reinitIframe(){
+        function reinitIframe() {
 
             var ifram = $(".frame-div");
 
-            try{
-                ifram.each(function(){
+            try {
+                ifram.each(function () {
                     var bHeight = this.contentWindow.document.body.scrollHeight;
                     var dHeight = this.contentWindow.document.documentElement.scrollHeight;
                     var height = Math.max(bHeight, dHeight);
                     this.height = height;
 
                 })
-            }catch (ex){}
+            } catch (ex) { }
         }
         window.setInterval("reinitIframe()", 200);
-        
+
         $('.buying').click(function () {
-            location.href='http://127.0.0.1:5050/user_index.html';
+            location.href = 'http://127.0.0.1:5050/user_index.html';
         })
     </script>
 </body>

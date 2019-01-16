@@ -9,27 +9,11 @@
     <script src="js/bootstrap.min.js"></script>
     <script src="js/popper.min.js"></script>
     <link rel="stylesheet" href="css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/bootstrap3.7.css">
+    <link rel="stylesheet" href="css/bootstrap.css">
     <link rel="stylesheet" href="css/content/header.css">
 
     <script>
         $(function () {
-            $('#search').click(function () {
-                $('.header-right').fadeOut();
-                $('#search').fadeOut();
-                setTimeout(() => {
-                    $('.test').fadeIn();
-                }, 500)
-
-            });
-            $('.close').click(function () {
-                $('.test').fadeOut();
-                setTimeout(() => {
-                    $('.header-right').fadeIn();
-                    $('#search').fadeIn();
-                }, 500)
-            })
-
             var fixedDom = $('.header')[0];
             window.onscroll = function () {
                 var scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
@@ -99,19 +83,7 @@
                                     <li><a href="#">加盟</a></li>
                                     <li><a href="#">点外卖</a></li>
                                     <li><a href="#">关于我们</a></li>
-                                    <li id="search"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></li>
                                 </ul>
-                            </div>
-                        </div>
-                        <div class="test">
-                            <div class="input-group inner-test">
-                                <input type="search" class="form-control search-cotain" placeholder="Search for...">
-                                <span class="input-group-btn">
-                                    <button class="btn btn-default search-icon" type="button"><span class="glyphicon glyphicon-search"
-                                            aria-hidden="true"></span></button>
-                                    <button class="btn btn-default search-icon" type="button"><span class="glyphicon glyphicon-remove close"
-                                            aria-hidden="true"></span></button>
-                                </span>
                             </div>
                         </div>
                     </div>

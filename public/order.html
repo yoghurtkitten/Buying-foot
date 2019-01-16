@@ -10,7 +10,7 @@
     <script src="js/bootstrap.min.js"></script>
     <script src="js/popper.min.js"></script>
     <link rel="stylesheet" href="css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/bootstrap3.7.css">
+    <link rel="stylesheet" href="css/bootstrap.css">
     <link rel="stylesheet" href="css/icon/iconfont.css">
     <link rel="stylesheet" href="css/order.css">
 </head>
@@ -34,10 +34,10 @@
                             </span>
                             <span>
                                 <a href="javascript:;">
-                                    < 返回商家修改 
-                                </a> 
-                            </span> 
-                        </li> 
+                                    返回商家修改
+                                </a>
+                            </span>
+                        </li>
                         <li>
                             <span>
                                 菜品
@@ -49,13 +49,41 @@
                     </ul>
                     <div></div>
                 </div>
-                <div>
-                    <h2>
+                <div data-right="">
+                    <h2 data-target="#modal" data-toggle="my-modal">
                         收货地址
                         <a href="javascript:;">
                             添加新地址
                         </a>
                     </h2>
+                    <slider id="modal">
+                        <h2>添加新地址</h2>
+                        <div>
+                            <span>姓名</span>
+                            <input type="text" name="" id="uname" placeholder="请输入您的姓名">
+                        </div>
+                        <div>
+                            <span>性别</span>
+                            <input type="radio" name="gender">先生
+                            <input type="radio" name="gender">女士
+                        </div>
+                        <div>
+                            <span>位置</span>
+                            <input type="text" name="" id="address" placeholder="请输入小区、大厦或者学校">
+                        </div>
+                        <div>
+                            <span>详细地址</span>
+                            <input type="text" name="" id="detail_address" placeholder="单元、门牌号">
+                        </div>
+                        <div>
+                            <span>手机号</span>
+                            <input type="text" name="" id="user_phone" placeholder="请输入您的手机号">
+                        </div>
+                        <div>
+                            <button>保存</button>
+                            <button>取消</button>
+                        </div>
+                    </slider>
                     <div>
                         <div>
                             <p class="add-address">
@@ -89,7 +117,7 @@
                                         立即送达
                                         <i class="iconfont">&#xeb6d;</i>
                                     </p>
-                                    <div>
+                                    <div class="time">
                                         <ul>
                                             <li>立即送达</li>
                                             <li>16:30</li>
@@ -112,7 +140,7 @@
                                         未选择
                                         <i class="iconfont">&#xeb6d;</i>
                                     </p>
-                                    <div>
+                                    <div data-cover=''>
                                         <ul>
                                             <li>
                                                 <i class="iconfont">&#xe601;</i>
@@ -135,6 +163,7 @@
                 </div>
             </div>
         </section>
+
     </div>
     <iframe src="./footer.html" frameborder="0" scrolling="no" class="frame-div" onload="this.height=100"></iframe>
 
@@ -142,7 +171,7 @@
     <script src="js/ajax.js"></script>
 
     <script>
-        $(function(){
+        $(function () {
             var urlParams = new URLSearchParams(location.search);
             var sid = urlParams.get('sid');
             var user = urlParams.get('user');
@@ -151,7 +180,7 @@
                 type: 'post',
                 data: `sid=${sid}&user=${user}`,
                 dataType: 'json'
-            }).then(function(data){
+            }).then(function (data) {
                 console.log(data);
                 $('section>div:first-child>p:nth-child(2)').html(`${data[0].shop_name} >`);
                 var li_content = '';
@@ -159,7 +188,7 @@
                 for (let i = 0; i < data.length; i++) {
                     const obj = data[i];
                     li_content += `
-                    <li>
+                    <li class="food">
                         <span>
                             ${obj.name}
                         </span>
@@ -187,14 +216,20 @@
                 `;
                 var ul = $('section>div:last-child>div:first-child>ul');
                 ul.html(`${ul.html()}${li_content}`)
-                // alert(ul.html())
+            })
+
+            $('.time').on('click', 'li', function () {
+                $(this).parent().parent().prev().html(`${$(this).html()} <i class="iconfont">&#xebe6;</i>`);
+            })
+            $('[data-cover]').on('click', 'li', function () {
+                $(this).parent().parent().prev().html(`${$(this).html()} <i class="iconfont">&#xebe6;</i>`);
             })
         })
         $('.another-info>div>p').mouseenter(function () {
-            $(this).next().fadeIn();
+            $(this).next().show();
         })
-        $('.another-info>div>div').mouseleave(function(){
-            $(this).fadeOut();
+        $('.another-info>div>div').mouseleave(function () {
+            $(this).hide();
         })
     </script>
 </body>

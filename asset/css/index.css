@@ -48,16 +48,9 @@ iframe{
     height: 2.5rem;
     animation: my-btn-Animate 1s ease 1;
     animation-fill-mode: forwards;
+    color: #fff;
 }
-.form-control{
-    padding-top: 24px;
-    padding-bottom: 24px;
-}
-.search-icon{
-    height: 50px;
-    width: 50%;
-    border-left: transparent;
-}
+
 .list-info ul {
     display: flex;
     list-style: none;
@@ -69,6 +62,11 @@ iframe{
     line-height: 115px;
     font-size: 0.8rem;
     padding-left: 2rem;
+}
+@media screen and (max-width:1540px){
+    .my-btn{
+        font-size: 16px;
+    }
 }
 @media screen and (max-width:1540px) and (min-width:981px){
     .my-btn{
@@ -96,6 +94,9 @@ iframe{
     ul li .main-title{
         font-size: 1.1rem!important;
     }
+    .header-menu{
+        display: none!important;
+    }
 }
 @media screen and (max-width:982px) and (min-width:849px){
     .loves{
@@ -108,6 +109,7 @@ iframe{
         width: 10%;
     }
 }
+
 @media screen and (max-width:850px) and (min-width:741px){
 
     .detail{
@@ -294,35 +296,31 @@ iframe{
 }
 .header-right{
     float: right;
+    display: flex;
+    height: 100%;
+    align-items: center;
+    position: relative;
 }
-#p2{
-    height: 165px!important;
-    width: 130px;
+
+.header-info{
     position: absolute;
-    left: -83px;
-    top: 56px;
-    z-index: 1000;
-    background-color: #fff;
+    width: 300px;
+    right: 0;
     font-size: 16px;
-    border-radius: 3%;
-    display: none;
-    box-shadow: 0px 0px 5px #ccc;
 }
-#p2 ul li{
-    margin-top: 10%;
+
+.header-info ul li{
+    float: left;
+    margin-left: 5%;
 }
-#p2 ul li a{
+.header-info ul li a{
+    color: #212529;
+    font-weight: bold;
     text-decoration: none;
-    color: #535353;
-}
-#p2 ul li a:hover{
-    text-decoration: none;
-    color: #e54c2a;
 }
 .server-img{
     margin-top: 4%;
     margin-bottom: 2%;
-    /* animation: upAnimate 2s ease 1 forwards;     */
 }
 @keyframes upAnimate{
     0%{
@@ -336,7 +334,6 @@ iframe{
 }
 .server-title{
     font-size: 40px;
-    /* animation: upAnimate 2s ease 1 forwards;     */
 }
 ul{
     list-style: none;
@@ -399,7 +396,6 @@ ul li .main-title{
 } 
 .main-title_out{
     transition: transform 0.5s, transform-origin 0.5s;
-    /* transform:scale(0.5); */
     transform-origin: 10% 50%; 
     color: #333;
 } 
@@ -409,11 +405,8 @@ ul li .main-title{
 }
 .server-left{
     padding-left: 4%;
-   /*  visibility: visible;
-    visibility: hidden; */
 }
 .phone-image{
-    /* padding-left: 15%; */
     animation: upAnimate 2s ease 1 forwards;        
 }
 .carousel{
@@ -426,8 +419,6 @@ ul li .main-title{
     top: 40%;
 }
 .carousel-indicators .active {
-    width: 12px;
-    height: 12px;
     margin: 0;
     background-color: #e54c2a;
 }
@@ -437,22 +428,18 @@ ul li .main-title{
     margin-left: 13%;
 }
 
-.show-btn{
-    display: none;
-    margin-top: 20px;
-}
-
-.card{
-    border: none;
-}
-.card-header{
-    padding: 0;
-    border: none;
-    background: none;
-}
 #demo{
     width: 100%;
 }
 .carousel-item img{
     width: 100%;
+}
+.show-btn{
+    width: 50px;
+    height: 50px;
+    z-index: 100;
+    cursor: pointer;
+}
+.show-btn i{
+    font-size: 30px;
 }

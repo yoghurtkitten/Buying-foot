@@ -110,9 +110,10 @@ section>div:nth-child(2)>div:first-child>ul>li:nth-child(2) {
     font-weight: bold;
 }
 
-section>div:nth-child(2)>div:first-child>ul>li:nth-child(3) {
-    background: #fcfaf8
+.food{
+    background: #fcfaf8!important;
 }
+
 
 section>div:nth-child(2)>div:first-child>ul>li:last-child {
     color: #e54c2a;
@@ -302,4 +303,18 @@ section>div:nth-child(2)>div:last-child>div {
 .another-info>div:nth-child(4)>div{
     left: 18%;
     top: 24%;
+}
+div[data-right]{
+    position: relative;
+}
+#modal{
+    position: absolute;
+    background: #fff;
+    width: 70%;
+    border: 1px solid #000;
+    z-index: 15;
+}
+#model>div{
+    display: flex;
+
 }

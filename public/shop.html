@@ -10,7 +10,7 @@
     <script src="js/bootstrap.min.js"></script>
     <script src="js/popper.min.js"></script>
     <link rel="stylesheet" href="css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/bootstrap3.7.css">
+    <link rel="stylesheet" href="css/bootstrap.css">
     <link rel="stylesheet" href="css/content/header.css">
     <link rel="stylesheet" href="css/icon/iconfont.css">
     <link rel="stylesheet" href="css/shop.css">
@@ -262,7 +262,7 @@
                                     <button>-</button>
                                     <input type="text" value="1">
                                     <button>+</button>
-                                    <input type="text" value="${f_id}">
+                                    <input type="hidden" value="${f_id}">
                                 </p>
                                 <span class="unprice">
                                 ${un_price}
@@ -330,7 +330,7 @@
                                     <button>-</button>
                                     <input type="text" value="${data[key].number}">
                                     <button>+</button>
-                                    <input type="text" value="${data[key].fid}">
+                                    <input type="hidden" value="${data[key].fid}">
                                 </p>
                                 <span class="unprice">
                                 ￥${data[key].un_price * data[key].number}
