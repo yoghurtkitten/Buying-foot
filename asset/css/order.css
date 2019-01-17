@@ -168,7 +168,7 @@ section>div:nth-child(2)>div:last-child>div {
     align-items: center;
     margin: 0 !important;
     padding: 0;
-    height: 7rem;
+    height: 4.99rem;
     background: #f1f1f1;
     font-weight: normal !important;
     font-size: 14px;
@@ -202,7 +202,7 @@ section>div:nth-child(2)>div:last-child>div {
     position: relative;
 }
 
-.add-address+div>div>div {
+.tabs{
     display: inline-block;
     position: absolute;
     border: 17px solid transparent;
@@ -211,8 +211,7 @@ section>div:nth-child(2)>div:last-child>div {
     top: 56%;
     right: 0%;
 }
-
-.add-address+div>div>div>i {
+.tabs>i{
     position: absolute;
     font-weight: bold;
     color: #fff;
@@ -381,4 +380,24 @@ div[data-address]{
 .city-popup{
     top: 0!important;
     left: 13%;
+}
+.has-address{
+    justify-content: flex-start!important;
+    background: #fff!important;
+    border: 1px solid #e54c2a;
+    position: relative;
+    /* display: block!important; */
+}
+.has-address>i{
+    display: block;
+    width: 10%;
+    font-size: 37px;
+    text-align: center;
+    float: left;
+}
+.has-address span{
+    display: block;
+} 
+.has-address>span>span:first-child{
+    color: #333;
 }

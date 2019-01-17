@@ -59,12 +59,13 @@
                     </h2>
                     <div>
                         <div>
-                            <p class="add-address">
+                            <div class="add-address ">
                                 <i>+</i>
                                 <span>
                                     添加新地址
                                 </span>
-                            </p>
+                            </div>
+
                             <div>
                                 <h2>
                                     付款方式
@@ -75,7 +76,7 @@
                                 <div>
                                     <p>在线支付</p>
                                     <p>支持微信、支付宝、QQ钱包及大部分银行卡</p>
-                                    <div>
+                                    <div class="tabs">
                                         <i class="iconfont">&#xebe6;</i>
                                     </div>
                                 </div>
@@ -129,7 +130,6 @@
                                     </div>
                                 </div>
                                 <button>确认下单</button>
-
                             </div>
                         </div>
                     </div>
@@ -186,9 +186,9 @@
             $.ajax({
                 url: '/user/getOrderInfo',
                 type: 'post',
-                data:{
-                    sid:sid,
-                    user:user
+                data: {
+                    sid: sid,
+                    user: user
                 },
                 dataType: 'json'
             }).then(function (data) {
@@ -235,11 +235,35 @@
             $('[data-cover]').on('click', 'li', function () {
                 $(this).parent().parent().prev().html(`${$(this).html()} <i class="iconfont">&#xebe6;</i>`);
             })
+
+            $.ajax({
+                url: '/user/valiAddress',
+                type: 'get',
+                dataType: 'json'
+            }).then((data) => {
+                $('.add-address').addClass('has-address');
+                var $address = $(`
+                <i class="iconfont">&#xe64d;</i>
+                <span>
+                    <span>
+                        ${data[0].receiver} 男士 ${data[0].phone}
+                    </span>
+                    <span>
+                        ${data[0].address}
+                    </span>
+                </span>
+                <div class="tabs">
+                    <i class="iconfont">&#xebe6;</i>
+                </div>
+                `)
+                $('.add-address').html('').prepend($address);
+            })
+
             $('.add-address').click(function () {
                 $('#modal').show();
                 $('.modal-bg').show();
             })
-            $('span[data-cancal]').click(function(){
+            $('span[data-cancal]').click(function () {
                 $('.modal-bg').hide();
                 $('#modal').hide();
             })
@@ -249,27 +273,49 @@
             $('.another-info>div>div').mouseleave(function () {
                 $(this).hide();
             })
-            $('button[data-save]').click(function(){
+
+            $('button[data-save]').click(function () {
                 var gender = $('input[name=gender]:checked').val();
                 var address = txt_city.value.replace(/\s*/ig, '').split('-');
 
                 $.ajax({
-                    url:'/user/save_address',
-                    type:'post',
-                    data:{
-                        u_phone:user,
-                        receiver:uname.value,
-                        province:address[0],
-                        city:address[1],
-                        country:address[2],
-                        address:detail_address.value,
-                        phone:user_phone.value
+                    url: '/user/save_address',
+                    type: 'post',
+                    data: {
+                        u_phone: user,
+                        receiver: uname.value,
+                        province: address[0],
+                        city: address[1],
+                        country: address[2],
+                        address: detail_address.value,
+                        phone: user_phone.value
                     },
-                    dataType:'json'
-                }).then(function(data){
+                    dataType: 'json'
+                }).then(function (data) {
                     console.log(data)
                 })
+
+                $('.modal-bg').hide();
+                $('#modal').hide();
+                $('.add-address').addClass('has-address');
+                var $address = $(`
+                <i class="iconfont">&#xe64d;</i>
+                <span>
+                    <span>
+                        ${uname.value} ${$('input[name=gender]:checked').next().html()} ${user_phone.value}
+                    </span>
+                    <span>
+                        ${detail_address.value}
+                    </span>
+                </span>
+                <div class="tabs">
+                    <i class="iconfont">&#xebe6;</i>
+                </div>
+                `)
+                $('.add-address').html('').prepend($address)
+
             })
+
         })
     </script>
 </body>

@@ -3,13 +3,12 @@ DROP DATABASE IF EXISTS buying;
 CREATE DATABASE buying CHARSET=UTF8;
 USE buying;
 
-
 -- phpMyAdmin SQL Dump
 -- version 4.7.4
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: 2019-01-17 07:49:31
+-- Generation Time: 2019-01-17 14:02:56
 -- 服务器版本： 10.1.28-MariaDB
 -- PHP Version: 5.6.32
 
@@ -181,9 +180,7 @@ CREATE TABLE `re_address` (
 --
 
 INSERT INTO `re_address` (`id`, `uid`, `receiver`, `province`, `city`, `country`, `address`, `phone`) VALUES
-(1, 2, '张三', '湖北', '武汉', '武昌区', '杨家湾五环天地', '18672284395'),
-(2, 2, '王五', '湖北', '武汉', NULL, '虎泉', '15926721541'),
-(3, 2, '李哈哈', '湖北', '武汉', NULL, '虎泉', '15912345678');
+(17, 2, 'tytry', '天津', '天津', '河东区', '65', '15912345678');
 
 -- --------------------------------------------------------
 
@@ -256,10 +253,10 @@ CREATE TABLE `shop_car` (
 --
 
 INSERT INTO `shop_car` (`id`, `uid`, `fid`, `number`, `un_price`) VALUES
-(1, 2, 3, 2, 59),
-(2, 2, 5, 1, 59),
-(3, 2, 28, 1, 59),
-(4, 2, 4, 1, 49);
+(66, 2, 3, 9, 59),
+(67, 2, 5, 3, 59),
+(68, 2, 28, 1, 59),
+(69, 2, 4, 2, 49);
 
 -- --------------------------------------------------------
 
@@ -405,7 +402,7 @@ ALTER TABLE `order_`
 -- 使用表AUTO_INCREMENT `re_address`
 --
 ALTER TABLE `re_address`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- 使用表AUTO_INCREMENT `shop`
@@ -417,7 +414,7 @@ ALTER TABLE `shop`
 -- 使用表AUTO_INCREMENT `shop_car`
 --
 ALTER TABLE `shop_car`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=70;
 
 --
 -- 使用表AUTO_INCREMENT `user`

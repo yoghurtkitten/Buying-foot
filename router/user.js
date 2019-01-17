@@ -370,7 +370,7 @@ router.post('/getOrderInfo', (req, res) => {
 router.post('/save_address',(req, res) => {
     var obj = req.body;
     var sql = `INSERT INTO re_address VALUES (null, (SELECT id FROM user WHERE user.phone=?), ?, ?, ?, ?, ?, ?)`;
-    pool.query(sql, [obj.u_phone, obj.receiver, obj.province, obj.city, obj.county, obj.address, obj.phone], (err, result) => {
+    pool.query(sql, [obj.u_phone, obj.receiver, obj.province, obj.city, obj.country, obj.address, obj.phone], (err, result) => {
         if (err) {
             throw err;
         }
@@ -393,6 +393,20 @@ router.post('/valiUser', (req, res) => {
             res.send(result)
         } else{
             res.send('error')
+        }
+    })
+})
+
+router.get('/valiAddress', (req, res) => {
+    var sql = "select * from re_address";
+    pool.query(sql, (err, result) => {
+        if (err) {
+            throw err;
+        }
+        if (result.length) {
+            res.send(result)
+        } else {
+            res.send({code:400, msg:'no address'})
         }
     })
 })
