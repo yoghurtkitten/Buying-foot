@@ -13,6 +13,8 @@
     <link rel="stylesheet" href="css/bootstrap.css">
     <link rel="stylesheet" href="css/icon/iconfont.css">
     <link rel="stylesheet" href="css/order.css">
+    <link href="css/jquery.city.css" rel="stylesheet" />
+    <link href="css/animate.min.css" rel="stylesheet" />
 </head>
 
 <body>
@@ -148,14 +150,13 @@
             <input type="radio" name="gender" value="0"><span>先生</span>
             <input type="radio" name="gender" value="1"><span>女士</span>
         </div>
-        <div>
+        <div data-address="">
             <label>位置</label>
-            <input type="text" name="" id="address" placeholder="请输入小区、大厦或者学校">
+            <input type="text" name="" id="txt_city" placeholder="请输入小区、大厦或者学校">
         </div>
         <div>
             <label>详细地址</label>
             <input type="text" name="" id="detail_address" placeholder="单元、门牌号">
-            <i class="iconfont">&#xe64d;</i>
         </div>
         <div>
             <label>手机号</label>
@@ -167,17 +168,28 @@
         </div>
     </slider>
     <script src="js/frame.js"></script>
-    <script src="js/ajax.js"></script>
+    <script src="js/jquery.city.js"></script>
+
 
     <script>
         $(function () {
+            $('#txt_city').jcity({
+                urlOrData: 'js/citydata.json',
+                animate: { showClass: 'animated flipInX', hideClass: 'animated flipOutX' },
+                onChoice: function (data) {
+                    console.log(data);
+                }
+            });
             var urlParams = new URLSearchParams(location.search);
             var sid = urlParams.get('sid');
             var user = urlParams.get('user');
-            ajax({
+            $.ajax({
                 url: '/user/getOrderInfo',
                 type: 'post',
-                data: `sid=${sid}&user=${user}`,
+                data:{
+                    sid:sid,
+                    user:user
+                },
                 dataType: 'json'
             }).then(function (data) {
                 console.log(data);
@@ -239,14 +251,24 @@
             })
             $('button[data-save]').click(function(){
                 var gender = $('input[name=gender]:checked').val();
-                /* ajax({
+                var address = txt_city.value.replace(/\s*/ig, '').split('-');
+
+                $.ajax({
                     url:'/user/save_address',
                     type:'post',
-                    data:`phone=${user}&receiver=${uname.value}&province=`,
+                    data:{
+                        u_phone:user,
+                        receiver:uname.value,
+                        province:address[0],
+                        city:address[1],
+                        country:address[2],
+                        address:detail_address.value,
+                        phone:user_phone.value
+                    },
                     dataType:'json'
                 }).then(function(data){
                     console.log(data)
-                }) */
+                })
             })
         })
     </script>

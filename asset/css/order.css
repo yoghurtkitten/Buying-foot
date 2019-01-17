@@ -350,10 +350,6 @@ div[data-right]{
 input::-webkit-input-placeholder {
     color: #bbbbbb;
 }
-#detail_address{
-    padding-left: 4%!important;
-    position: relative;
-}
 
 #modal>div>button{
     width: 20%;
@@ -369,10 +365,6 @@ input::-webkit-input-placeholder {
 #modal>div>button+span{
     margin-left: 5%;
 }
-#modal i{
-    position: absolute;
-    left: 137px;
-}
 .modal-bg{
     position: fixed;
     width: 100%;
@@ -382,4 +374,11 @@ input::-webkit-input-placeholder {
     left: 0;
     top: 0;
     display: none;
+}
+div[data-address]{
+    position: relative;
+}
+.city-popup{
+    top: 0!important;
+    left: 13%;
 }

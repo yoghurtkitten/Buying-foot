@@ -292,7 +292,6 @@ router.post('/setShopCar', (req, res) => {
             res.send({code: 400, msg: 'fault'})
         }
     })
-    // res.send('123');
 })
 
 router.post('/update_shopCar', (req, res) => {
@@ -364,6 +363,36 @@ router.post('/getOrderInfo', (req, res) => {
             res.send(result);
         } else {
             res.send({code:400, msg:'get order info fault!'})
+        }
+    })
+})
+
+router.post('/save_address',(req, res) => {
+    var obj = req.body;
+    var sql = `INSERT INTO re_address VALUES (null, (SELECT id FROM user WHERE user.phone=?), ?, ?, ?, ?, ?, ?)`;
+    pool.query(sql, [obj.u_phone, obj.receiver, obj.province, obj.city, obj.county, obj.address, obj.phone], (err, result) => {
+        if (err) {
+            throw err;
+        }
+        if (result.affectedRows) {
+            res.send({code:200, msg:'Insert Success'});
+        } else {
+            res.send({code:400, msg:'Insert Fault'});
+        }
+    })
+})
+
+router.post('/valiUser', (req, res) => {
+    var obj = req.body;
+    var sql = `SELECT * FROM shop_car JOIN user ON shop_car.uid=user.id WHERE user.phone=? AND shop_car.fid=?`;
+    pool.query(sql, [obj.user,obj.foods_id],(err, result) => {
+        if(err){
+            throw err;
+        }
+        if (result) {
+            res.send(result)
+        } else{
+            res.send('error')
         }
     })
 })

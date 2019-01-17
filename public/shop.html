@@ -150,7 +150,7 @@
     </div>
     <iframe src="./footer.html" frameborder="0" scrolling="no" class="frame-div" onload="this.height=100"></iframe>
     <script src="js/frame.js"></script>
-    <script src="js/ajax.js"></script>
+    <!-- <script src="js/ajax.js"></script> -->
     <script>
         $(function () {
             var urlParams = new URLSearchParams(location.search);
@@ -159,10 +159,13 @@
 
             function load_food() {
                 return new Promise(function (open) {
-                    ajax({
+                    $.ajax({
                         url: "/user/getFoodsCatagory",
                         type: "get",
-                        data: `sid=${sid}`,
+                        data: {
+                            sid: sid
+                        },
+                        // data: `sid=${sid}`,
                         dataType: "json"
                     }).then(function (data) {
                         var li_html = '';
@@ -177,7 +180,6 @@
                             </div>`;
                         }
                         $('.category ul').html(li_html);
-                        // console.log(item_title)
                         $('.food_item').html(`${$('.food_item').html()}${item_title}`)
                         open();
                     })
@@ -186,10 +188,13 @@
             }
             function load_type() {
                 return new Promise(function (open) {
-                    ajax({
+                    $.ajax({
                         url: "/user/getFoods",
                         type: "get",
-                        data: `sid=${sid}`,
+                        data: {
+                            sid: sid
+                        },
+                        // data: `sid=${sid}`,
                         dataType: "json"
                     }).then(function (data) {
                         $('.busin-title span').html(data[0].shop_name)
@@ -252,33 +257,77 @@
                     var g_name = e.target.parentElement.parentElement.firstElementChild.innerHTML;
                     var un_price = e.target.previousElementSibling.innerHTML;
                     var f_id = e.target.nextElementSibling.value;
-                    $('.shop-car>div:nth-child(2)').html(`
-                    ${ $('.shop-car>div:nth-child(2)').html()}
-                    <div class="shop-item">
-                        <ul>
-                            <li>
-                                <span class="goods-name">${g_name}</span>
-                                <p>
-                                    <button>-</button>
-                                    <input type="text" value="1">
-                                    <button>+</button>
-                                    <input type="hidden" value="${f_id}">
-                                </p>
-                                <span class="unprice">
-                                ${un_price}
-                                </span>
-                            </li>
-                        </ul>
-                    </div>`);
 
-                    ajax({
-                        url: "/user/setShopCar",
-                        type: "post",
-                        data: `foods_id=${f_id}&un_price=${un_price}&user=${user}`,
-                        dataType: "json"
-                    }).then(function (data) {
-                        cal_total();
+                    function vali() {
+                        return new Promise(function (open) {
+                            $.ajax({
+                                url: "/user/valiUser",
+                                type: 'post',
+                                data: {
+                                    user: user,
+                                    foods_id: f_id
+                                },
+                                dataType: 'json'
+                            }).then(function (data) {
+                                open(data);
+                            })
+                        })
+                    }
+                    vali().then(function (data) {
+                        if (data.length) {
+                            var shop_item = $('.shop-car>div:nth-child(2)>div input[type=text]');
+                            for (const elem of shop_item) {
+                                var fid = $(elem).parent().children().last().val();
+                                var count = parseInt($(elem).val()) + 1;
+                                if (fid == f_id) {
+                                    $.ajax({
+                                        url: "/user/update_shopCar",
+                                        type: "post",
+                                        data: {
+                                            foods_id: fid,
+                                            number: count
+                                        },
+                                        dataType: 'json'
+                                    }).then(function (data) {
+                                        $(elem).val(count);
+                                    })
+                                    break;
+                                }
+                            }
+                        } else {
+                            $.ajax({
+                                url: "/user/setShopCar",
+                                type: "post",
+                                data: {
+                                    foods_id: f_id,
+                                    un_price: un_price,
+                                    user: user
+                                },
+                                dataType: "json"
+                            }).then(function (data) {
+                                cal_total();
+                            })
+                            $('.shop-car>div:nth-child(2)').html(`
+                                ${ $('.shop-car>div:nth-child(2)').html()}
+                                <div class="shop-item">
+                                    <ul>
+                                        <li>
+                                            <span class="goods-name">${g_name}</span>
+                                            <p>
+                                                <button>-</button>
+                                                <input type="text" value="1">
+                                                <button>+</button>
+                                                <input type="hidden" value="${f_id}">
+                                            </p>
+                                            <span class="unprice">
+                                            ${un_price}
+                                            </span>
+                                        </li>
+                                    </ul>
+                                </div>`);
+                        }
                     })
+
                 }
             })
 
@@ -295,10 +344,14 @@
                             count = e.target.parentNode.firstElementChild.nextElementSibling.value = count - 1;
                         }
                     }
-                    ajax({
+                    $.ajax({
                         url: "/user/update_shopCar",
                         type: "post",
-                        data: `foods_id=${fid}&number=${count}`,
+                        data: {
+                            foods_id: fid,
+                            number: count
+                        },
+                        // data: `foods_id=${fid}&number=${count}`,
                         dataType: "json"
                     }).then(function (data) {
                         var obj = data[0];
@@ -313,7 +366,7 @@
                 }
             })
 
-            ajax({
+            $.ajax({
                 url: "/user/load_shop_car",
                 type: "get",
                 dataType: "json"
@@ -416,7 +469,7 @@
             $('.shop-car>div:nth-child(2)').html('');
             $('.number').html('0');
             $('.total').html('00.00');
-            ajax({
+            $.ajax({
                 url: '/user/delete_shop_car',
                 type: 'get',
                 dataType: 'json'

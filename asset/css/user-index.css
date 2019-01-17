@@ -140,6 +140,7 @@ ul{
     background: #fff;  
     box-sizing: border-box;
     color: #333;
+    font-size: 14px!important;
 }
 .new-list-btn{
     width: 96px;

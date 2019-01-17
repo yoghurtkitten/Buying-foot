@@ -1,9 +1,15 @@
-﻿-- phpMyAdmin SQL Dump
+SET NAMES UTF8;
+DROP DATABASE IF EXISTS buying;
+CREATE DATABASE buying CHARSET=UTF8;
+USE buying;
+
+
+-- phpMyAdmin SQL Dump
 -- version 4.7.4
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: 2019-01-12 11:08:36
+-- Generation Time: 2019-01-17 07:49:31
 -- 服务器版本： 10.1.28-MariaDB
 -- PHP Version: 5.6.32
 
@@ -11,10 +17,6 @@ SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
-
-DROP DATABASE IF EXISTS buying;
-CREATE DATABASE buying;
-USE buying;
 
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
@@ -82,34 +84,34 @@ CREATE TABLE `food` (
 --
 
 INSERT INTO `food` (`food_id`, `shop_id`, `name`, `price`, `ingredients`, `foot_type`, `food_start`, `sell_number`, `food_img`) VALUES
-(3, 1, '土豆炖牛腩', '59', NULL, '热销', 5, 25, 'img/goods/agg.webp'),
-(4, 1, '铁板牛肉', '49', NULL, '热销', 4, 25, 'img/goods/agg.webp'),
-(5, 1, '土豆炖牛腩', '59', NULL, '热销', 5, 18, 'img/goods/agg.webp'),
-(6, 1, '铁板牛肉', '49', NULL, '新品', 4, 30, 'img/goods/agg.webp'),
-(7, 1, '土豆炖牛腩', '59', NULL, '新品', 5, 28, 'img/goods/agg.webp'),
-(8, 1, '土豆炖牛腩', '59', NULL, '新品', 5, 35, 'img/goods/agg.webp'),
-(9, 1, '铁板牛肉', '49', NULL, '靓粥', 4, 24, 'img/goods/agg.webp'),
-(10, 1, '土豆炖牛腩', '59', NULL, '靓粥', 5, 19, 'img/goods/agg.webp'),
-(11, 1, '铁板牛肉', '49', NULL, '靓粥', 4, 28, 'img/goods/agg.webp'),
-(12, 1, '土豆炖牛腩', '59', NULL, '饮品', 5, 32, 'img/goods/agg.webp'),
-(13, 1, '铁板牛肉', '49', NULL, '饮品', 4, 37, 'img/goods/agg.webp'),
-(14, 1, '土豆炖牛腩', '59', NULL, '饮品', 5, 35, 'img/goods/agg.webp'),
-(15, 1, '土豆炖牛腩', '59', NULL, '小食', 5, 28, 'img/goods/agg.webp'),
-(16, 1, '铁板牛肉', '49', NULL, '小食', 4, 27, 'img/goods/agg.webp'),
-(17, 1, '土豆炖牛腩', '59', NULL, '小食', 5, 34, 'img/goods/agg.webp'),
-(18, 1, '铁板牛肉', '49', NULL, '套餐', 4, 26, 'img/goods/agg.webp'),
-(19, 1, '土豆炖牛腩', '59', NULL, '套餐', 5, 18, 'img/goods/agg.webp'),
-(20, 1, '铁板牛肉', '49', NULL, '套餐', 4, 37, 'img/goods/agg.webp'),
-(21, 1, '土豆炖牛腩', '59', NULL, '冷藏', 5, 28, 'img/goods/agg.webp'),
-(22, 1, '土豆炖牛腩', '59', '', '冷藏', 5, 25, 'img/goods/agg.webp'),
-(23, 1, '铁板牛肉', '49', NULL, '暖汤', 4, 34, 'img/goods/agg.webp'),
-(24, 1, '土豆炖牛腩', '59', NULL, '暖汤', 5, 28, 'img/goods/agg.webp'),
-(25, 1, '铁板牛肉', '49', NULL, '暖汤', 4, 35, 'img/goods/agg.webp'),
-(26, 1, '土豆炖牛腩', '59', NULL, '优惠', 5, 27, 'img/goods/agg.webp'),
-(27, 1, '铁板牛肉', '49', NULL, '小份热菜', 4, 29, 'img/goods/agg.webp'),
-(28, 1, '土豆炖牛腩', '59', NULL, '热销', 5, 0, 'img/goods/agg.webp'),
-(29, 1, '土豆炖牛腩', '59', NULL, '热销', 5, 0, 'img/goods/agg.webp'),
-(30, 1, '铁板牛肉', '49', NULL, '新品', 4, 0, 'img/goods/agg.webp');
+(3, 1, '土豆炖牛腩', '59', '土豆软糯，牛肉酥烂入味', '热销', 5, 25, 'img/goods/agg.webp'),
+(4, 1, '铁板牛肉', '49', '土豆软糯，牛肉酥烂入味', '热销', 4, 25, 'img/goods/agg.webp'),
+(5, 1, '土豆炖牛腩', '59', '土豆软糯，牛肉酥烂入味', '热销', 5, 18, 'img/goods/agg.webp'),
+(6, 1, '铁板牛肉', '49', '土豆软糯，牛肉酥烂入味', '新品', 4, 30, 'img/goods/agg.webp'),
+(7, 1, '土豆炖牛腩', '59', '土豆软糯，牛肉酥烂入味', '新品', 5, 28, 'img/goods/agg.webp'),
+(8, 1, '土豆炖牛腩', '59', '土豆软糯，牛肉酥烂入味', '新品', 5, 35, 'img/goods/agg.webp'),
+(9, 1, '铁板牛肉', '49', '土豆软糯，牛肉酥烂入味', '靓粥', 4, 24, 'img/goods/agg.webp'),
+(10, 1, '土豆炖牛腩', '59', '土豆软糯，牛肉酥烂入味', '靓粥', 5, 19, 'img/goods/agg.webp'),
+(11, 1, '铁板牛肉', '49', '土豆软糯，牛肉酥烂入味', '靓粥', 4, 28, 'img/goods/agg.webp'),
+(12, 1, '土豆炖牛腩', '59', '土豆软糯，牛肉酥烂入味', '饮品', 5, 32, 'img/goods/agg.webp'),
+(13, 1, '铁板牛肉', '49', '土豆软糯，牛肉酥烂入味', '饮品', 4, 37, 'img/goods/agg.webp'),
+(14, 1, '土豆炖牛腩', '59', '土豆软糯，牛肉酥烂入味', '饮品', 5, 35, 'img/goods/agg.webp'),
+(15, 1, '土豆炖牛腩', '59', '土豆软糯，牛肉酥烂入味', '小食', 5, 28, 'img/goods/agg.webp'),
+(16, 1, '铁板牛肉', '49', '土豆软糯，牛肉酥烂入味', '小食', 4, 27, 'img/goods/agg.webp'),
+(17, 1, '土豆炖牛腩', '59', '土豆软糯，牛肉酥烂入味', '小食', 5, 34, 'img/goods/agg.webp'),
+(18, 1, '铁板牛肉', '49', '土豆软糯，牛肉酥烂入味', '套餐', 4, 26, 'img/goods/agg.webp'),
+(19, 1, '土豆炖牛腩', '59', '土豆软糯，牛肉酥烂入味', '套餐', 5, 18, 'img/goods/agg.webp'),
+(20, 1, '铁板牛肉', '49', '土豆软糯，牛肉酥烂入味', '套餐', 4, 37, 'img/goods/agg.webp'),
+(21, 1, '土豆炖牛腩', '59', '土豆软糯，牛肉酥烂入味', '冷藏', 5, 28, 'img/goods/agg.webp'),
+(22, 1, '土豆炖牛腩', '59', '土豆软糯，牛肉酥烂入味', '冷藏', 5, 25, 'img/goods/agg.webp'),
+(23, 1, '铁板牛肉', '49', '土豆软糯，牛肉酥烂入味', '暖汤', 4, 34, 'img/goods/agg.webp'),
+(24, 1, '土豆炖牛腩', '59', '土豆软糯，牛肉酥烂入味', '暖汤', 5, 28, 'img/goods/agg.webp'),
+(25, 1, '铁板牛肉', '49', '土豆软糯，牛肉酥烂入味', '暖汤', 4, 35, 'img/goods/agg.webp'),
+(26, 1, '土豆炖牛腩', '59', '土豆软糯，牛肉酥烂入味', '优惠', 5, 27, 'img/goods/agg.webp'),
+(27, 1, '铁板牛肉', '49', '土豆软糯，牛肉酥烂入味', '小份热菜', 4, 29, 'img/goods/agg.webp'),
+(28, 1, '土豆炖牛腩', '59', '土豆软糯，牛肉酥烂入味', '热销', 5, 0, 'img/goods/agg.webp'),
+(29, 1, '土豆炖牛腩', '59', '土豆软糯，牛肉酥烂入味', '热销', 5, 0, 'img/goods/agg.webp'),
+(30, 1, '铁板牛肉', '49', '土豆软糯，牛肉酥烂入味', '新品', 4, 0, 'img/goods/agg.webp');
 
 -- --------------------------------------------------------
 
@@ -174,6 +176,15 @@ CREATE TABLE `re_address` (
   `phone` varchar(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- 转存表中的数据 `re_address`
+--
+
+INSERT INTO `re_address` (`id`, `uid`, `receiver`, `province`, `city`, `country`, `address`, `phone`) VALUES
+(1, 2, '张三', '湖北', '武汉', '武昌区', '杨家湾五环天地', '18672284395'),
+(2, 2, '王五', '湖北', '武汉', NULL, '虎泉', '15926721541'),
+(3, 2, '李哈哈', '湖北', '武汉', NULL, '虎泉', '15912345678');
+
 -- --------------------------------------------------------
 
 --
@@ -236,8 +247,19 @@ CREATE TABLE `shop_car` (
   `id` int(11) NOT NULL,
   `uid` int(11) DEFAULT NULL,
   `fid` int(11) DEFAULT NULL,
-  `number` smallint(6) DEFAULT NULL
+  `number` smallint(6) DEFAULT NULL,
+  `un_price` float NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- 转存表中的数据 `shop_car`
+--
+
+INSERT INTO `shop_car` (`id`, `uid`, `fid`, `number`, `un_price`) VALUES
+(1, 2, 3, 2, 59),
+(2, 2, 5, 1, 59),
+(3, 2, 28, 1, 59),
+(4, 2, 4, 1, 49);
 
 -- --------------------------------------------------------
 
@@ -383,7 +405,7 @@ ALTER TABLE `order_`
 -- 使用表AUTO_INCREMENT `re_address`
 --
 ALTER TABLE `re_address`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- 使用表AUTO_INCREMENT `shop`
@@ -395,7 +417,7 @@ ALTER TABLE `shop`
 -- 使用表AUTO_INCREMENT `shop_car`
 --
 ALTER TABLE `shop_car`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- 使用表AUTO_INCREMENT `user`
