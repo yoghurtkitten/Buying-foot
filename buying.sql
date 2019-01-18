@@ -3,12 +3,13 @@ DROP DATABASE IF EXISTS buying;
 CREATE DATABASE buying CHARSET=UTF8;
 USE buying;
 
+
 -- phpMyAdmin SQL Dump
 -- version 4.7.4
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: 2019-01-17 14:02:56
+-- Generation Time: 2019-01-18 14:05:56
 -- 服务器版本： 10.1.28-MariaDB
 -- PHP Version: 5.6.32
 
@@ -83,31 +84,31 @@ CREATE TABLE `food` (
 --
 
 INSERT INTO `food` (`food_id`, `shop_id`, `name`, `price`, `ingredients`, `foot_type`, `food_start`, `sell_number`, `food_img`) VALUES
-(3, 1, '土豆炖牛腩', '59', '土豆软糯，牛肉酥烂入味', '热销', 5, 25, 'img/goods/agg.webp'),
-(4, 1, '铁板牛肉', '49', '土豆软糯，牛肉酥烂入味', '热销', 4, 25, 'img/goods/agg.webp'),
-(5, 1, '土豆炖牛腩', '59', '土豆软糯，牛肉酥烂入味', '热销', 5, 18, 'img/goods/agg.webp'),
-(6, 1, '铁板牛肉', '49', '土豆软糯，牛肉酥烂入味', '新品', 4, 30, 'img/goods/agg.webp'),
-(7, 1, '土豆炖牛腩', '59', '土豆软糯，牛肉酥烂入味', '新品', 5, 28, 'img/goods/agg.webp'),
-(8, 1, '土豆炖牛腩', '59', '土豆软糯，牛肉酥烂入味', '新品', 5, 35, 'img/goods/agg.webp'),
-(9, 1, '铁板牛肉', '49', '土豆软糯，牛肉酥烂入味', '靓粥', 4, 24, 'img/goods/agg.webp'),
+(3, 1, '川香回锅肉', '59', '亲，记得点米饭哦！', '热销', 5, 25, 'img/goods/rou.jpg'),
+(4, 1, '老长沙肉炒肉', '49', '亲，记得点米饭哦！', '热销', 4, 25, 'img/goods/rou2.jpg'),
+(5, 1, '卤藕牛三样', '59', '亲，记得点米饭哦！', '热销', 5, 18, 'img/goods/agg.webp'),
+(6, 1, '铁板牛肉', '49', '亲，记得点米饭哦！', '新品', 4, 30, 'img/goods/rou.jpg'),
+(7, 1, '南京鸭血粉丝汤', '59', '亲，记得点米饭哦！', '新品', 5, 28, 'img/goods/agg.webp'),
+(8, 1, '老坛酸菜龙利鱼', '59', '土豆软糯，牛肉酥烂入味', '新品', 5, 35, 'img/goods/agg.webp'),
+(9, 1, '水煮肉片', '49', '豆芽，千张打底，重辣！配有香葱芝麻', '靓粥', 4, 24, 'img/goods/rou.jpg'),
 (10, 1, '土豆炖牛腩', '59', '土豆软糯，牛肉酥烂入味', '靓粥', 5, 19, 'img/goods/agg.webp'),
-(11, 1, '铁板牛肉', '49', '土豆软糯，牛肉酥烂入味', '靓粥', 4, 28, 'img/goods/agg.webp'),
-(12, 1, '土豆炖牛腩', '59', '土豆软糯，牛肉酥烂入味', '饮品', 5, 32, 'img/goods/agg.webp'),
-(13, 1, '铁板牛肉', '49', '土豆软糯，牛肉酥烂入味', '饮品', 4, 37, 'img/goods/agg.webp'),
-(14, 1, '土豆炖牛腩', '59', '土豆软糯，牛肉酥烂入味', '饮品', 5, 35, 'img/goods/agg.webp'),
-(15, 1, '土豆炖牛腩', '59', '土豆软糯，牛肉酥烂入味', '小食', 5, 28, 'img/goods/agg.webp'),
-(16, 1, '铁板牛肉', '49', '土豆软糯，牛肉酥烂入味', '小食', 4, 27, 'img/goods/agg.webp'),
-(17, 1, '土豆炖牛腩', '59', '土豆软糯，牛肉酥烂入味', '小食', 5, 34, 'img/goods/agg.webp'),
-(18, 1, '铁板牛肉', '49', '土豆软糯，牛肉酥烂入味', '套餐', 4, 26, 'img/goods/agg.webp'),
-(19, 1, '土豆炖牛腩', '59', '土豆软糯，牛肉酥烂入味', '套餐', 5, 18, 'img/goods/agg.webp'),
-(20, 1, '铁板牛肉', '49', '土豆软糯，牛肉酥烂入味', '套餐', 4, 37, 'img/goods/agg.webp'),
-(21, 1, '土豆炖牛腩', '59', '土豆软糯，牛肉酥烂入味', '冷藏', 5, 28, 'img/goods/agg.webp'),
-(22, 1, '土豆炖牛腩', '59', '土豆软糯，牛肉酥烂入味', '冷藏', 5, 25, 'img/goods/agg.webp'),
-(23, 1, '铁板牛肉', '49', '土豆软糯，牛肉酥烂入味', '暖汤', 4, 34, 'img/goods/agg.webp'),
-(24, 1, '土豆炖牛腩', '59', '土豆软糯，牛肉酥烂入味', '暖汤', 5, 28, 'img/goods/agg.webp'),
-(25, 1, '铁板牛肉', '49', '土豆软糯，牛肉酥烂入味', '暖汤', 4, 35, 'img/goods/agg.webp'),
-(26, 1, '土豆炖牛腩', '59', '土豆软糯，牛肉酥烂入味', '优惠', 5, 27, 'img/goods/agg.webp'),
-(27, 1, '铁板牛肉', '49', '土豆软糯，牛肉酥烂入味', '小份热菜', 4, 29, 'img/goods/agg.webp'),
+(11, 1, '鹌鹑蛋香干烧排骨', '49', '亲 米饭需要单点', '靓粥', 4, 28, 'img/goods/agg.webp'),
+(12, 1, '私房毛血旺', '59', '亲 米饭需要单点', '饮品', 5, 32, 'img/goods/agg.webp'),
+(13, 1, '香辣带鱼', '49', '亲 米饭需要单点', '饮品', 4, 37, 'img/goods/agg.webp'),
+(14, 1, '外婆下饭菜\r\n', '59', '亲 米饭需要单点', '饮品', 5, 35, 'img/goods/agg.webp'),
+(15, 1, '虎皮青椒荷包蛋', '59', '亲 米饭需要单点', '小食', 5, 28, 'img/goods/agg.webp'),
+(16, 1, '剁椒黑木耳炒鸡蛋\r\n', '49', '亲 米饭需要单点', '小食', 4, 27, 'img/goods/agg.webp'),
+(17, 1, '炒双素(四季豆+土豆条）', '59', '亲 米饭需要单点', '小食', 5, 34, 'img/goods/agg.webp'),
+(18, 1, '新派麻婆豆腐', '49', '亲 米饭需要单点', '套餐', 4, 26, 'img/goods/agg.webp'),
+(19, 1, '橄菜四季豆肉丁', '59', '亲 米饭需要单点', '套餐', 5, 18, 'img/goods/agg.webp'),
+(20, 1, '新派鱼香肉丝', '49', '亲 米饭需要单点', '套餐', 4, 37, 'img/goods/agg.webp'),
+(21, 1, '干锅土豆片（孜然味）', '59', '亲 米饭需要单点', '冷藏', 5, 28, 'img/goods/agg.webp'),
+(22, 1, '蕃茄紫菜蛋花汤', '59', '亲 米饭需要单点', '冷藏', 5, 25, 'img/goods/agg.webp'),
+(23, 1, '铁板牛肉', '49', '亲 米饭需要单点', '暖汤', 4, 34, 'img/goods/agg.webp'),
+(24, 1, '土豆炖牛腩', '59', '亲 米饭需要单点', '暖汤', 5, 28, 'img/goods/agg.webp'),
+(25, 1, '铁板牛肉', '49', '亲 米饭需要单点', '暖汤', 4, 35, 'img/goods/agg.webp'),
+(26, 1, '外婆下饭菜', '59', '亲 米饭需要单点', '优惠', 5, 27, 'img/goods/agg.webp'),
+(27, 1, '虎皮青椒荷包蛋', '49', '亲 米饭需要单点', '小份热菜', 4, 29, 'img/goods/agg.webp'),
 (28, 1, '土豆炖牛腩', '59', '土豆软糯，牛肉酥烂入味', '热销', 5, 0, 'img/goods/agg.webp'),
 (29, 1, '土豆炖牛腩', '59', '土豆软糯，牛肉酥烂入味', '热销', 5, 0, 'img/goods/agg.webp'),
 (30, 1, '铁板牛肉', '49', '土豆软糯，牛肉酥烂入味', '新品', 4, 0, 'img/goods/agg.webp');
@@ -180,7 +181,7 @@ CREATE TABLE `re_address` (
 --
 
 INSERT INTO `re_address` (`id`, `uid`, `receiver`, `province`, `city`, `country`, `address`, `phone`) VALUES
-(17, 2, 'tytry', '天津', '天津', '河东区', '65', '15912345678');
+(18, 2, '李哈哈', '湖北', '武汉', '武昌区', '保利华都A栋305', '15078945612');
 
 -- --------------------------------------------------------
 
@@ -211,7 +212,7 @@ CREATE TABLE `shop` (
 --
 
 INSERT INTO `shop` (`id`, `business_id`, `shop_name`, `shop_type`, `province`, `city`, `county`, `address`, `license`, `deliver_fee`, `deliver_cost`, `deliver_time`, `shop_img`, `shop_start`, `shop_phone`) VALUES
-(1, 1, '叮咚叮咚早餐店（杨家湾店）', '正餐优选', '湖北', '武汉', '武昌区', '湖北省武汉市武昌区', '654654131', '8', '20', 30, 'img/brand/95608b68ffb39943dbe10ac8c5b9aacd15834.jpg', 3, '15912345678'),
+(1, 1, '叮咚叮咚早餐店（杨家湾店）', '正餐优选', '湖北', '武汉', '武昌区', '湖北省武汉市武昌区', '654654131', '8', '20', 30, 'img/brand/miaomiao.jpg', 3, '15912345678'),
 (2, 1, '咕叽快餐', '下午茶', '湖北', '武汉', '武昌区', '湖北省武汉市武昌区杨家湾五环天地', '458453135486', '10', '15', 30, 'img/brand/95608b68ffb39943dbe10ac8c5b9aacd15834.jpg', 5, '15912345678'),
 (3, 1, '四美包子', '精选小吃', '湖北', '武汉', '武昌区', '湖北省武汉市武昌区杨家湾', '74867654154', '5', '30', 20, 'img/business/business-icon.png', 4, '15912345678'),
 (4, 1, '华莱士', '下午茶', '湖北', '武汉', '武昌区', '湖北省武汉市武昌区白沙洲大道', '86745645', '11', '30', 15, 'img/business/hualaishi.jpg', 4, '15912345678'),
@@ -253,10 +254,9 @@ CREATE TABLE `shop_car` (
 --
 
 INSERT INTO `shop_car` (`id`, `uid`, `fid`, `number`, `un_price`) VALUES
-(66, 2, 3, 9, 59),
-(67, 2, 5, 3, 59),
-(68, 2, 28, 1, 59),
-(69, 2, 4, 2, 49);
+(70, 2, 3, 1, 59),
+(71, 2, 4, 1, 49),
+(72, 2, 28, 1, 59);
 
 -- --------------------------------------------------------
 
@@ -402,7 +402,7 @@ ALTER TABLE `order_`
 -- 使用表AUTO_INCREMENT `re_address`
 --
 ALTER TABLE `re_address`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- 使用表AUTO_INCREMENT `shop`
@@ -414,7 +414,7 @@ ALTER TABLE `shop`
 -- 使用表AUTO_INCREMENT `shop_car`
 --
 ALTER TABLE `shop_car`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=70;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=73;
 
 --
 -- 使用表AUTO_INCREMENT `user`
