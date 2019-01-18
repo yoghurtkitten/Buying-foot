@@ -399,7 +399,7 @@
 
             $('.shop-car div:last-child a:last-child').click(function (e) {
                 e.preventDefault();
-                location.href = `http://127.0.0.1:5050/order.html?sid=${sid}&user=${user}`;
+                location.href = `${location.origin}/order.html?sid=${sid}&user=${user}`;
             })
         })
 

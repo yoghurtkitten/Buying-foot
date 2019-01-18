@@ -93,7 +93,8 @@
             });
             $('.search-btn').click(function () {
                 var data = txt_city.value.replace(/\s*/ig, '');
-                location.href = `http://127.0.0.1:5050/user_choose.html?address=${data}`;
+                // alert(location.origin)
+                location.href = `${location.origin}/user_choose.html?address=${data}`;
                 return false;
             })
 

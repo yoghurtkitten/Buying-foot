@@ -77,20 +77,6 @@ router.post('/regist', (req, res) => {
     })
 });
 
-router.get('/del', (req, res) => {
-    var id = req.query.id;
-    var sql = 'DELETE FROM user WHERE id = ?';
-    pool.query(sql, [id], (err, result) => {
-        if (err) {
-            throw err;
-        }
-        if (result.affectedRows) {
-            res.send(`<script>alert('删除成功');location.href="http://127.0.0.1:5050/user_list.html"</script>`)
-        } else {
-            res.send({ code: 401, msg: 'Delete Fault!' })
-        }
-    })
-})
 
 router.get('/query', (req, res) => {
     // res.send(req.query.id);

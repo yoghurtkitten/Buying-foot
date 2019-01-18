@@ -144,14 +144,14 @@
             //根据商家名来搜索
             $('#search_business+a').click(function () {
                 var business = search_business.value;
-                location.href = `http://127.0.0.1:5050/user_sheach.html?address=${data}&business=${business}`;
+                location.href = `${location.origin}/user_sheach.html?address=${data}&business=${business}`;
             })
 
             $('.detail-list ul').on('click', 'li', function () {
                 var sid = this.querySelector("input").value;
                 var reg = /\d{11}/ig;
                 var phone = $(".login_user").text().match(reg)[0]
-                location.href=`http://127.0.0.1:5050/shop.html?sid=${sid}&user=${phone}`;
+                location.href=`${location.origin}/shop.html?sid=${sid}&user=${phone}`;
             })
         })
     </script>

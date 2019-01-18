@@ -329,7 +329,7 @@
             })
 
             $('.another-info>button').click(function(){
-                location.href=`http://127.0.0.1:5050/pay.html?sid=${sid}&user=${user}&total=${$('span[data-total]').html()}`
+                location.href=`${location.origin}/pay.html?sid=${sid}&user=${user}&total=${$('span[data-total]').html()}`
             })
         })
     </script>

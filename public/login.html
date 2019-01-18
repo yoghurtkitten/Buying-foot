@@ -74,12 +74,12 @@
             color: #e8694c;
         }
         .phone-number{
-            height: 100%;
+            height: 44px;
         }
         .btn{
             background: #e54c2a;
             color: #fff;
-            height: 13%;
+            /* height: 13%; */
         }
         section{
             width: 100%;
@@ -187,7 +187,6 @@
                     var arr = JSON.parse(result);
                     if (arr.code == 200) {
                         console.log(arr.msg);
-                        // location.href='http://127.0.0.1:3000/index.html';
                         window.location.replace(document.referrer);
                     } else if (arr.code == 403) {
                         alert('验证码有误');
