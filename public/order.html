@@ -59,7 +59,7 @@
                     </h2>
                     <div>
                         <div>
-                            <div class="add-address ">
+                            <div class="add-address" data-add-address="">
                                 <i>+</i>
                                 <span>
                                     添加新地址
@@ -241,25 +241,37 @@
                 type: 'get',
                 dataType: 'json'
             }).then((data) => {
-                $('.add-address').addClass('has-address');
-                var $address = $(`
-                <i class="iconfont">&#xe64d;</i>
-                <span>
+                if (data.length) {
+                    $('.add-address').addClass('has-address');
+                    var $address = $(`
+                    <i class="iconfont">&#xe64d;</i>
                     <span>
-                        ${data[0].receiver} 男士 ${data[0].phone}
+                        <span>
+                            ${data[0].receiver} 男士 ${data[0].phone}
+                        </span>
+                        <span>
+                            ${data[0].address}
+                        </span>
                     </span>
-                    <span>
-                        ${data[0].address}
-                    </span>
-                </span>
-                <div class="tabs">
-                    <i class="iconfont">&#xebe6;</i>
-                </div>
-                `)
-                $('.add-address').html('').prepend($address);
+                    <div class="tabs">
+                        <i class="iconfont">&#xebe6;</i>
+                    </div>
+                    `)
+                    $('.add-address').html('').prepend($address);
+                } else {
+                    function alert_address() {
+                        $('#modal').show();
+                        $('.modal-bg').show();
+                        if ($('div[data-add-address]').has('.has-address')) {
+                            $('div[data-add-address]').off('click');
+                        } 
+                    }
+                    $('div[data-add-address]').on('click', alert_address);
+                }
             })
 
-            $('.add-address').click(function () {
+            
+            $('section>div:nth-child(2)>div:last-child h2>a').click(function () {
                 $('#modal').show();
                 $('.modal-bg').show();
             })
@@ -316,6 +328,19 @@
 
             })
 
+            $('.another-info>button').click(function(){
+                $.ajax({
+                    url:'/user/saveOrder',
+                    data:{
+                        sid:sid,
+                        user:user
+                    },
+                    type:'post',
+                    dataType:'json'
+                }).then((data) => {
+                    console.log(data);
+                })
+            })
         })
     </script>
 </body>
