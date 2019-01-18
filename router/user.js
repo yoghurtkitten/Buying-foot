@@ -416,7 +416,23 @@ router.get('/accross', (req, res) => {
 })
 
 router.post('/saveOrder', (req, res) => {
-    
+    var obj = req.body;
+    var sid = obj.sid;
+    var user = obj.user;
+    var sql = `SELECT shop.shop_name,shop.deliver_fee,shop.deliver_time,food.name,shop_car.number,shop_car.un_price,re_address.receiver,re_address.province,re_address.city,re_address.country,re_address.address,re_address.phone 
+    FROM food JOIN shop_car ON food.food_id=shop_car.fid JOIN shop ON food.shop_id=shop.id JOIN user ON shop_car.uid=user.id JOIN re_address ON user.id=re_address.uid WHERE 
+    user.phone=? AND shop.id=?
+    `;
+    pool.query(sql, [user,sid], (err, result) => {
+        if (err) {
+            throw err;
+        }
+        if (result) {
+            res.send(result);
+        } else {
+            res.send({code:400, msg:'get order info fault!'})
+        }
+    })
 })
 
 module.exports = router;

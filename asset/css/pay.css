@@ -1,0 +1,189 @@
+* {
+    padding: 0;
+    margin: 0;
+}
+
+body {
+    background: #f7f7f7;
+}
+
+header {
+    display: flex;
+    align-items: center;
+    padding-left: 5%;
+    background: #fff;
+    position: relative;
+    height: 100px;
+}
+
+header>div:first-child {
+    position: absolute;
+}
+
+header>div:last-child {
+    font-size: 24px;
+    color: #e54c2a;
+    font-weight: bold;
+    margin-left: 18%;
+}
+
+section {
+    padding: 0 !important;
+    margin-top: 5%;
+    color: #666;
+    font-size: 14px;
+}
+
+div[data-order] {
+    background: #fff;
+    box-shadow: 0px 0px 5px #ccc;
+    padding: 2% 3% 2% 3%;
+}
+
+div[data-order]>p {
+    margin: 0;
+}
+
+div[data-order]>h3 {
+    font-size: 16px;
+    font-weight: bold;
+}
+
+div[data-order]>hr {
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+div[data-order-info] {
+    display: flex;
+    justify-content: space-between
+}
+div[data-order-info]>p{
+    margin: 0;
+}
+div[data-order-info]>p:last-child{
+    color: #000;
+}
+div[data-order-info]>p>span{
+    color: #f66c1c;
+    font-size: 21px;
+    font-weight: 700;
+}
+
+div[data-small] {
+    display: block;
+}
+
+div[data-small]>span:first-child {
+    display: inline-block;
+    width: 37% !important;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    margin-right: 1%;
+    vertical-align: middle;
+
+}
+
+div[data-small]>span:nth-child(2),
+div[data-small]>i {
+    color: #427bd8 !important;
+    cursor: pointer;
+    display: inline-block;
+    vertical-align: middle;
+
+}
+
+div[data-big]>span,
+div[data-big]>i {
+    color: #427bd8 !important;
+    cursor: pointer;
+}
+
+div[data-big] {
+    display: none;
+}
+
+div[data-big] p {
+    margin: 0;
+}
+
+div[data-big]>ul {
+    list-style: none;
+    margin: 0;
+}
+
+div[data-pay]{
+    background: #fff;
+    padding: 2%;
+    margin-top: 3%;
+    box-shadow: 0px 0px 5px #ccc;
+}
+div[data-pay]>div>div {
+    display: flex;
+}
+
+div[data-pay]>div>div>div {
+    float: left;
+    width: 13%;
+    border: 1px solid #e6e6e6;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 0.5% 1% 0.5% 1%;
+    margin-right: 1%;
+    position: relative;
+}
+
+div[data-pay]>div>div>div:first-child>i {
+    font-size: 35px;
+    color: #00b7f0;
+}
+
+div[data-pay]>div>div>div:last-child>i {
+    font-size: 35px;
+    color: #00b95a;
+}
+
+div[data-pay]>div>div>div>span {
+    font-size: 1.25em;
+    font-weight: 500;
+    color: #000;
+}
+
+div[data-pay] button {
+    background: #e54c2a;
+    color: #fff;
+    border: none;
+    padding: 12px 30px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.active {
+    border: 1px solid #e54c2a !important;
+}
+
+.active::after {
+    content: url(../img/payway.082e2f.png);
+    display: inline-block;
+    position: absolute;
+    right: -1px;
+    bottom: -5px;
+    z-index: 10;
+}
+div[data-pay]>p>span:first-child{
+    font-size: 16.32px;
+    color: #000;
+    font-weight: 700;
+    margin-right: 1%;
+}
+div[data-pay]>div>p>span{
+    font-size: 18px;
+    font-weight: bold;
+    color: #f66c1c;
+}
+div[data-pay]>p>span>i{
+    color: #f66c1c;
+    font-style: normal;
+}

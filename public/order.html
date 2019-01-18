@@ -221,7 +221,7 @@
                     </li>
                     <li>
                         <span>￥
-                            <span>${total_price.toFixed(2)}</span>
+                            <span data-total="">${total_price.toFixed(2)}</span>
                         </span>
                     </li>
                 `;
@@ -329,17 +329,7 @@
             })
 
             $('.another-info>button').click(function(){
-                $.ajax({
-                    url:'/user/saveOrder',
-                    data:{
-                        sid:sid,
-                        user:user
-                    },
-                    type:'post',
-                    dataType:'json'
-                }).then((data) => {
-                    console.log(data);
-                })
+                location.href=`http://127.0.0.1:5050/pay.html?sid=${sid}&user=${user}&total=${$('span[data-total]').html()}`
             })
         })
     </script>

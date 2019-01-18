@@ -243,6 +243,7 @@ section>div:nth-child(2)>div:last-child>div {
     color: #fff;
     font-size: 16px;
     padding: 12px 30px;
+    cursor: pointer;
 }
 .another-info>div>i{
     color: #1ec971;
