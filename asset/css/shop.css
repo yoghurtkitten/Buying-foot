@@ -208,15 +208,15 @@ iframe {
     background: #e54c2a;
     color: #fff;
 }
-.category ul li:first-child{
+/* .category ul li:first-child{
     background: #e54c2a;
 }
 .category ul li:first-child>a{
     color: #fff;
-}
-.category ul li:hover{
+} */
+/* .category ul li:hover{
     background: #eee;
-}
+} */
 h4{
     font-size: 14px;
     font-weight: 700;
@@ -483,6 +483,13 @@ h4{
 }
 a{
     text-decoration: none!important;
+}
+
+.type-active{
+    background: #e54c2a!important;
+}
+.type-active a{
+    color: #fff!important;
 }
 
 

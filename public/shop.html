@@ -145,12 +145,11 @@
                     </span>
                 </a>
             </div>
-
         </div>
     </div>
     <iframe src="./footer.html" frameborder="0" scrolling="no" class="frame-div" onload="this.height=100"></iframe>
     <script src="js/frame.js"></script>
-    <!-- <script src="js/ajax.js"></script> -->
+
     <script>
         $(function () {
             var urlParams = new URLSearchParams(location.search);
@@ -171,7 +170,7 @@
                         var li_html = '';
                         var item_title = '';
                         for (let i = 0; i < data.length; i++) {
-                            li_html += `<li><a href="#item${i + 1}">${data[i].type_name}</a></li>`
+                            li_html += `<li><a href="#item${i + 1}" data-target="#item${i + 1}">${data[i].type_name}</a></li>`
                             item_title += `
                             <div class="goods" id="item${i + 1}">
                                 <div class="goods-type">
@@ -181,6 +180,7 @@
                         }
                         $('.category ul').html(li_html);
                         $('.food_item').html(`${$('.food_item').html()}${item_title}`)
+
                         open();
                     })
                 })
@@ -243,11 +243,29 @@
                                 }
                             }
                         }
+                        open();
+                    })
+                })
+            }
+            /* .category ul li: hover{
+                background: #eee;
+            } */
+
+            function bandClick() {
+                return new Promise(function (open) {
+                    $('.category ul li:first-child').addClass('type-active');
+                    $('.category>ul').on('click', 'li', function (e) {
+                        $(this).addClass('type-active').siblings('li').removeClass('type-active').css({'background':'#fff'});
+                    })
+                    $('.category ul li').hover(function(){
+                        $(this).not('.type-active').css({'background':'#eee'});
+                    },function(){
+                        $(this).not('.type-active').css({'background':'#fff'});
                     })
                 })
             }
 
-            load_food().then(load_type);
+            load_food().then(load_type).then(bandClick);
 
             $('.food_item').on('click', '.goods', function (e) {
                 e.stopPropagation();
@@ -365,12 +383,12 @@
 
                 }
             })
-            
+
             $.ajax({
                 url: "/user/load_shop_car",
                 type: "get",
-                data:{
-                    user:user
+                data: {
+                    user: user
                 },
                 dataType: "json"
             }).then(function (data) {
@@ -455,6 +473,32 @@
                 var div = document.getElementsByClassName('category')[0]
                 div.classList.add('fixed-div');
             };
+            if ($('.goods').length>0) {
+                /* $('.goods').each(function(i, elem){
+                    console.log(elem.scrollTo)
+                }) */
+                var windowTop = 550;
+                var arr = {};
+                var goods_div = document.getElementsByClassName('goods')
+                for (const elem of goods_div) {
+                    arr[$(elem).attr('id')] = elem.scrollHeight;
+                }
+                console.log(arr)
+                /* for (let i = 0; i < array.length; i++) {
+                    const element = array[i];
+                    
+                } */
+                // for (const elem of document.getElementsByClassName('goods')) {
+                //     if (scrollTop > 900 && scrollTop < 900+elem.scrollHeight) {
+                //         var target = $(elem).attr('id');/* .addClass('type-active') */
+                //         console.log( scrollTop + $(`.category>ul>li>a[data-target='#${target}']`).html())
+                //     } else {
+                //         break;
+                //     }
+                // }
+                // console.log(scrollTop+' ---- '+ document.getElementsByClassName('goods')[1].scrollHeight)
+                
+            }
         }
         function cal_total() {
             var moneys = $('.unprice');
@@ -474,18 +518,21 @@
             $('.number').html('0');
             $('.total').html('00.00');
             var urlp = new URLSearchParams(location.search);
-            
+
             $.ajax({
                 url: '/user/delete_shop_car',
                 type: 'get',
                 dataType: 'json',
-                data:{
-                    user:urlp.get('user')
+                data: {
+                    user: urlp.get('user')
                 }
             }).then(function (data) {
                 console.log(data);
             })
         })
+
+
+
     </script>
 </body>
 
