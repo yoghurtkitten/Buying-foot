@@ -173,7 +173,7 @@
                         for (let i = 0; i < data.length; i++) {
                             li_html += `<li><a href="#item${i + 1}">${data[i].type_name}</a></li>`
                             item_title += `
-                            <div class="goods">
+                            <div class="goods" id="item${i + 1}">
                                 <div class="goods-type">
                                     <p class="goods-title" id="item1">${data[i].type_name}</p><ul></ul>
                                 </div>
@@ -249,7 +249,7 @@
 
             load_food().then(load_type);
 
-            $('.food_item').on('click', 'div', function (e) {
+            $('.food_item').on('click', '.goods', function (e) {
                 e.stopPropagation();
                 var a = e.target.nodeName;
                 if (a == 'A') {
