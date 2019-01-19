@@ -133,6 +133,7 @@ div[data-pay]>div>div>div {
     padding: 0.5% 1% 0.5% 1%;
     margin-right: 1%;
     position: relative;
+    cursor: pointer;
 }
 
 div[data-pay]>div>div>div:first-child>i {

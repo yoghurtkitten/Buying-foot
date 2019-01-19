@@ -148,6 +148,12 @@
                 setTimeout(() => {
                     clearTimeout(timer)
                 }, 900000)
+
+                $('div[data-pay]>div>div>div').click(function(e){
+                    if(e.target.nodeName == 'DIV'){
+                        $(this).addClass('active').siblings('div').removeClass('active');
+                    }
+                })
         })
     </script>
 </body>

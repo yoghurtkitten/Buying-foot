@@ -468,14 +468,20 @@
             $('.total').html(`${total.toFixed(2)}`)
         }
 
-        $('.shop-car>div>p>span>a').click(function () {
+        $('.shop-car>div>p>span>a').click(function (e) {
+            e.preventDefault();
             $('.shop-car>div:nth-child(2)').html('');
             $('.number').html('0');
             $('.total').html('00.00');
+            var urlp = new URLSearchParams(location.search);
+            
             $.ajax({
                 url: '/user/delete_shop_car',
                 type: 'get',
-                dataType: 'json'
+                dataType: 'json',
+                data:{
+                    user:urlp.get('user')
+                }
             }).then(function (data) {
                 console.log(data);
             })

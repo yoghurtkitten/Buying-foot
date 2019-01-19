@@ -322,20 +322,6 @@ router.get('/load_shop_car', (req, res) => {
     });
 })
 
-router.get('/delete_shop_car', (req, res) => {
-    var sql = 'DELETE FROM shop_car';
-    pool.query(sql,(err, result) => {
-        if (err) {
-            throw err;
-        }
-        if (result.affectedRows) {
-            res.send({code:200, msg:'Success'});
-        } else {
-            res.send({code:400, msg:'Fault'});
-        }
-    })
-})
-
 router.post('/getOrderInfo', (req, res) => {
     var obj = req.body;
     var sid = obj.sid;
@@ -421,6 +407,21 @@ router.post('/saveOrder', (req, res) => {
             res.send(result);
         } else {
             res.send({code:400, msg:'get order info fault!'})
+        }
+    })
+})
+
+router.get('/delete_shop_car', (req, res) => {
+    var obj = req.query;
+    var sql = `DELETE FROM shop_car WHERE uid=(SELECT id FROM user WHERE user.phone=?)`;
+    pool.query(sql,[obj.user],(err, result) => {
+        if (err) {
+            throw err;
+        }
+        if (result.affectedRows) {
+            res.send({code:200, msg:'Delete Success'});
+        } else {
+            res.send({code:400, msg:'Delete Fault'});
         }
     })
 })
