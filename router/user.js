@@ -307,7 +307,7 @@ router.post('/update_shopCar', (req, res) => {
 
 router.get('/load_shop_car', (req, res) => {
     var obj = req.query;
-    var sql = 'SELECT fid,food.name,number,un_price FROM shop_car JOIN food on shop_car.fid = food.food_id JOIN user ON shop_car.uid=user.id WHERE user.phone=?';
+    var sql = 'SELECT fid,food.name as name,number,un_price FROM shop_car JOIN food on shop_car.fid = food.food_id JOIN user ON shop_car.uid=user.id WHERE user.phone=?';
     pool.query(sql, [obj.user], (err, result) => {
         if (err) {
             throw err;
