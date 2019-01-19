@@ -369,6 +369,9 @@
             $.ajax({
                 url: "/user/load_shop_car",
                 type: "get",
+                data:{
+                    user:user
+                },
                 dataType: "json"
             }).then(function (data) {
                 var food_count = 0;
@@ -378,7 +381,7 @@
                     <div class="shop-item">
                         <ul>
                             <li>
-                                <span class="goods-name">${data[key].name}</span>
+                                <span class="goods-name">${data[key].food.name}</span>
                                 <p>
                                     <button>-</button>
                                     <input type="text" value="${data[key].number}">
