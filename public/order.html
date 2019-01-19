@@ -239,6 +239,9 @@
             $.ajax({
                 url: '/user/valiAddress',
                 type: 'get',
+                data:{
+                    user:user
+                },
                 dataType: 'json'
             }).then((data) => {
                 if (data.length) {

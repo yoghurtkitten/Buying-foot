@@ -313,6 +313,8 @@ router.get('/load_shop_car', (req, res) => {
             throw err;
         }
         if (result) {
+            console.log(obj.user)
+            console.log(result)
             res.send(result);
         } else {
             result({code:400, msg:'select Fault'})
@@ -385,8 +387,9 @@ router.post('/valiUser', (req, res) => {
 })
 
 router.get('/valiAddress', (req, res) => {
-    var sql = "select * from re_address";
-    pool.query(sql, (err, result) => {
+    var obj = req.query;
+    var sql = "select * from re_address JOIN user ON re_address.uid=user.id WHERE user.phone=?";
+    pool.query(sql, [obj.user], (err, result) => {
         if (err) {
             throw err;
         }
