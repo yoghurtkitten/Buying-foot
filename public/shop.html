@@ -477,13 +477,50 @@
                 /* $('.goods').each(function(i, elem){
                     console.log(elem.scrollTo)
                 }) */
-                var windowTop = 550;
+                var windowTop = 500;
                 var arr = {};
                 var goods_div = document.getElementsByClassName('goods')
                 for (const elem of goods_div) {
                     arr[$(elem).attr('id')] = elem.scrollHeight;
                 }
-                console.log(arr)
+                // console.log(arr)
+                // for (const key in arr) {
+                //     if (arr.hasOwnProperty(key)) {
+                //         const element = arr[key];
+                //         if (scrollTop>windowTop+element.scrollHeight) {
+                //             // console.log(key + '   '+document.getElementById(key).scrollHeight)
+                //         }
+                //     }
+                // }
+
+                // console.log(scrollTop)
+                /* if (scrollTop>windowTop&&scrollTop<windowTop+arr.item1) {
+                    $('a[data-target="#item1"]').parent().addClass('type-active').siblings().removeClass('type-active');
+                }
+                if (scrollTop>windowTop+arr.item1&&scrollTop<windowTop+arr.item1+arr.item2) {
+                    $('a[data-target="#item2"]').parent().addClass('type-active').siblings().removeClass('type-active');
+                }
+                if (scrollTop>windowTop+arr.item1+arr.item2&&scrollTop<windowTop+arr.item1+arr.item2+arr.item3) {
+                    $('a[data-target="#item3"]').parent().addClass('type-active').siblings().removeClass('type-active');
+                }
+                if (scrollTop>windowTop+arr.item1+arr.item2+arr.item3&&scrollTop<windowTop+arr.item1+arr.item2+arr.item3+arr.item4) {
+                    $('a[data-target="#item4"]').parent().addClass('type-active').siblings().removeClass('type-active');
+                } */
+
+
+                var countLeft = 0,countRight = 0;
+                for (const key in arr) {
+                    countLeft = countRight;
+                    countRight += arr[key];
+                    if (scrollTop>windowTop + countLeft&&scrollTop<windowTop + countRight) {
+                        $(`a[data-target="#${key}"]`).parent().addClass('type-active').siblings().removeClass('type-active');
+                        // console.log(key)
+                    }
+                }
+
+
+                
+
                 /* for (let i = 0; i < array.length; i++) {
                     const element = array[i];
                     
