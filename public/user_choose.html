@@ -14,22 +14,10 @@
     <link rel="stylesheet" href="css/content/header.css">
     <link rel="stylesheet" href="css/icon/iconfont.css">
     <link rel="stylesheet" href="css/user_choose.css">
+    <script src="js/vue.js"></script>
     <script>
         $(function () {
             //获取session中的用户名
-            $.ajax({
-                type: "GET",
-                url: "/user/session",
-                dataType: "json",
-                success: function (data) {
-                    if (data.code == 200) {
-                        $('.login_user').html(`<i class="iconfont">&#xe6a2;</i>${data.msg.name}`)
-                        $('.login_user').click(function () {
-                            return false;
-                        })
-                    }
-                }
-            });
 
             //获取url中传入的地址
             var urlParams = new URLSearchParams(location.search);
@@ -151,7 +139,7 @@
                 var sid = this.querySelector("input").value;
                 var reg = /\d{11}/ig;
                 var phone = $(".login_user").text().match(reg)[0]
-                location.href=`${location.origin}/shop.html?sid=${sid}&user=${phone}`;
+                location.href = `${location.origin}/shop.html?sid=${sid}&user=${phone}`;
             })
         })
     </script>
@@ -159,7 +147,7 @@
 </head>
 
 <body>
-    <div class="container-fluid">
+    <div class="container-fluid" id="app">
         <iframe src="./header.html" frameborder="0" scrolling="no" class="frame-div" onload="this.height=100"></iframe>
 
         <div class="container">
@@ -180,7 +168,9 @@
                         </div>
                         <div class="col-lg-3 col-md-6 row detail-btn m-0">
                             <div class="col-md-6 col-sm-3 col-xs-6 offset-6 p-0 m-0">
-                                <a href="login.html" class="btn mr-1 login_user">注册/登录</a>
+                                <a href="login.html" class="btn mr-1 login_user" v-if="user.length==0">注册/登录</a>
+                                    <a href="javascript:;" class="btn mr-1 login_user" v-else @click="{return false;}">
+                                        {{user}}</a>
                             </div>
                             <div class="col-md-6 col-sm-3 col-xs-6 p-0 ">
                                 <a href="#" class="new-list-btn fr btn">
@@ -234,6 +224,34 @@
     </div>
 
     <script src="js/frame.js"></script>
+    <script>
+        new Vue({
+            el: '#app',
+            data: {
+                user: ''
+            },
+            mounted: function () {
+                this.getUser();
+            },
+            methods: {
+                getUser: function () {
+                    var _self = this;
+                    $.ajax({
+                        type: "GET",
+                        url: "/user/session",
+                        dataType: "json",
+                        success: function (data) {
+                            if (data.code == 200) {
+                                _self.user = data.msg.name;
+                            }
+                        }
+                    });
+                }
+            },
+        })
+
+
+    </script>
 </body>
 
 </html>
