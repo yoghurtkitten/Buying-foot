@@ -18,7 +18,7 @@
 </head>
 
 <body>
-    <div class="container-fluid">
+    <div class="container-fluid" id="app">
         <iframe src="./header.html" frameborder="0" scrolling="no" class="frame-div" onload="this.height=100"></iframe>
         <div class="main_img">
             <div class="address ">
@@ -27,7 +27,11 @@
                         <div class="col-lg-5 col-md-8 col-sm-10 d-flex p-0">
                             <div class="row detail-btn">
                                 <div class="col-md-6 p-0 d-flex user">
-                                    <a href="login.html" class="btn mr-1 login_user">注册/登录</a>
+                                    <a href="login.html" class="btn mr-1 login_user" v-if="user.length==0">注册/登录</a>
+                                    <a href="javascript:;" class="btn mr-1 login_user" v-else @click="{return false;}">
+                                        {{user}}</a>
+
+
                                 </div>
                                 <div class="col-md-6 p-0 pl-4">
                                     <a href="#" class="new-list-btn fr btn">
@@ -56,7 +60,7 @@
                     <div class="input-group mt-2 search-form row">
                         <input type="text" id="txt_city" class="form-control border-0 col-lg-8 col-md-7 col-sm-8"
                             placeholder="输入地址搜索周边美食">
-                        <a href="#" class="search-btn col-lg-2 col-md-3 col-sm-2">搜索</a>
+                        <a href="#" class="search-btn col-lg-2 col-md-3 col-sm-2" @click="search">搜索</a>
                     </div>
 
                 </div>
@@ -69,21 +73,40 @@
     </div>
     <script src="js/frame.js"></script>
     <script src="js/jquery.city.js"></script>
+    <script src="js/vue.js"></script>
+    <!-- <script src="https://unpkg.com/axios/dist/axios.min.js"></script> -->
     <script>
-        $(function () {
-            $.ajax({
-                type: "GET",
-                url: "/user/session",
-                dataType: "json",
-                success: function (data) {
-                    if (data.code == 200) {
-                        $('.login_user').html(`${data.msg.name}<i class="iconfont">&#xeb6d;</i>`)
-                        $('.login_user').click(function () {
-                            return false;
-                        })
-                    }
+        new Vue({
+            el: '#app',
+            data: {
+                user: ''
+            },
+            mounted: function () {
+                this.getUser();
+            },
+            methods: {
+                getUser: function () {
+                    var _self = this;
+                    $.ajax({
+                        type: "GET",
+                        url: "/user/session",
+                        dataType: "json",
+                        success: function (data) {
+                            if (data.code == 200) {
+                                _self.user = data.msg.name;
+                            }
+                        }
+                    });
+                },
+                search: function () {
+                    var data = txt_city.value.replace(/\s*/ig, '');
+                    location.href = `${location.origin}/user_choose.html?address=${data}`;
                 }
-            });
+            },
+        })
+
+        $(function () {
+
             $('#txt_city').jcity({
                 urlOrData: 'js/citydata.json',
                 animate: { showClass: 'animated flipInX', hideClass: 'animated flipOutX' },
@@ -91,12 +114,6 @@
                     console.log(data);
                 }
             });
-            $('.search-btn').click(function () {
-                var data = txt_city.value.replace(/\s*/ig, '');
-                // alert(location.origin)
-                location.href = `${location.origin}/user_choose.html?address=${data}`;
-                return false;
-            })
 
             $('.btn').mouseenter(function () {
                 if ($('.login_user').text() == '注册/登录') {
