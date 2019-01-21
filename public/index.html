@@ -17,7 +17,7 @@
     <script>
         $(function () {
 
-            $('.show-btn').click(function(){
+            $('.show-btn').click(function () {
                 if ($('.header-info').is(':visible')) {
                     $('.header-info').hide();
                 } else {
@@ -44,12 +44,18 @@
                     fixedDom.classList.add("fixed");
                 }
                 if (scrollTop <= fixedDom.offsetTop + 10) {
+                    fixedDom.classList.remove("fixed");
+                }
+                var topHeight = document.getElementsByClassName('header')[0].clientHeight + document.getElementsByClassName('main_img')[0].clientHeight;
+                var topServer = document.getElementsByClassName('server')[0].clientHeight;
+                console.log(scrollTop+' --- '+ topHeight + '------' + document.getElementsByClassName('server')[0].clientHeight)
+                if (topHeight - scrollTop >= topServer) {
                     $('.server-img').css({ 'opacity': '0', 'animation': 'none' });
                     $('.server-title').css({ 'opacity': '0', 'animation': 'none' });
                     $('.server-list').css({ 'opacity': '0', 'animation': 'none' });
                     $('.phone-image').css({ 'opacity': '0', 'animation': 'none' });
-
-                    fixedDom.classList.remove("fixed");
+                } else {
+                    console.log('2')
                 }
             }
 
@@ -65,7 +71,8 @@
                     var str = $(this).parent().prev().css("background-image");
                     str = str.replace('-no', '-');
                     str = str.replace('.png', 'ed.png');
-                    str = str.replace('http://127.0.0.1:5050', '..');
+
+                    str = str.replace(location.href.slice(0, -1), '..');
                     $(this).parent().prev().css("background-image", str);
 
                     if (str.indexOf('Delicacy') != -1) {
@@ -100,7 +107,7 @@
                     var str = $(this).parent().prev().css("background-image");
                     str = str.replace('-', '-no');
                     str = str.replace('ed.png', '.png');
-                    str = str.replace('http://127.0.0.1:5050', '..');
+                    str = str.replace(location.href.slice(0, -1), '..');
                     $(this).parent().prev().css("background-image", str);
                 })
             })
