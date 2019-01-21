@@ -434,14 +434,17 @@
             $('.left-b').removeClass('left-b-show-all');
             $('.busin-title>.iconfont').html('&#xeb6d;');
         });
+        
+        $('.right-b div i').click(function(){
+            if ($('.right-b div i').css('color') == 'rgb(106, 106, 106)') {    
+                $('.right-b div i').html('&#xeca1;');
+                $('.right-b div i').css('color', '#e54c2a')
+            } else {
+                $('.right-b div i').html('&#xeca2;');
+                $('.right-b div i').css('color', '#6a6a6a')
+            }
 
-        heart.hover(function () {
-            $('.right-b div i').html('&#xeca1;');
-            $('.right-b div i').css('color', '#e54c2a')
-        }, function () {
-            $('.right-b div i').html('&#xeca2;');
-            $('.right-b div i').css('color', '#6A6A6A')
-        });
+        })
 
         $('.taggle-btn').click(function () {
             if ($('.right-b').css('display') == 'none') {
@@ -474,39 +477,13 @@
                 div.classList.add('fixed-div');
             };
             if ($('.goods').length>0) {
-                /* $('.goods').each(function(i, elem){
-                    console.log(elem.scrollTo)
-                }) */
+
                 var windowTop = 500;
                 var arr = {};
                 var goods_div = document.getElementsByClassName('goods')
                 for (const elem of goods_div) {
                     arr[$(elem).attr('id')] = elem.scrollHeight;
                 }
-                // console.log(arr)
-                // for (const key in arr) {
-                //     if (arr.hasOwnProperty(key)) {
-                //         const element = arr[key];
-                //         if (scrollTop>windowTop+element.scrollHeight) {
-                //             // console.log(key + '   '+document.getElementById(key).scrollHeight)
-                //         }
-                //     }
-                // }
-
-                // console.log(scrollTop)
-                /* if (scrollTop>windowTop&&scrollTop<windowTop+arr.item1) {
-                    $('a[data-target="#item1"]').parent().addClass('type-active').siblings().removeClass('type-active');
-                }
-                if (scrollTop>windowTop+arr.item1&&scrollTop<windowTop+arr.item1+arr.item2) {
-                    $('a[data-target="#item2"]').parent().addClass('type-active').siblings().removeClass('type-active');
-                }
-                if (scrollTop>windowTop+arr.item1+arr.item2&&scrollTop<windowTop+arr.item1+arr.item2+arr.item3) {
-                    $('a[data-target="#item3"]').parent().addClass('type-active').siblings().removeClass('type-active');
-                }
-                if (scrollTop>windowTop+arr.item1+arr.item2+arr.item3&&scrollTop<windowTop+arr.item1+arr.item2+arr.item3+arr.item4) {
-                    $('a[data-target="#item4"]').parent().addClass('type-active').siblings().removeClass('type-active');
-                } */
-
 
                 var countLeft = 0,countRight = 0;
                 for (const key in arr) {
@@ -514,7 +491,6 @@
                     countRight += arr[key];
                     if (scrollTop>windowTop + countLeft&&scrollTop<windowTop + countRight) {
                         $(`a[data-target="#${key}"]`).parent().addClass('type-active').siblings().removeClass('type-active');
-                        // console.log(key)
                     }
                 }
 
