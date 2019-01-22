@@ -251,3 +251,6 @@ a:hover{
     border-radius: 5px;
     background: #e54c2a;
 }
+[v-cloak]{
+    display: none;
+}
