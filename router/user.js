@@ -96,9 +96,9 @@ router.get('/query', (req, res) => {
 
 
 router.get('/getlist', (req, res) => {
-    var address=req.query.address.split('-');
-    var n =parseInt(req.query.n);
-    n = n*20;
+    var address = req.query.address.split('-');
+    var n = parseInt(req.query.n);
+    n = n * 20;
     var [province, city, county] = address;
     var shop_type = req.query.type;
     var sql = '';
@@ -123,11 +123,11 @@ router.get('/getlist', (req, res) => {
 });
 
 router.get('/searchByBusiness', (req, res) => {
-    var address=req.query.address.split('-');
+    var address = req.query.address.split('-');
     var [province, city, county] = address;
     var sql = 'SELECT * FROM shop WHERE province=? and city=? and county=? and shop_name like ?';
     var queryPara = [province, city, county, req.query.business];
-    
+
     pool.query(sql, queryPara, (err, result) => {
         if (err) {
             throw err;
@@ -230,9 +230,9 @@ router.post('/login', (req, res) => {
 router.get('/session', (req, res) => {
     var session_msg = req.session.user;
     if (session_msg) {
-        res.send({code: 200, msg: session_msg});
+        res.send({ code: 200, msg: session_msg });
     } else {
-        res.send({code: 400, msg: 'get session Fault'});
+        res.send({ code: 400, msg: 'get session Fault' });
     }
 })
 
@@ -251,6 +251,7 @@ router.get('/getFoods', (req, res) => {
     })
 })
 router.get('/getFoodsCatagory', (req, res) => {
+    var food_catagory = { foods: [], catagory: [] };
     var sid = req.query.sid;
     var sql = "SELECT type_name FROM shop JOIN food_catagory ON shop.id=food_catagory.shop_id WHERE shop.id=?";
     pool.query(sql, [sid], (err, result) => {
@@ -258,7 +259,20 @@ router.get('/getFoodsCatagory', (req, res) => {
             throw err;
         }
         if (result) {
-            res.send(result);
+            food_catagory.catagory = result;
+            var sql2 = 'SELECT * FROM shop JOIN food ON shop.id=food.shop_id WHERE food.shop_id=?';
+            pool.query(sql2, [sid], (err, result) => {
+                if (err) {
+                    throw err;
+                }
+                if (result) {
+                    food_catagory.foods = result;
+                    res.send(food_catagory)
+                } else {
+                    res.send('err');
+                }
+            })
+
         } else {
             res.send('err');
         }
@@ -268,14 +282,14 @@ router.get('/getFoodsCatagory', (req, res) => {
 router.post('/setShopCar', (req, res) => {
     var obj = req.body;
     var sql = `INSERT INTO shop_car VALUES (null, (SELECT user.id FROM user WHERE user.phone = ?), ?, 1, ?)`
-    pool.query(sql, [obj.user,parseInt(obj.foods_id),parseFloat(obj.un_price.substring(1))], (err, result) => {
+    pool.query(sql, [obj.user, parseInt(obj.foods_id), parseFloat(obj.un_price)], (err, result) => {
         if (err) {
             throw err;
         }
         if (result.affectedRows) {
             res.send(result);
         } else {
-            res.send({code: 400, msg: 'fault'})
+            res.send({ code: 400, msg: 'fault' })
         }
     })
 })
@@ -293,14 +307,14 @@ router.post('/update_shopCar', (req, res) => {
                 if (err) {
                     throw err;
                 }
-                if(result){
+                if (result) {
                     res.send(result);
                 } else {
-                    res.send({code: 400, msg: 'fault_select'})
+                    res.send({ code: 400, msg: 'fault_select' })
                 }
             })
         } else {
-            res.send({code: 400, msg: 'fault'})
+            res.send({ code: 400, msg: 'fault' })
         }
     })
 })
@@ -313,11 +327,11 @@ router.get('/load_shop_car', (req, res) => {
             throw err;
         }
         if (result) {
-            console.log(obj.user)
-            console.log(result)
+            // console.log(obj.user)
+            // console.log(result)
             res.send(result);
         } else {
-            result({code:400, msg:'select Fault'})
+            result({ code: 400, msg: 'select Fault' })
         }
     });
 })
@@ -330,19 +344,19 @@ router.post('/getOrderInfo', (req, res) => {
     FROM food JOIN shop_car ON food.food_id=shop_car.fid JOIN shop ON food.shop_id=shop.id JOIN user ON shop_car.uid=user.id 
     WHERE user.phone=? AND shop.id=?
     `;
-    pool.query(sql, [user,sid], (err, result) => {
+    pool.query(sql, [user, sid], (err, result) => {
         if (err) {
             throw err;
         }
         if (result) {
             res.send(result);
         } else {
-            res.send({code:400, msg:'get order info fault!'})
+            res.send({ code: 400, msg: 'get order info fault!' })
         }
     })
 })
 
-router.post('/save_address',(req, res) => {
+router.post('/save_address', (req, res) => {
     var obj = req.body;
     var sql = `INSERT INTO re_address VALUES (null, (SELECT id FROM user WHERE user.phone=?), ?, ?, ?, ?, ?, ?)`;
     pool.query(sql, [obj.u_phone, obj.receiver, obj.province, obj.city, obj.country, obj.address, obj.phone], (err, result) => {
@@ -350,9 +364,9 @@ router.post('/save_address',(req, res) => {
             throw err;
         }
         if (result.affectedRows) {
-            res.send({code:200, msg:'Insert Success'});
+            res.send({ code: 200, msg: 'Insert Success' });
         } else {
-            res.send({code:400, msg:'Insert Fault'});
+            res.send({ code: 400, msg: 'Insert Fault' });
         }
     })
 })
@@ -360,13 +374,13 @@ router.post('/save_address',(req, res) => {
 router.post('/valiUser', (req, res) => {
     var obj = req.body;
     var sql = `SELECT * FROM shop_car JOIN user ON shop_car.uid=user.id WHERE user.phone=? AND shop_car.fid=?`;
-    pool.query(sql, [obj.user,obj.foods_id],(err, result) => {
-        if(err){
+    pool.query(sql, [obj.user, obj.foods_id], (err, result) => {
+        if (err) {
             throw err;
         }
         if (result) {
             res.send(result)
-        } else{
+        } else {
             res.send('error')
         }
     })
@@ -382,12 +396,12 @@ router.get('/valiAddress', (req, res) => {
         if (result.length) {
             res.send(result)
         } else {
-            res.send({code:400, msg:'no address'})
+            res.send({ code: 400, msg: 'no address' })
         }
     })
 })
 
-router.get('/accross', (req, res) => {    
+router.get('/accross', (req, res) => {
     res.send('123456');
 })
 
@@ -399,14 +413,14 @@ router.post('/saveOrder', (req, res) => {
     FROM food JOIN shop_car ON food.food_id=shop_car.fid JOIN shop ON food.shop_id=shop.id JOIN user ON shop_car.uid=user.id JOIN re_address ON user.id=re_address.uid WHERE 
     user.phone=? AND shop.id=?
     `;
-    pool.query(sql, [user,sid], (err, result) => {
+    pool.query(sql, [user, sid], (err, result) => {
         if (err) {
             throw err;
         }
         if (result) {
             res.send(result);
         } else {
-            res.send({code:400, msg:'get order info fault!'})
+            res.send({ code: 400, msg: 'get order info fault!' })
         }
     })
 })
@@ -414,14 +428,14 @@ router.post('/saveOrder', (req, res) => {
 router.get('/delete_shop_car', (req, res) => {
     var obj = req.query;
     var sql = `DELETE FROM shop_car WHERE uid=(SELECT id FROM user WHERE user.phone=?)`;
-    pool.query(sql,[obj.user],(err, result) => {
+    pool.query(sql, [obj.user], (err, result) => {
         if (err) {
             throw err;
         }
         if (result.affectedRows) {
-            res.send({code:200, msg:'Delete Success'});
+            res.send({ code: 200, msg: 'Delete Success' });
         } else {
-            res.send({code:400, msg:'Delete Fault'});
+            res.send({ code: 400, msg: 'Delete Fault' });
         }
     })
 })

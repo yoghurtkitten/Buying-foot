@@ -15,29 +15,28 @@
     <link rel="stylesheet" href="css/icon/iconfont.css">
     <link rel="stylesheet" href="css/shop.css">
     <style>
-        .fixed-div {
-            position: fixed;
-            top: 0;
-            margin-top: 0px !important;
-            box-shadow: 0px 0px 5px #ccc;
-        }
     </style>
 </head>
 
 <body oncontextmenu="return false;" onselectstart="return false">
     <iframe src="./header.html" frameborder="0" scrolling="no" class="frame-div" onload="this.height=100"></iframe>
-    <div class="container">
+    <div class="container" id="app" v-cloak>
         <div class="business-info row m-0 mt-3">
             <div class="left-b col-md-6 pr-0">
                 <div class="left-inner d-flex align-items-center">
                     <img src="img/business/business-icon.png" class="icon" alt="">
                     <div class="ml-2">
-                        <p class="busin-title">
-                            <span></span>
+                        <p class="busin-title" v-if="category[0]">
+                            <span>
+                                {{category[0].foods[0].shop_name}}
+                            </span>
                             <i class="iconfont">&#xeb6d;</i>
                         </p>
-                        <div class="star">
-                            <span></span>
+                        <div class="star" v-if="category[0]">
+                            <i class="iconfont" v-for="(item, index) in category[0].foods[0].shop_start" :key="index">&#xec43;</i>
+                            <span>
+                                {{category[0].foods[0].shop_start}}分
+                            </span>
                         </div>
                     </div>
                 </div>
@@ -50,12 +49,16 @@
                     <p>
                         <i class="iconfont">&#xec3f;</i>
                         <span>商家地址</span>
-                        <span class="shop_address"></span>
+                        <span class="shop_address" v-if="category[0]">
+                            {{category[0].foods[0].shop_name}}
+                        </span>
                     </p>
                     <p>
                         <i class="iconfont">&#xe678;</i>
                         <span>商家电话</span>
-                        <span class="shop_tel"></span>
+                        <span class="shop_tel" v-if="category[0]">
+                            {{category[0].foods[0].shop_phone}}
+                        </span>
                     </p>
                 </div>
             </div>
@@ -63,18 +66,18 @@
                 <i class="iconfont">&#xec0b;</i>
             </div>
             <div class="right-b col-md-6 col-sm-5 p-0 ">
-                <div class="d-flex justify-content-between align-items-center detail-info">
+                <div class="d-flex justify-content-between align-items-center detail-info" v-if="category[0]">
                     <div class="deliver_time">
                         <p>平均送餐时间</p>
-                        <p><span></span>分钟</p>
+                        <p><span>{{category[0].foods[0].deliver_time}}</span>分钟</p>
                     </div>
                     <div class="deliver_cost">
                         <p>起送</p>
-                        <p><span></span>元</p>
+                        <p><span>{{category[0].foods[0].deliver_cost}}</span>元</p>
                     </div>
                     <div class="deliver_fee">
                         <p>配送费</p>
-                        <p><span></span>元</p>
+                        <p><span>{{category[0].foods[0].deliver_fee}}</span>元</p>
                     </div>
                 </div>
                 <div class="save d-flex justify-content-center p-0 m-0">
@@ -108,17 +111,59 @@
                 </ul>
             </div>
         </div>
-        <div class="food_item">
+        <div class="food_item" v-if="category[0]">
             <div class="d-flex">
                 <div class="category mt-3">
-                    <ul class="d-flex flex-wrap pt-3 pl-4 m-0"></ul>
+                    <ul class="d-flex flex-wrap pt-3 pl-4 m-0" v-if="category[0]">
+                        <li v-for="(obj, index) in category[0].catagory" :key="index">
+                            <a :href="'#item'+(index+1)" :data-target="'#item'+(index+1)">{{obj.type_name}}</a>
+                        </li>
+                    </ul>
                 </div>
                 <div class="mt-3 concat">
                     <p>商家公告</p>
                     <div>
                         <h4>配送说明</h4>
-                        <p></p>
+                        <p v-if="category[0]">配送费 ￥{{category[0].foods[0].deliver_fee}}</p>
                     </div>
+                </div>
+            </div>
+            <div v-if="category[0]" v-for="(obj, index) in category[0].catagory" :key="index" class="goods" :id="'item'+(index+1)">
+                <div class="goods-type">
+                    <p class="goods-title" id="item1">{{obj.type_name}}</p>
+                    <ul>
+                        <li v-for="(food, index) in category[0].foods" :key="index" v-if="food.foot_type == obj.type_name">
+                            <img :src="food.food_img" alt="" class="goods-img">
+                            <div>
+                                <p>{{food.name}}</p>
+                                <p>{{food.ingredients}}</p>
+                                <div class="star">
+                                    <i class="iconfont">&#xec43;</i>
+                                    <i class="iconfont">&#xec43;</i>
+                                    <i class="iconfont">&#xec43;</i>
+                                    <i class="iconfont">&#xec43;</i>
+                                    <i class="iconfont">&#xec43;</i>
+                                    <span>
+                                        ({{food.food_start}}分)月售200+份
+                                    </span>
+                                </div>
+                                <p v-if="getCount(food.food_id)<1">
+                                    <span class="price">￥{{food.price}}</span>
+                                    <a href="javascript:;" @click="add_to_shopCar($event,food.name,food.price,food.food_id)">加入购物车</a>
+                                    <input type="hidden" class="food_id" :value="food.food_id">
+                                </p>
+                                <div v-if="getCount(food.food_id)>=1" class="change_food_count">
+                                    <span class="price">￥{{food.price}}</span>
+                                    <p>
+                                        <button @click="change(-1, food.food_id)">-</button>
+                                        <input type="text" :value="getCount(food.food_id)">
+                                        <button @click="change(+1, food.food_id)">+</button>
+                                        <input type="hidden" class="food_id" :value="food.food_id">
+                                    </p>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
                 </div>
             </div>
         </div>
@@ -126,21 +171,38 @@
             <div>
                 <p>
                     <span>购物车</span>
-                    <span><a href="#">[清空]</a></span>
+                    <span @click="clear"><a href="javascript:;">[清空]</a></span>
                 </p>
                 <i class="iconfont">&#xe640;</i>
             </div>
-            <div></div>
+            <div v-for="obj in shop_car">
+                <div class="shop-item">
+                    <ul>
+                        <li>
+                            <span class="goods-name">{{obj.name}}</span>
+                            <p>
+                                <button @click="change(-1, obj.fid)">-</button>
+                                <input type="text" v-model="obj.number">
+                                <button @click="change(+1, obj.fid)">+</button>
+                                <input type="hidden" :value="obj.fid">
+                            </p>
+                            <span class="unprice">
+                                ￥{{obj.un_price * obj.number}}
+                            </span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
             <div>
                 <a href="#">
                     <i class="iconfont">&#xe63f;</i>
-                    <i class="number">0</i>
+                    <i class="number">{{count_total}}</i>
                     <span>￥</span>
-                    <span class="total">000.00</span>
+                    <span class="total">{{price_total}}</span>
                     <span></span>
                 </a>
                 <a href="#">
-                    <span>
+                    <span @click="toOrder">
                         去结算 >
                     </span>
                 </a>
@@ -149,281 +211,170 @@
     </div>
     <iframe src="./footer.html" frameborder="0" scrolling="no" class="frame-div" onload="this.height=100"></iframe>
     <script src="js/frame.js"></script>
-
+    <script src="js/vue.js"></script>
     <script>
-        $(function () {
-            var urlParams = new URLSearchParams(location.search);
-            var sid = urlParams.get("sid");
-            var user = urlParams.get('user');
-
-            function load_food() {
-                return new Promise(function (open) {
-                    $.ajax({
-                        url: "/user/getFoodsCatagory",
-                        type: "get",
-                        data: {
-                            sid: sid
-                        },
-                        // data: `sid=${sid}`,
-                        dataType: "json"
-                    }).then(function (data) {
-                        var li_html = '';
-                        var item_title = '';
-                        for (let i = 0; i < data.length; i++) {
-                            li_html += `<li><a href="#item${i + 1}" data-target="#item${i + 1}">${data[i].type_name}</a></li>`
-                            item_title += `
-                            <div class="goods" id="item${i + 1}">
-                                <div class="goods-type">
-                                    <p class="goods-title" id="item1">${data[i].type_name}</p><ul></ul>
-                                </div>
-                            </div>`;
-                        }
-                        $('.category ul').html(li_html);
-                        $('.food_item').html(`${$('.food_item').html()}${item_title}`)
-
-                        open();
-                    })
-                })
-
-            }
-            function load_type() {
-                return new Promise(function (open) {
-                    $.ajax({
-                        url: "/user/getFoods",
-                        type: "get",
-                        data: {
-                            sid: sid
-                        },
-                        // data: `sid=${sid}`,
-                        dataType: "json"
-                    }).then(function (data) {
-                        $('.busin-title span').html(data[0].shop_name)
-                        var start_icon = '';
-                        for (let i = 0; i < data[0].shop_start; i++) {
-                            start_icon += '<i class="iconfont">&#xec43;</i>';
-                        }
-                        $('.star').html(`${start_icon} <span>${data[0].shop_start}分</span>`);
-                        $('.shop_address').html(data[0].address);
-                        $('.shop_tel').html(data[0].shop_phone);
-                        $('.deliver_time p span').html(data[0].deliver_time);
-                        $('.concat div p').html(`配送费：￥ ${parseFloat(data[0].deliver_fee).toFixed(2)}`);
-                        $('.deliver_cost p span').html(data[0].deliver_cost);
-                        $('.deliver_fee p span').html(data[0].deliver_fee);
-                        $('.total').next().html(`| 配送费￥${data[0].deliver_fee}`)
-                        var food_items = '';
-                        var goods_title = document.querySelectorAll(".goods>.goods-type>.goods-title")
-                        for (const obj of data) {
-                            for (let i = 0; i < goods_title.length; i++) {
-                                const element = goods_title[i];
-                                var text = element.textContent;
-                                if (obj.foot_type == text) {
-                                    element.parentNode.lastElementChild.innerHTML += `<li>
-                                        <img src="${obj.food_img}" alt="" class="goods-img">
-                                        <div>
-                                            <p>${obj.name}</p>
-                                            <p>${obj.ingredients}</p>
-                                            <div class="star">
-                                                <i class="iconfont">&#xec43;</i>
-                                                <i class="iconfont">&#xec43;</i>
-                                                <i class="iconfont">&#xec43;</i>
-                                                <i class="iconfont">&#xec43;</i>
-                                                <i class="iconfont">&#xec43;</i>
-                                                <span>
-                                                    (${obj.food_start}分)月售200+份
-                                                    </span>
-                                                    </div>
-                                                    <p>
-                                                        <span class="price">￥${obj.price}</span>
-                                                        <a href="javascript:;">加入购物车</a>
-                                                        <input type="hidden" class="food_id" value="${obj.food_id}">
-                                                    </p>
-                                        </div>
-                                    </li>
-                                    `
-                                }
+        new Vue({
+            el: '#app',
+            data: {
+                sid: '',
+                user: '',
+                category: [],
+                foods_type: [],
+                shop_car: [],
+            },
+            mounted() {
+                this.set_sid_user();
+                this.load_food().then(this.bandClick);
+                this.load_shop_car();
+            },
+            methods: {
+                getCount:function (food_id) {
+                    for (const key in this.shop_car) {
+                        if (this.shop_car.hasOwnProperty(key)) {
+                            const element = this.shop_car[key];
+                            if (element.fid == food_id) {
+                                return element.number;
                             }
                         }
-                        open();
-                    })
-                })
-            }
-            /* .category ul li: hover{
-                background: #eee;
-            } */
-
-            function bandClick() {
-                return new Promise(function (open) {
-                    $('.category ul li:first-child').addClass('type-active');
-                    $('.category>ul').on('click', 'li', function (e) {
-                        $(this).addClass('type-active').siblings('li').removeClass('type-active').css({'background':'#fff'});
-                    })
-                    $('.category ul li').hover(function(){
-                        $(this).not('.type-active').css({'background':'#eee'});
-                    },function(){
-                        $(this).not('.type-active').css({'background':'#fff'});
-                    })
-                })
-            }
-
-            load_food().then(load_type).then(bandClick);
-
-            $('.food_item').on('click', '.goods', function (e) {
-                e.stopPropagation();
-                var a = e.target.nodeName;
-                if (a == 'A') {
-                    $('.number').html(parseInt($('.number').text()) + 1);
-                    var g_name = e.target.parentElement.parentElement.firstElementChild.innerHTML;
-                    var un_price = e.target.previousElementSibling.innerHTML;
-                    var f_id = e.target.nextElementSibling.value;
-
-                    function vali() {
-                        return new Promise(function (open) {
-                            $.ajax({
-                                url: "/user/valiUser",
-                                type: 'post',
-                                data: {
-                                    user: user,
-                                    foods_id: f_id
-                                },
-                                dataType: 'json'
-                            }).then(function (data) {
-                                open(data);
-                            })
+                    }
+                    return 0;
+                },
+                load_food: function () {
+                    var _self = this;
+                    return new Promise(function (open) {
+                        $.ajax({
+                            url: "/user/getFoodsCatagory",
+                            type: "get",
+                            data: {
+                                sid: _self.sid
+                            },
+                            dataType: "json"
+                        }).then(function (data) {
+                            _self.category = _self.category.concat(data);
+                            open();
                         })
-                    }
-                    vali().then(function (data) {
-                        if (data.length) {
-                            var shop_item = $('.shop-car>div:nth-child(2)>div input[type=text]');
-                            for (const elem of shop_item) {
-                                var fid = $(elem).parent().children().last().val();
-                                var count = parseInt($(elem).val()) + 1;
-                                if (fid == f_id) {
-                                    $.ajax({
-                                        url: "/user/update_shopCar",
-                                        type: "post",
-                                        data: {
-                                            foods_id: fid,
-                                            number: count
-                                        },
-                                        dataType: 'json'
-                                    }).then(function (data) {
-                                        $(elem).val(count);
-                                    })
-                                    break;
-                                }
-                            }
-                        } else {
-                            $.ajax({
-                                url: "/user/setShopCar",
-                                type: "post",
-                                data: {
-                                    foods_id: f_id,
-                                    un_price: un_price,
-                                    user: user
-                                },
-                                dataType: "json"
-                            }).then(function (data) {
-                                cal_total();
-                            })
-                            $('.shop-car>div:nth-child(2)').html(`
-                                ${ $('.shop-car>div:nth-child(2)').html()}
-                                <div class="shop-item">
-                                    <ul>
-                                        <li>
-                                            <span class="goods-name">${g_name}</span>
-                                            <p>
-                                                <button>-</button>
-                                                <input type="text" value="1">
-                                                <button>+</button>
-                                                <input type="hidden" value="${f_id}">
-                                            </p>
-                                            <span class="unprice">
-                                            ${un_price}
-                                            </span>
-                                        </li>
-                                    </ul>
-                                </div>`);
-                        }
                     })
-
-                }
-            })
-
-            $('.shop-car>div:nth-child(2)').click(function (e) {
-                if (e.target.nodeName == 'BUTTON') {
-                    var fid = e.target.parentNode.lastElementChild.value;
-                    var count = parseInt(e.target.parentNode.firstElementChild.nextElementSibling.value);
-                    if (e.target.innerHTML == '+') {
-                        count = e.target.parentNode.firstElementChild.nextElementSibling.value = count + 1;
-                        var n = parseInt($('.number').text()) + 1;
-                        $('.number').text(n)
-                    } else {
-                        if (count > 1) {
-                            count = e.target.parentNode.firstElementChild.nextElementSibling.value = count - 1;
-                        }
-                    }
+                },
+                bandClick: function () {
+                    return new Promise(function (open) {
+                        $('.category ul li:first-child').addClass('type-active');
+                        $('.category>ul').on('click', 'li', function (e) {
+                            $(this).addClass('type-active').siblings('li').removeClass('type-active').css({ 'background': '#fff' });
+                        })
+                        $('.category ul li').hover(function () {
+                            $(this).not('.type-active').css({ 'background': '#eee' });
+                        }, function () {
+                            $(this).not('.type-active').css({ 'background': '#fff' });
+                        })
+                    })
+                },
+                set_sid_user: function () {
+                    var urlParams = new URLSearchParams(location.search);
+                    this.sid = urlParams.get("sid");
+                    this.user = urlParams.get('user');
+                },
+                load_shop_car: function () {
+                    var _self = this;
                     $.ajax({
-                        url: "/user/update_shopCar",
+                        url: "/user/load_shop_car",
+                        type: "get",
+                        data: {
+                            user: this.user
+                        },
+                        dataType: "json"
+                    }).then(function (data) {
+                        _self.shop_car = data;
+                    })
+                },
+                toOrder: function () {
+                    location.href = `${location.origin}/order.html?sid=${this.sid}&user=${this.user}`;
+                },
+                clear: function () {
+                    this.shop_car = [];
+
+                    $.ajax({
+                        url: '/user/delete_shop_car',
+                        type: 'get',
+                        dataType: 'json',
+                        data: {
+                            user: this.user
+                        }
+                    }).then(function (data) {
+                        console.log(data);
+                    })
+                },
+                add_to_shopCar: function (e, name, price, f_id) {
+                    var _self = this;
+                    $.ajax({
+                        url: "/user/setShopCar",
                         type: "post",
                         data: {
-                            foods_id: fid,
-                            number: count
+                            foods_id: f_id,
+                            un_price: price,
+                            user: this.user
                         },
-                        // data: `foods_id=${fid}&number=${count}`,
                         dataType: "json"
                     }).then(function (data) {
-                        var obj = data[0];
-                        var un_tatle = e.target.parentNode.nextElementSibling;
-                        un_tatle.innerHTML = `￥${parseFloat(count * obj.un_price)}`;
-                        setTimeout(() => {
-                            cal_total();
-                        }, 500);
-
-                    })
-
-                }
-            })
-
-            $.ajax({
-                url: "/user/load_shop_car",
-                type: "get",
-                data: {
-                    user: user
+                        console.log('重新加载')
+                        _self.load_shop_car();
+                    });
+                    for (const key in this.category[0].foods) {
+                        if (this.category[0].foods.hasOwnProperty(key)) {
+                            const element = this.category[0].foods[key];
+                        }
+                    }
                 },
-                dataType: "json"
-            }).then(function (data) {
-                var food_count = 0;
-                for (const key in data) {
-                    $('.shop-car>div:nth-child(2)').html(`
-                    ${ $('.shop-car>div:nth-child(2)').html()}
-                    <div class="shop-item">
-                        <ul>
-                            <li>
-                                <span class="goods-name">${data[key].name}</span>
-                                <p>
-                                    <button>-</button>
-                                    <input type="text" value="${data[key].number}">
-                                    <button>+</button>
-                                    <input type="hidden" value="${data[key].fid}">
-                                </p>
-                                <span class="unprice">
-                                ￥${data[key].un_price * data[key].number}
-                                </span>
-                            </li>
-                        </ul>
-                    </div>`);
-                    cal_total()
-                    food_count += parseInt(data[key].number);
+                change: function (i, f_id) {
+                    var _self = this;
+                    for (const key in this.shop_car) {
+                        if (this.shop_car.hasOwnProperty(key)) {
+                            const element = this.shop_car[key];
+                            if (element.fid == f_id) {
+                                element.number += i;
+                                if (element.number == 0) {
+                                    element.number = 1;
+                                }
+                                $.ajax({
+                                    url: "/user/update_shopCar",
+                                    type: "post",
+                                    data: {
+                                        foods_id: f_id,
+                                        number: element.number
+                                    },
+                                    dataType: 'json'
+                                }).then(function (data) {
+                                })
+                            }
+                        }
+                    }
                 }
-                $('.number').html(food_count)
-            })
-
-            $('.shop-car div:last-child a:last-child').click(function (e) {
-                e.preventDefault();
-                location.href = `${location.origin}/order.html?sid=${sid}&user=${user}`;
-            })
+            },
+            computed: {
+                count_total: function () {
+                    var sum = 0;
+                    for (const key in this.shop_car) {
+                        if (this.shop_car.hasOwnProperty(key)) {
+                            const element = this.shop_car[key];
+                            sum += element.number;
+                        }
+                    }
+                    return sum;
+                },
+                price_total: function () {
+                    var sum = 0;
+                    for (const key in this.shop_car) {
+                        if (this.shop_car.hasOwnProperty(key)) {
+                            const element = this.shop_car[key];
+                            sum += element.number * element.un_price;
+                        }
+                    }
+                    return sum.toFixed(2);
+                }
+            },
         })
+    </script>
 
+    <script>
         var title = $('.left-inner');
         var heart = $('.save>div>i');
 
@@ -434,9 +385,9 @@
             $('.left-b').removeClass('left-b-show-all');
             $('.busin-title>.iconfont').html('&#xeb6d;');
         });
-        
-        $('.right-b div i').click(function(){
-            if ($('.right-b div i').css('color') == 'rgb(106, 106, 106)') {    
+
+        $('.right-b div i').click(function () {
+            if ($('.right-b div i').css('color') == 'rgb(106, 106, 106)') {
                 $('.right-b div i').html('&#xeca1;');
                 $('.right-b div i').css('color', '#e54c2a')
             } else {
@@ -476,7 +427,7 @@
                 var div = document.getElementsByClassName('category')[0]
                 div.classList.add('fixed-div');
             };
-            if ($('.goods').length>0) {
+            if ($('.goods').length > 0) {
 
                 var windowTop = 500;
                 var arr = {};
@@ -485,68 +436,16 @@
                     arr[$(elem).attr('id')] = elem.scrollHeight;
                 }
 
-                var countLeft = 0,countRight = 0;
+                var countLeft = 0, countRight = 0;
                 for (const key in arr) {
                     countLeft = countRight;
                     countRight += arr[key];
-                    if (scrollTop>windowTop + countLeft&&scrollTop<windowTop + countRight) {
+                    if (scrollTop > windowTop + countLeft && scrollTop < windowTop + countRight) {
                         $(`a[data-target="#${key}"]`).parent().addClass('type-active').siblings().removeClass('type-active');
                     }
                 }
-
-
-                
-
-                /* for (let i = 0; i < array.length; i++) {
-                    const element = array[i];
-                    
-                } */
-                // for (const elem of document.getElementsByClassName('goods')) {
-                //     if (scrollTop > 900 && scrollTop < 900+elem.scrollHeight) {
-                //         var target = $(elem).attr('id');/* .addClass('type-active') */
-                //         console.log( scrollTop + $(`.category>ul>li>a[data-target='#${target}']`).html())
-                //     } else {
-                //         break;
-                //     }
-                // }
-                // console.log(scrollTop+' ---- '+ document.getElementsByClassName('goods')[1].scrollHeight)
-                
             }
         }
-        function cal_total() {
-            var moneys = $('.unprice');
-            var total = 0;;
-            moneys.each(function () {
-                var str = $(this).text();
-                var reg = /(^\s*[￥])|(\s*$)/g;
-                str = str.replace(reg, '');
-                total += parseFloat(str);
-            })
-            $('.total').html(`${total.toFixed(2)}`)
-        }
-
-        $('.shop-car>div>p>span>a').click(function (e) {
-            e.preventDefault();
-            $('.shop-car>div:nth-child(2)').html('');
-            $('.number').html('0');
-            $('.total').html('00.00');
-            var urlp = new URLSearchParams(location.search);
-
-            $.ajax({
-                url: '/user/delete_shop_car',
-                type: 'get',
-                dataType: 'json',
-                data: {
-                    user: urlp.get('user')
-                }
-            }).then(function (data) {
-                console.log(data);
-            })
-        })
-
-
-
     </script>
 </body>
-
 </html>
