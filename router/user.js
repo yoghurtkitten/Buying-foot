@@ -358,8 +358,8 @@ router.post('/getOrderInfo', (req, res) => {
 
 router.post('/save_address', (req, res) => {
     var obj = req.body;
-    var sql = `INSERT INTO re_address VALUES (null, (SELECT id FROM user WHERE user.phone=?), ?, ?, ?, ?, ?, ?)`;
-    pool.query(sql, [obj.u_phone, obj.receiver, obj.province, obj.city, obj.country, obj.address, obj.phone], (err, result) => {
+    var sql = `INSERT INTO re_address VALUES (null, (SELECT id FROM user WHERE user.phone=?), ?, ?, ?, ?, ?, ?, ?)`;
+    pool.query(sql, [obj.u_phone, obj.receiver, obj.province, obj.city, obj.country, obj.address, obj.phone, obj.gender], (err, result) => {
         if (err) {
             throw err;
         }
@@ -388,7 +388,7 @@ router.post('/valiUser', (req, res) => {
 
 router.get('/valiAddress', (req, res) => {
     var obj = req.query;
-    var sql = "select * from re_address JOIN user ON re_address.uid=user.id WHERE user.phone=?";
+    var sql = "select re_address.id, re_address.receiver,re_address.province,re_address.city,re_address.country,re_address.address,re_address.phone,re_address.gender from re_address JOIN user ON re_address.uid=user.id WHERE user.phone=?";
     pool.query(sql, [obj.user], (err, result) => {
         if (err) {
             throw err;

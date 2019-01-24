@@ -18,322 +18,381 @@
 </head>
 
 <body>
-    <iframe src="./header.html" frameborder="0" scrolling="no" class="frame-div" onload="this.height=100"></iframe>
-    <div class="container">
-        <section>
-            <div>
-                <p></p>
-                <p></p>
-                <p> 确认购买</p>
-            </div>
-            <div>
-                <div>
-                    <ul>
-                        <li>
-                            <span>
-                                订单详情
-                            </span>
-                            <span>
-                                <a href="javascript:;">
-                                    返回商家修改
-                                </a>
-                            </span>
-                        </li>
-                        <li>
-                            <span>
-                                菜品
-                            </span>
-                            <span>
-                                份数/价格
-                            </span>
-                        </li>
-                    </ul>
-                    <div></div>
+    <div id="app">
+        <iframe src="./header.html" frameborder="0" scrolling="no" class="frame-div" onload="this.height=100"></iframe>
+        <div class="container">
+            <section>
+                <div v-if="orderInfo[0]">
+                    <p></p>
+                    <p>{{orderInfo[0].shop_name}}</p>
+                    <p> 确认购买</p>
                 </div>
-                <div data-right="">
-                    <h2 data-target="#modal" data-toggle="my-modal">
-                        收货地址
-                        <a href="javascript:;">
-                            添加新地址
-                        </a>
-                    </h2>
+                <div>
                     <div>
-                        <div>
-                            <div class="add-address" data-add-address="">
-                                <i>+</i>
+                        <ul v-if="orderInfo[0]">
+                            <li>
                                 <span>
-                                    添加新地址
+                                    订单详情
                                 </span>
-                            </div>
-
-                            <div>
-                                <h2>
-                                    付款方式
+                                <span>
+                                    <a href="javascript:;">
+                                        返回商家修改
+                                    </a>
+                                </span>
+                            </li>
+                            <li>
+                                <span>
+                                    菜品
+                                </span>
+                                <span>
+                                    份数/价格
+                                </span>
+                            </li>
+                            <li class="food" v-if="orderInfo" v-for="obj in orderInfo">
+                                <span>
+                                    {{obj.name}}
+                                </span>
+                                <span>
+                                    ￥{{obj.un_price}}*{{obj.number}}
+                                </span>
+                            </li>
+                            <li>
+                                <span>包装费</span>
+                                <span>￥2</span>
+                            </li>
+                            <li>
+                                <span>配送费</span>
+                                <span>￥{{orderInfo[0].deliver_fee}}</span>
+                            </li>
+                            <li>
+                                <span>￥
+                                    <span data-total="">{{getTotal()}}</span>
+                                </span>
+                            </li>
+                        </ul>
+                        <div></div>
+                    </div>
+                    <div data-right="">
+                        <h2 data-target="#modal" data-toggle="my-modal">
+                            收货地址
+                            <a href="javascript:;" @click="show_address">
+                                添加新地址
+                            </a>
+                        </h2>
+                        <div class="add-address" data-add-address="" v-if="!address[0]">
+                            <i>+</i>
+                            <span @click="show_address">
+                                添加新地址
+                            </span>
+                        </div>
+                        <div>
+                            <div data-address-list="" :class="{showFirst:isShowAdderss}">
+                                <div v-if="address" class="add-address has-address" :class="" v-for="obj in address"
+                                    @click.stop="checkAddress($event, obj.id)">
+                                    <i class="iconfont">&#xe64d;</i>
                                     <span>
-                                        推荐使用在线支付，不用找零，优惠更多
+                                        <span>
+                                            {{obj.receiver}} {{obj.gender | changeGender}} {{obj.phone}}
+                                        </span>
+                                        <span>
+                                            {{obj.address}}
+                                        </span>
                                     </span>
-                                </h2>
-                                <div>
-                                    <p>在线支付</p>
-                                    <p>支持微信、支付宝、QQ钱包及大部分银行卡</p>
-                                    <div class="tabs">
+                                    <div>
                                         <i class="iconfont">&#xebe6;</i>
                                     </div>
                                 </div>
                             </div>
-                            <div class="another-info">
-                                <h2>
-                                    其他信息
-                                </h2>
-                                <div>
-                                    <span>送达时间</span>
-                                    <p>
-                                        立即送达
-                                        <i class="iconfont">&#xeb6d;</i>
-                                    </p>
-                                    <div class="time">
-                                        <ul>
-                                            <li>立即送达</li>
-                                            <li>16:30</li>
-                                            <li>17:00</li>
-                                            <li>17:30</li>
-                                            <li>18:00</li>
-                                            <li>18:30</li>
-                                            <li>19:00</li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <div>
-                                    <span>订单备注</span>
-                                    <input type="text" name="order_descript" id="order_descript">
-                                </div>
-                                <div>
-                                    <span>餐具份数</span>
-                                    <i class="iconfont">&#xe601;</i>
-                                    <p>
-                                        未选择
-                                        <i class="iconfont">&#xeb6d;</i>
-                                    </p>
-                                    <div data-cover=''>
-                                        <ul>
-                                            <li>
-                                                <i class="iconfont">&#xe601;</i>
-                                                无需餐具
-                                            </li>
-                                            <li>1份</li>
-                                            <li>2份</li>
-                                            <li>3份</li>
-                                            <li>4份</li>
-                                            <li>5份</li>
-                                            <li>6份</li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <button>确认下单</button>
+                            <div @click="changeShow">
+                                <p v-if="showFitst">
+                                    显示更多地址
+                                    <i class="iconfont">&#xeb6d;</i>
+                                </p>
+                                <p v-if="!showFitst">
+                                    收起
+                                    <i class="iconfont">&#xeb6e;</i>
+                                </p>
                             </div>
+                        </div>
+                        <div>
+                            <h2>
+                                付款方式
+                                <span>
+                                    推荐使用在线支付，不用找零，优惠更多
+                                </span>
+                            </h2>
+                            <div class="pay_method">
+                                <p>在线支付</p>
+                                <p>支持微信、支付宝、QQ钱包及大部分银行卡</p>
+                                <div class="tabs">
+                                    <i class="iconfont">&#xebe6;</i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="another-info">
+                            <h2>
+                                其他信息
+                            </h2>
+                            <div>
+                                <span>送达时间</span>
+                                <p @mouseenter='enter'>
+                                    立即送达
+                                    <i class="iconfont">&#xeb6d;</i>
+                                </p>
+                                <div class="time">
+                                    <ul>
+                                        <li>立即送达</li>
+                                        <li>16:30</li>
+                                        <li>17:00</li>
+                                        <li>17:30</li>
+                                        <li>18:00</li>
+                                        <li>18:30</li>
+                                        <li>19:00</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div>
+                                <span>订单备注</span>
+                                <input type="text" name="order_descript" id="order_descript" v-model="order_descript">
+                            </div>
+                            <div>
+                                <span>餐具份数</span>
+                                <i class="iconfont">&#xe601;</i>
+                                <p @mouseenter='dishEnter'>
+                                    未选择
+                                    <i class="iconfont">&#xeb6d;</i>
+                                </p>
+                                <div data-cover=''>
+                                    <ul>
+                                        <li>
+                                            <i class="iconfont">&#xe601;</i>
+                                            无需餐具
+                                        </li>
+                                        <li>1份</li>
+                                        <li>2份</li>
+                                        <li>3份</li>
+                                        <li>4份</li>
+                                        <li>5份</li>
+                                        <li>6份</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <button @click="confirm_order">确认下单</button>
                         </div>
                     </div>
                 </div>
+            </section>
+        </div>
+        <iframe src="./footer.html" frameborder="0" scrolling="no" class="frame-div" onload="this.height=100"></iframe>
+        <div class="modal-bg"></div>
+        <aside id="modal">
+            <h2>添加新地址</h2>
+            <div>
+                <label>姓名</label>
+                <input type="text" name="" id="uname" placeholder="请输入您的姓名" v-model="receiver">
             </div>
-        </section>
+            <div>
+                <label>性别</label>
+                <input type="radio" name="gender" value="1" v-model="gender"><span>先生</span>
+                <input type="radio" name="gender" value="0" v-model="gender"><span>女士</span>
+            </div>
+            <div data-address="">
+                <label>位置</label>
+                <input type="text" name="" id="txt_city" placeholder="请输入小区、大厦或者学校">
+            </div>
+            <div>
+                <label>详细地址</label>
+                <input type="text" name="" id="detail_address" placeholder="单元、门牌号" v-model="datail_address">
+            </div>
+            <div>
+                <label>手机号</label>
+                <input type="text" name="" id="user_phone" placeholder="请输入您的手机号" v-model="phone">
+            </div>
+            <div>
+                <button @click="getAddre">保存</button>
+                <span data-cancal="" @click="cancel">取消</span>
+            </div>
+        </aside>
     </div>
-    <iframe src="./footer.html" frameborder="0" scrolling="no" class="frame-div" onload="this.height=100"></iframe>
-    <div class="modal-bg"></div>
-    <slider id="modal">
-        <h2>添加新地址</h2>
-        <div>
-            <label>姓名</label>
-            <input type="text" name="" id="uname" placeholder="请输入您的姓名">
-        </div>
-        <div>
-            <label>性别</label>
-            <input type="radio" name="gender" value="0"><span>先生</span>
-            <input type="radio" name="gender" value="1"><span>女士</span>
-        </div>
-        <div data-address="">
-            <label>位置</label>
-            <input type="text" name="" id="txt_city" placeholder="请输入小区、大厦或者学校">
-        </div>
-        <div>
-            <label>详细地址</label>
-            <input type="text" name="" id="detail_address" placeholder="单元、门牌号">
-        </div>
-        <div>
-            <label>手机号</label>
-            <input type="text" name="" id="user_phone" placeholder="请输入您的手机号">
-        </div>
-        <div>
-            <button data-save="">保存</button>
-            <span data-cancal="">取消</span>
-        </div>
-    </slider>
     <script src="js/frame.js"></script>
     <script src="js/jquery.city.js"></script>
+    <script src="js/vue.js"></script>
+    <script>
+        Vue.filter('changeGender', function (value) {
+            return value ? '先生' : '女士';
+        })
+        new Vue({
+            el: '#app',
+            data: {
+                sid: '',
+                user: '',
+                orderInfo: [],
+                address: [],
+                receiver: '',
+                datail_address: '',
+                phone: '',
+                address_id: '',
+                gender: '',
+                showFitst: true,
+                isShowAdderss: true,
+                order_descript: '',
+                deliver_time:'立即送达',
+                dish_count:'0'
+                
+            },
+            mounted() {
+                this.getCity();
+                this.setSidUser();
+                this.load_orderInfo();
+                this.load_adderss();
+            },
 
-
+            watch: {
+                address_id: function () {
+                }
+            },
+            methods: {
+                enter:function(){
+                    $('.time').hide()
+                },
+                dishEnter:function(){
+                    $('div[data-cover]').hide();
+                },
+                confirm_order: function () {
+                    location.href = `${location.origin}/pay.html?sid=${this.sid}&user=${this.user}&address=${this.address_id}
+                    &total=${this.getTotal()}`
+                    // console.log('sid'+this.sid +'--user'+ this.user +'--address_id'+ this.address_id +'--total'+ this.getTotal());
+                },
+                checkAddress: function (e, id) {
+                    if (e.target.nodeName == 'DIV') {
+                        this.address_id = id;
+                        $('div[data-address-list]>div').each(function () {
+                            $(this).removeClass('is-choose-address')
+                        })
+                        $('div[data-address-list]>div>div').each(function () {
+                            $(this).removeClass('tabs')
+                        })
+                        $(e.target).addClass('is-choose-address')
+                        $(e.target).children('div').addClass('tabs')
+                    }
+                },
+                changeShow: function () {
+                    this.showFitst = !this.showFitst;
+                    this.isShowAdderss = !this.isShowAdderss;
+                },
+                getCity: function () {
+                    $('#txt_city').jcity({
+                        urlOrData: 'js/citydata.json',
+                        animate: { showClass: 'animated flipInX', hideClass: 'animated flipOutX' },
+                        onChoice: function (data) {
+                            console.log(data);
+                        }
+                    });
+                },
+                setSidUser: function () {
+                    var urlParams = new URLSearchParams(location.search);
+                    this.sid = urlParams.get('sid');
+                    this.user = urlParams.get('user');
+                },
+                load_orderInfo: function () {
+                    var _self = this;
+                    $.ajax({
+                        url: '/user/getOrderInfo',
+                        type: 'post',
+                        data: {
+                            sid: this.sid,
+                            user: this.user
+                        },
+                        dataType: 'json'
+                    }).then(function (data) {
+                        _self.orderInfo = data;
+                        console.log(data);
+                    })
+                },
+                getTotal: function () {
+                    var sum = 0;
+                    for (const key in this.orderInfo) {
+                        if (this.orderInfo.hasOwnProperty(key)) {
+                            const element = this.orderInfo[key];
+                            sum += parseInt(element.number) * parseFloat(element.un_price);
+                        }
+                    }
+                    return sum.toFixed(2);
+                },
+                show_address: function () {
+                    $('#modal').show();
+                    $('.modal-bg').show();
+                },
+                cancel: function () {
+                    $('#modal').hide();
+                    $('.modal-bg').hide();
+                },
+                load_adderss: function () {
+                    var _self = this;
+                    $.ajax({
+                        url: '/user/valiAddress',
+                        type: 'get',
+                        data: {
+                            user: this.user
+                        },
+                        dataType: 'json'
+                    }).then((data) => {
+                        if (data.code != 400) {
+                            _self.address = data;
+                            console.log(data)
+                        }
+                    })
+                },
+                saveAddress: function () {
+                    $('#modal').hide();
+                    $('.modal-bg').hide();
+                },
+                getAddre: function (e) {
+                    var addr = txt_city.value.replace(/\s*/ig, '').split('-');
+                    $.ajax({
+                        url: '/user/save_address',
+                        type: 'post',
+                        data: {
+                            u_phone: this.user,
+                            receiver: this.receiver,
+                            province: addr[0],
+                            city: addr[1],
+                            country: addr[2],
+                            address: this.datail_address,
+                            phone: this.phone,
+                            gender: this.gender
+                        },
+                        dataType: 'json'
+                    }).then(function (data) {
+                        console.log(data);
+                        $('#modal').hide();
+                        $('.modal-bg').hide();
+                    })
+                }
+            },
+        })
+    </script>
     <script>
         $(function () {
-            $('#txt_city').jcity({
-                urlOrData: 'js/citydata.json',
-                animate: { showClass: 'animated flipInX', hideClass: 'animated flipOutX' },
-                onChoice: function (data) {
-                    console.log(data);
-                }
-            });
+
             var urlParams = new URLSearchParams(location.search);
             var sid = urlParams.get('sid');
             var user = urlParams.get('user');
-            $.ajax({
-                url: '/user/getOrderInfo',
-                type: 'post',
-                data: {
-                    sid: sid,
-                    user: user
-                },
-                dataType: 'json'
-            }).then(function (data) {
-                console.log(data);
-                $('section>div:first-child>p:nth-child(2)').html(`${data[0].shop_name} >`);
-                var li_content = '';
-                var total_price = 0;
-                for (let i = 0; i < data.length; i++) {
-                    const obj = data[i];
-                    li_content += `
-                    <li class="food">
-                        <span>
-                            ${obj.name}
-                        </span>
-                        <span>
-                            ￥${obj.un_price}*${obj.number}
-                        </span>
-                    </li>
-                    `;
-                    total_price += parseFloat(obj.un_price) * parseFloat(obj.number);
-                }
-                li_content += `
-                    <li>
-                    <span>包装费</span>
-                    <span>￥2</span>
-                    </li>
-                    <li>
-                        <span>配送费</span>
-                        <span>￥${data[0].deliver_fee}</span>
-                    </li>
-                    <li>
-                        <span>￥
-                            <span data-total="">${total_price.toFixed(2)}</span>
-                        </span>
-                    </li>
-                `;
-                var ul = $('section>div:last-child>div:first-child>ul');
-                ul.html(`${ul.html()}${li_content}`)
-            })
-
             $('.time').on('click', 'li', function () {
                 $(this).parent().parent().prev().html(`${$(this).html()} <i class="iconfont">&#xebe6;</i>`);
             })
             $('[data-cover]').on('click', 'li', function () {
                 $(this).parent().parent().prev().html(`${$(this).html()} <i class="iconfont">&#xebe6;</i>`);
             })
-
-            $.ajax({
-                url: '/user/valiAddress',
-                type: 'get',
-                data:{
-                    user:user
-                },
-                dataType: 'json'
-            }).then((data) => {
-                if (data.length) {
-                    $('.add-address').addClass('has-address');
-                    var $address = $(`
-                    <i class="iconfont">&#xe64d;</i>
-                    <span>
-                        <span>
-                            ${data[0].receiver} 男士 ${data[0].phone}
-                        </span>
-                        <span>
-                            ${data[0].address}
-                        </span>
-                    </span>
-                    <div class="tabs">
-                        <i class="iconfont">&#xebe6;</i>
-                    </div>
-                    `)
-                    $('.add-address').html('').prepend($address);
-                } else {
-                    function alert_address() {
-                        $('#modal').show();
-                        $('.modal-bg').show();
-                        if ($('div[data-add-address]').has('.has-address')) {
-                            $('div[data-add-address]').off('click');
-                        } 
-                    }
-                    $('div[data-add-address]').on('click', alert_address);
-                }
-            })
-
-            
-            $('section>div:nth-child(2)>div:last-child h2>a').click(function () {
-                $('#modal').show();
-                $('.modal-bg').show();
-            })
-            $('span[data-cancal]').click(function () {
-                $('.modal-bg').hide();
-                $('#modal').hide();
-            })
-            $('.another-info>div>p').mouseenter(function () {
+            /* $('.another-info>div>p').mouseenter(function () {
                 $(this).next().show();
             })
             $('.another-info>div>div').mouseleave(function () {
                 $(this).hide();
-            })
-
-            $('button[data-save]').click(function () {
-                var gender = $('input[name=gender]:checked').val();
-                var address = txt_city.value.replace(/\s*/ig, '').split('-');
-
-                $.ajax({
-                    url: '/user/save_address',
-                    type: 'post',
-                    data: {
-                        u_phone: user,
-                        receiver: uname.value,
-                        province: address[0],
-                        city: address[1],
-                        country: address[2],
-                        address: detail_address.value,
-                        phone: user_phone.value
-                    },
-                    dataType: 'json'
-                }).then(function (data) {
-                    console.log(data)
-                })
-
-                $('.modal-bg').hide();
-                $('#modal').hide();
-                $('.add-address').addClass('has-address');
-                var $address = $(`
-                <i class="iconfont">&#xe64d;</i>
-                <span>
-                    <span>
-                        ${uname.value} ${$('input[name=gender]:checked').next().html()} ${user_phone.value}
-                    </span>
-                    <span>
-                        ${detail_address.value}
-                    </span>
-                </span>
-                <div class="tabs">
-                    <i class="iconfont">&#xebe6;</i>
-                </div>
-                `)
-                $('.add-address').html('').prepend($address)
-
-            })
-
-            $('.another-info>button').click(function(){
-                location.href=`${location.origin}/pay.html?sid=${sid}&user=${user}&total=${$('span[data-total]').html()}`
-            })
+            }) */
+            /* $('.another-info>button').click(function () {
+                location.href = `${location.origin}/pay.html?sid=${sid}&user=${user}&total=${$('span[data-total]').html()}`
+            }) */
         })
     </script>
 </body>
