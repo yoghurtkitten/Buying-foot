@@ -17,46 +17,46 @@
 </head>
 
 <body>
-    <div class="container-fluid">
+    <div class="container-fluid" id="app">
         <header>
             <div class="logo"><a href="index.html"><img src="img/logo.png" alt=""></a></div>
             <div>收银台</div>
         </header>
         <section class="container">
-            <div data-order="">
+            <div data-order="" v-if="pay_info[0]">
                 <h3>
                     订单详情
                 </h3>
                 <hr>
                 <div data-order-info="">
                     <p>
-                        
+                        {{pay_info[0].shop_name}}（外卖订单）
                     </p>
                     <p>
                         支付金额
                         <span>
-                            ￥48.10
+                            ￥{{total}}
                         </span>
                     </p>
                 </div>
-                <div data-small="">
-                    <span></span>
-                    <span>查看详情</span>
+                <div data-small="" v-if="pay_info">
+                    <span>
+                        {{pay_info[0].receiver}} ({{pay_info[0].phone | changeGender}}) {{pay_info[0].phone}}
+                        {{pay_info[0].address}} - <span v-for="obj in pay_info">{{obj.name}}*{{obj.number}}-</span>
+                    </span>
+                    <span @click="show_detail">查看详情</span>
                     <i class="iconfont">&#xeb6d;</i>
                 </div>
-                <div data-big="">
-                    <p>邓多多(先生) 150****2364</p>
-                    <p>保利华都18栋D栋</p>
+                <div data-big="" v-if="pay_info[0]">
+                    <p>{{pay_info[0].receiver}} {{pay_info[0].phone}}</p>
+                    <p>{{pay_info[0].address}}</p>
                     <p>-</p>
                     <ul>
-                        <li>全料热干粉-细粉 X1</li>
-                        <li>银耳汤-银耳汤 X1</li>
-                        <li>新品 台湾热狗肠 X2</li>
-                        <li>卤干子 X1</li>
-                        <li>老蔡锅贴（煎饺）5个一份 X1</li>
-                        <li>新品 养生 红豆糯米粥 X1</li>
+                        <li v-for="obj in pay_info">
+                            {{obj.name}}*{{obj.number}}
+                        </li>
                     </ul>
-                    <span>收起详情</span>
+                    <span @click="hide_detail">收起详情</span>
                     <i class="iconfont">&#xeb6e;</i>
                 </div>
             </div>
@@ -70,7 +70,7 @@
                     <p>
                         第三方支付
                         <span>
-                            ￥48.10
+                            ￥{{total}}
                         </span>
                     </p>
                     <div>
@@ -89,71 +89,79 @@
             </div>
         </section>
     </div>
+    <script src="js/vue.js"></script>
+    <script>
+        Vue.filter('changeGender', function (value) {
+            return value == '1' ? '先生' : '女士';
+        });
+        new Vue({
+            el: '#app',
+            data: {
+                sid: '',
+                user: '',
+                total: '',
+                pay_info: [],
+                add_id: ''
+            },
+            mounted() {
+                this.getOrderPage();
+                this.getPayInfo();
+                this.time();
+            },
+            methods: {
+                time() {
+                    var time_count = 900;
+                    var timer = setInterval(() => {
+                        time_count--;
+                        $('div[data-pay]>p>span>i').html(`${parseInt(time_count / 60)}分${time_count % 60}秒`)
+                    }, 1000)
+
+                    setTimeout(() => {
+                        clearTimeout(timer)
+                    }, 900000)
+                },
+                show_detail() {
+                    $('div[data-small]').hide();
+                    $('div[data-big]').show();
+                },
+                hide_detail() {
+                    $('div[data-small]').show();
+                    $('div[data-big]').hide();
+                },
+                getOrderPage() {
+                    var urlParam = new URLSearchParams(location.search);
+                    this.sid = urlParam.get('sid');
+                    this.user = urlParam.get('user');
+                    this.total = urlParam.get('total');
+                    this.add_id = urlParam.get('address');
+                },
+                getPayInfo() {
+                    var _self = this;
+                    $.ajax({
+                        url: '/user/saveOrder',
+                        data: {
+                            sid: this.sid,
+                            user: this.user,
+                            add_id: this.add_id
+                        },
+                        type: 'post',
+                        dataType: 'json'
+                    }).then((data) => {
+                        console.log(data);
+                        _self.pay_info = data;
+                    })
+
+                }
+            },
+        })
+    </script>
     <script>
         $(function () {
-            $('div[data-small]>span:last').click(function () {
-                $('div[data-small]').hide();
-                $('div[data-big]').show();
+            $('div[data-pay]>div>div>div').click(function (e) {
+                if (e.target.nodeName == 'DIV') {
+                    $(this).addClass('active').siblings('div').removeClass('active');
+                }
             })
-            $('div[data-big]>span').click(function () {
-                $('div[data-big]').hide();
-                $('div[data-small]').show();
-            })
-            
-            var urlParam = new URLSearchParams(location.search);
-            var sid = urlParam.get('sid');
-            var user = urlParam.get('user');
-            var total = urlParam.get('total');
-            $('div[data-order-info]>p>span').html(`￥${total}`)
-            $('div[data-pay]>div>p>span').html(`￥${total}`)
-            $.ajax({
-                    url:'/user/saveOrder',
-                    data:{
-                        sid:sid,
-                        user:user
-                    },
-                    type:'post',
-                    dataType:'json'
-                }).then((data) => {
-                    console.log(data)
-                    $('div[data-order-info]>p:first-child').html(`${data[0].shop_name}（外卖订单）`)
-                    var $order_info = $('div[data-small]>span:first-child');
-                    // $order_info.html(`${data[0].receiver}（先生） ${data[0].phone}${data[0].address}`)
-                    var html = '';
-                    for (const info of data) {
-                        html += info.name + '，';
-                    }
-                    $order_info.html(`${data[0].receiver}（先生） ${data[0].phone}${data[0].address}-${html}`)
-
-                    var $order_info_big = $('div[data-big]');
-                    $order_info_big.children().first().html(`${data[0].receiver}先生 ${data[0].phone}`)
-                    .next().html(data[0].address);
-
-                    html = '';
-
-                    for (const info of data) {
-                        html += `<li>${info.name}</li>`
-                    }
-
-                    $order_info_big.children('ul').html(html);
-
-                })
-
-                var time_count = 900;
-                var timer = setInterval(() => {
-                    time_count --;
-                    $('div[data-pay]>p>span>i').html(`${parseInt(time_count/60)}分${time_count%60}秒`)
-                }, 1000)
-
-                setTimeout(() => {
-                    clearTimeout(timer)
-                }, 900000)
-
-                $('div[data-pay]>div>div>div').click(function(e){
-                    if(e.target.nodeName == 'DIV'){
-                        $(this).addClass('active').siblings('div').removeClass('active');
-                    }
-                })
         })
     </script>
 </body>

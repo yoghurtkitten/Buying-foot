@@ -340,6 +340,7 @@ router.post('/getOrderInfo', (req, res) => {
     var obj = req.body;
     var sid = obj.sid;
     var user = obj.user;
+    
     var sql = `SELECT shop.shop_name,shop.deliver_fee,shop.deliver_time,food.name,shop_car.number,shop_car.un_price 
     FROM food JOIN shop_car ON food.food_id=shop_car.fid JOIN shop ON food.shop_id=shop.id JOIN user ON shop_car.uid=user.id 
     WHERE user.phone=? AND shop.id=?
@@ -409,11 +410,12 @@ router.post('/saveOrder', (req, res) => {
     var obj = req.body;
     var sid = obj.sid;
     var user = obj.user;
-    var sql = `SELECT shop.shop_name,shop.deliver_fee,shop.deliver_time,food.name,shop_car.number,shop_car.un_price,re_address.receiver,re_address.province,re_address.city,re_address.country,re_address.address,re_address.phone 
+    var add_id = obj.add_id;
+    var sql = `SELECT shop.shop_name,shop.deliver_fee,shop.deliver_time,food.name,shop_car.number,shop_car.un_price,re_address.receiver,re_address.province,re_address.city,re_address.country,re_address.address,re_address.phone,re_address.gender 
     FROM food JOIN shop_car ON food.food_id=shop_car.fid JOIN shop ON food.shop_id=shop.id JOIN user ON shop_car.uid=user.id JOIN re_address ON user.id=re_address.uid WHERE 
-    user.phone=? AND shop.id=?
+    user.phone=? AND shop.id=? AND re_address.id=?
     `;
-    pool.query(sql, [user, sid], (err, result) => {
+    pool.query(sql, [user, sid, add_id], (err, result) => {
         if (err) {
             throw err;
         }

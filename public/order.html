@@ -135,19 +135,21 @@
                             </h2>
                             <div>
                                 <span>送达时间</span>
-                                <p @mouseenter='enter'>
-                                    立即送达
+                                <p @click='toggleTime'>
+                                    <span v-if="typeof(deliver_time)=='number'">
+                                        {{new Date(deliver_time).getHours()}}:{{new Date(deliver_time).getMinutes()}}
+                                    </span>
+                                    <span v-if="typeof(deliver_time)=='string'">
+                                        {{deliver_time}}
+                                    </span>
                                     <i class="iconfont">&#xeb6d;</i>
                                 </p>
-                                <div class="time">
+                                <div class="time" v-show="show_time" @mouseleave="timeLeave">
                                     <ul>
-                                        <li>立即送达</li>
-                                        <li>16:30</li>
-                                        <li>17:00</li>
-                                        <li>17:30</li>
-                                        <li>18:00</li>
-                                        <li>18:30</li>
-                                        <li>19:00</li>
+                                        <li @click="chooseTime('立即送达')">立即送达</li>
+                                        <li v-for="i in 5" @click="chooseTime(time+(i+1)*900000)">
+                                            {{new Date(time+(i+1)*900000).getHours()}}:{{new Date(time+(i+1)*900000).getMinutes()}}
+                                        </li>
                                     </ul>
                                 </div>
                             </div>
@@ -158,22 +160,17 @@
                             <div>
                                 <span>餐具份数</span>
                                 <i class="iconfont">&#xe601;</i>
-                                <p @mouseenter='dishEnter'>
-                                    未选择
+                                <p @click='toggleDish'>
+                                    {{dish_count}}
                                     <i class="iconfont">&#xeb6d;</i>
                                 </p>
-                                <div data-cover=''>
-                                    <ul>
-                                        <li>
+                                <div data-cover='' v-show="show_dish" >
+                                    <ul @mouseleave="dishLeave">
+                                        <li @click="chooseDish(0)">
                                             <i class="iconfont">&#xe601;</i>
                                             无需餐具
                                         </li>
-                                        <li>1份</li>
-                                        <li>2份</li>
-                                        <li>3份</li>
-                                        <li>4份</li>
-                                        <li>5份</li>
-                                        <li>6份</li>
+                                        <li v-for="i in 6" @click="chooseDish(i+'份')">{{i}}份</li>
                                     </ul>
                                 </div>
                             </div>
@@ -237,8 +234,10 @@
                 isShowAdderss: true,
                 order_descript: '',
                 deliver_time:'立即送达',
-                dish_count:'0'
-                
+                time: new Date().getTime(),
+                dish_count:'无需餐具',
+                show_time: false,
+                show_dish: false,
             },
             mounted() {
                 this.getCity();
@@ -246,22 +245,46 @@
                 this.load_orderInfo();
                 this.load_adderss();
             },
-
             watch: {
                 address_id: function () {
+                },
+                show_time: function(){
+                },
+                address: function(){
+                    console.log('addressAdd')
                 }
             },
             methods: {
-                enter:function(){
-                    $('.time').hide()
+                toggleTime: function(){
+                    this.show_time = !this.show_time
+                },
+                toggleDish: function(){
+                    this.show_dish = !this.show_dish
+                },
+                chooseTime:function(time){
+                    console.log(time)
+                    this.deliver_time = time;                  
+                },
+                chooseDish:function(i){
+                    this.dish_count = i;
+                },
+                timeEnter:function(){
+                    this.show_time = true;
+                },
+                timeLeave: function(){
+                    this.show_time = false;
                 },
                 dishEnter:function(){
-                    $('div[data-cover]').hide();
+                    this.show_dish = true;
+                },
+                dishLeave:function(){
+                    this.show_dish = false;
                 },
                 confirm_order: function () {
-                    location.href = `${location.origin}/pay.html?sid=${this.sid}&user=${this.user}&address=${this.address_id}
-                    &total=${this.getTotal()}`
-                    // console.log('sid'+this.sid +'--user'+ this.user +'--address_id'+ this.address_id +'--total'+ this.getTotal());
+                    /* location.href = `${location.origin}/pay.html?sid=${this.sid}&user=${this.user}&address=${this.address_id}
+                    &total=${this.getTotal()}`; */
+                    // console.log('sid'+this.sid +'--user'+ this.user +'--address_id'+ this.address_id +'--total'+ this.getTotal() +'--delive-time'+this.deliver_time+'--'+this.dish_count+'--'+this.order_descript);
+                    console.log('sid'+this.sid +'--user'+ this.user +'--address_id'+ this.address_id+'--total'+ this.getTotal() +'--delive-time'+this.deliver_time+'--'+this.dish_count+'--message'+this.order_descript);
                 },
                 checkAddress: function (e, id) {
                     if (e.target.nodeName == 'DIV') {
@@ -339,7 +362,6 @@
                     }).then((data) => {
                         if (data.code != 400) {
                             _self.address = data;
-                            console.log(data)
                         }
                     })
                 },
@@ -349,6 +371,7 @@
                 },
                 getAddre: function (e) {
                     var addr = txt_city.value.replace(/\s*/ig, '').split('-');
+                    var _self = this;
                     $.ajax({
                         url: '/user/save_address',
                         type: 'post',
@@ -367,32 +390,10 @@
                         console.log(data);
                         $('#modal').hide();
                         $('.modal-bg').hide();
+                        _self.load_adderss();
                     })
                 }
             },
-        })
-    </script>
-    <script>
-        $(function () {
-
-            var urlParams = new URLSearchParams(location.search);
-            var sid = urlParams.get('sid');
-            var user = urlParams.get('user');
-            $('.time').on('click', 'li', function () {
-                $(this).parent().parent().prev().html(`${$(this).html()} <i class="iconfont">&#xebe6;</i>`);
-            })
-            $('[data-cover]').on('click', 'li', function () {
-                $(this).parent().parent().prev().html(`${$(this).html()} <i class="iconfont">&#xebe6;</i>`);
-            })
-            /* $('.another-info>div>p').mouseenter(function () {
-                $(this).next().show();
-            })
-            $('.another-info>div>div').mouseleave(function () {
-                $(this).hide();
-            }) */
-            /* $('.another-info>button').click(function () {
-                location.href = `${location.origin}/pay.html?sid=${sid}&user=${user}&total=${$('span[data-total]').html()}`
-            }) */
         })
     </script>
 </body>
