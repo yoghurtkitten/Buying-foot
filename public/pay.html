@@ -107,6 +107,7 @@
                 this.getOrderPage();
                 this.getPayInfo();
                 this.time();
+                this.changeOrder();
             },
             methods: {
                 time() {
@@ -138,7 +139,7 @@
                 getPayInfo() {
                     var _self = this;
                     $.ajax({
-                        url: '/user/saveOrder',
+                        url: '/user/load_Order',
                         data: {
                             sid: this.sid,
                             user: this.user,
@@ -151,6 +152,19 @@
                         _self.pay_info = data;
                     })
 
+                },
+                changeOrder() {
+                    $.ajax({
+                        url: '/user/change_order',
+                        type: 'get',
+                        dataType: 'json',
+                        data:{
+                            u_phone: this.user,
+                            sid: this.sid
+                        }
+                    }).then((data) => {
+                        console.log(data)
+                    })
                 }
             },
         })

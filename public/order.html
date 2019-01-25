@@ -161,7 +161,12 @@
                                 <span>餐具份数</span>
                                 <i class="iconfont">&#xe601;</i>
                                 <p @click='toggleDish'>
-                                    {{dish_count}}
+                                    <span v-if="dish_count=='0'">
+                                        无需餐具
+                                    </span>
+                                    <span v-else>
+                                        {{dish_count}}
+                                    </span>
                                     <i class="iconfont">&#xeb6d;</i>
                                 </p>
                                 <div data-cover='' v-show="show_dish" >
@@ -263,7 +268,11 @@
                 },
                 chooseTime:function(time){
                     console.log(time)
-                    this.deliver_time = time;                  
+                    if (time == '立即送达') {
+                        this.deliver_time = new Date().getTime();
+                    } else {
+                        this.deliver_time = time;                
+                    }
                 },
                 chooseDish:function(i){
                     this.dish_count = i;
@@ -281,10 +290,29 @@
                     this.show_dish = false;
                 },
                 confirm_order: function () {
-                    /* location.href = `${location.origin}/pay.html?sid=${this.sid}&user=${this.user}&address=${this.address_id}
-                    &total=${this.getTotal()}`; */
-                    // console.log('sid'+this.sid +'--user'+ this.user +'--address_id'+ this.address_id +'--total'+ this.getTotal() +'--delive-time'+this.deliver_time+'--'+this.dish_count+'--'+this.order_descript);
-                    console.log('sid'+this.sid +'--user'+ this.user +'--address_id'+ this.address_id+'--total'+ this.getTotal() +'--delive-time'+this.deliver_time+'--'+this.dish_count+'--message'+this.order_descript);
+                    var _self = this;
+                    $.ajax({
+                        url:'/user/save_Order',
+                        type: 'post',
+                        data:{
+                            u_phone: this.user,
+                            shop_id: this.sid,
+                            addr_id: this.address_id,
+                            order_time: this.deliver_time,
+                            message: this.order_descript,
+                            dish_count: this.dish_count,
+                            price:this.getTotal()
+                        },
+                        dataType: 'json'
+                    }).then(function(data){
+                        // console.log(data[0].id);
+                        if (data) {
+                            location.href = `${location.origin}/pay.html?sid=${_self.sid}&user=${_self.user}&address=${_self.address_id}&total=${_self.getTotal()}&order_id=${data[0].id}`;
+                        } else {
+                            alert('诶呀，服务器出了点小问题！')
+                        }
+                    })
+       
                 },
                 checkAddress: function (e, id) {
                     if (e.target.nodeName == 'DIV') {

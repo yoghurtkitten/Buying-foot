@@ -281,8 +281,8 @@ router.get('/getFoodsCatagory', (req, res) => {
 
 router.post('/setShopCar', (req, res) => {
     var obj = req.body;
-    var sql = `INSERT INTO shop_car VALUES (null, (SELECT user.id FROM user WHERE user.phone = ?), ?, 1, ?)`
-    pool.query(sql, [obj.user, parseInt(obj.foods_id), parseFloat(obj.un_price)], (err, result) => {
+    var sql = `INSERT INTO shop_car VALUES (null, (SELECT user.id FROM user WHERE user.phone = ?), ?, ?, 1, ?, 0)`
+    pool.query(sql, [obj.user, parseInt(obj.foods_id), obj.sid, parseFloat(obj.un_price)], (err, result) => {
         if (err) {
             throw err;
         }
@@ -296,13 +296,13 @@ router.post('/setShopCar', (req, res) => {
 
 router.post('/update_shopCar', (req, res) => {
     var obj = req.body;
-    var sql = `UPDATE shop_car SET number=? WHERE fid=?`
+    var sql = `UPDATE shop_car SET number=? WHERE fid=? AND shop_car.isOrder=0`
     pool.query(sql, [obj.number, obj.foods_id], (err, result) => {
         if (err) {
             throw err;
         }
         if (result.affectedRows) {
-            var sql2 = `SELECT un_price FROM shop_car WHERE fid=?`;
+            var sql2 = `SELECT un_price FROM shop_car WHERE fid=? AND shop_car.isOrder=0`;
             pool.query(sql2, [obj.foods_id], (err, result) => {
                 if (err) {
                     throw err;
@@ -321,7 +321,7 @@ router.post('/update_shopCar', (req, res) => {
 
 router.get('/load_shop_car', (req, res) => {
     var obj = req.query;
-    var sql = 'SELECT fid,food.name as name,number,un_price FROM shop_car JOIN food on shop_car.fid = food.food_id JOIN user ON shop_car.uid=user.id WHERE user.phone=?';
+    var sql = 'SELECT fid,food.name as name,number,un_price FROM shop_car JOIN food on shop_car.fid = food.food_id JOIN user ON shop_car.uid=user.id WHERE user.phone=? AND shop_car.isOrder=0';
     pool.query(sql, [obj.user], (err, result) => {
         if (err) {
             throw err;
@@ -343,7 +343,7 @@ router.post('/getOrderInfo', (req, res) => {
     
     var sql = `SELECT shop.shop_name,shop.deliver_fee,shop.deliver_time,food.name,shop_car.number,shop_car.un_price 
     FROM food JOIN shop_car ON food.food_id=shop_car.fid JOIN shop ON food.shop_id=shop.id JOIN user ON shop_car.uid=user.id 
-    WHERE user.phone=? AND shop.id=?
+    WHERE user.phone=? AND shop.id=? AND shop_car.isOrder=0
     `;
     pool.query(sql, [user, sid], (err, result) => {
         if (err) {
@@ -406,7 +406,7 @@ router.get('/accross', (req, res) => {
     res.send('123456');
 })
 
-router.post('/saveOrder', (req, res) => {
+router.post('/load_Order', (req, res) => {
     var obj = req.body;
     var sid = obj.sid;
     var user = obj.user;
@@ -438,6 +438,47 @@ router.get('/delete_shop_car', (req, res) => {
             res.send({ code: 200, msg: 'Delete Success' });
         } else {
             res.send({ code: 400, msg: 'Delete Fault' });
+        }
+    })
+})
+
+router.post('/save_Order', (req, res) => {
+    var obj = req.body;
+    var sql = 'INSERT INTO order_ (uid, addr_id, shop_id, status, order_time,message,dish_count,price) VALUES ((SELECT id FROM user WHERE user.phone=?), ?, ?, 0, ?, ?, ?, ?)'
+    pool.query(sql, [obj.u_phone, obj.addr_id, obj.shop_id, obj.order_time, obj.message, obj.dish_count, obj.price], (err, result) => {
+        if (err) {
+            throw err;
+        }
+        if (result.affectedRows) {
+            console.log(result);
+            var sql2 = 'SELECT id FROM order_ WHERE order_time=?';
+            pool.query(sql2, [obj.order_time], (err, result) => {
+                if (err) {
+                    throw err;
+                }
+                if (result) {
+                    res.send(result);
+                } else {
+                    res.send({code: 400, msg: 'Select Id Fault!'});
+                }
+            })
+        } else {
+            res.send({code: 400, msg: 'Insert Fault!'});
+        }
+    })
+})
+
+router.get('/change_order', (req, res) => {
+    var obj = req.query;
+    var sql = 'UPDATE shop_car SET isOrder=1 WHERE uid=(SELECT id FROM user WHERE user.phone=?) AND shop_id=?';
+    pool.query(sql, [obj.u_phone, obj.sid], (err, result) => {
+        if (err) {
+            throw err;
+        }
+        if (result.affectedRows) {
+            res.send({code: 200, msg: 'Update Success!'});
+        } else {
+            res.send({code: 400, msg: 'Update Fault!'});
         }
     })
 })
