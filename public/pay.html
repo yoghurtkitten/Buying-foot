@@ -74,18 +74,18 @@
                         </span>
                     </p>
                     <div>
-                        <div class="active">
+                        <div :class="{active:Alipay}" @click="pay('ali')">
                             <i class="iconfont">&#xe647;</i>
                             <span>支付宝</span>
                         </div>
-                        <div>
+                        <div :class="{active:weChatPay}" @click="pay('wechat')">
                             <i class="iconfont">&#xe634;</i>
                             <span>微信支付</span>
                         </div>
                     </div>
                 </div>
                 <hr>
-                <button>确认支付</button>
+                <button @click="confirmPayment()">确认支付</button>
             </div>
         </section>
     </div>
@@ -101,7 +101,11 @@
                 user: '',
                 total: '',
                 pay_info: [],
-                add_id: ''
+                add_id: '',
+                order_id: '',
+                Alipay: true,
+                weChatPay: false,
+                payment: '支付宝',
             },
             mounted() {
                 this.getOrderPage();
@@ -110,6 +114,22 @@
                 this.changeOrder();
             },
             methods: {
+                confirmPayment(){
+                    if (this.payment == '支付宝') {
+                        location.href = `${location.origin}/payment.html?total=${this.total}&order_id=${this.order_id}`;                        
+                    }
+                },
+                pay(payment){
+                    if (payment == 'ali') {
+                        this.Alipay = true;
+                        this.weChatPay = false;
+                        this.payment = '支付宝';
+                    } else {
+                        this.Alipay = false;
+                        this.weChatPay = true;
+                        this.payment = '微信支付';
+                    }
+                },
                 time() {
                     var time_count = 900;
                     var timer = setInterval(() => {
@@ -135,6 +155,7 @@
                     this.user = urlParam.get('user');
                     this.total = urlParam.get('total');
                     this.add_id = urlParam.get('address');
+                    this.order_id = urlParam.get('order_id');
                 },
                 getPayInfo() {
                     var _self = this;
@@ -160,22 +181,14 @@
                         dataType: 'json',
                         data:{
                             u_phone: this.user,
-                            sid: this.sid
+                            sid: this.sid,
+                            order_id: this.order_id
                         }
                     }).then((data) => {
                         console.log(data)
                     })
                 }
             },
-        })
-    </script>
-    <script>
-        $(function () {
-            $('div[data-pay]>div>div>div').click(function (e) {
-                if (e.target.nodeName == 'DIV') {
-                    $(this).addClass('active').siblings('div').removeClass('active');
-                }
-            })
         })
     </script>
 </body>
