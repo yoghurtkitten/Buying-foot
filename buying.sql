@@ -9,7 +9,7 @@ USE buying;
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: 2019-01-18 14:05:56
+-- Generation Time: 2019-01-26 11:00:18
 -- 服务器版本： 10.1.28-MariaDB
 -- PHP Version: 5.6.32
 
@@ -149,15 +149,29 @@ INSERT INTO `food_catagory` (`id`, `type_name`, `shop_id`) VALUES
 
 CREATE TABLE `order_` (
   `id` int(11) NOT NULL,
-  `fid` int(11) DEFAULT NULL,
   `uid` int(11) DEFAULT NULL,
-  `number` smallint(6) DEFAULT NULL,
+  `addr_id` int(11) NOT NULL,
+  `shop_id` int(11) NOT NULL,
   `status` tinyint(4) DEFAULT NULL,
   `order_time` bigint(20) DEFAULT NULL,
   `pay_time` bigint(20) DEFAULT NULL,
+  `deliver_start` bigint(32) NOT NULL,
   `received_time` bigint(20) DEFAULT NULL,
-  `message` varchar(128) DEFAULT NULL
+  `message` varchar(128) DEFAULT NULL,
+  `dish_count` tinyint(4) NOT NULL,
+  `price` decimal(10,2) NOT NULL,
+  `pay_method` varchar(16) NOT NULL,
+  `order_no` varchar(64) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- 转存表中的数据 `order_`
+--
+
+INSERT INTO `order_` (`id`, `uid`, `addr_id`, `shop_id`, `status`, `order_time`, `pay_time`, `deliver_start`, `received_time`, `message`, `dish_count`, `price`, `pay_method`, `order_no`) VALUES
+(19, 2, 32, 1, 1, 1548491917422, NULL, 0, NULL, '', 2, '236.00', '', '1548490123059182915'),
+(20, 2, 32, 1, 0, 0, NULL, 0, NULL, '', 0, '167.00', '', '1548491099656229515'),
+(21, 2, 32, 1, 0, 0, NULL, 0, NULL, '', 0, '108.00', '', '1548495446638232060');
 
 -- --------------------------------------------------------
 
@@ -173,15 +187,20 @@ CREATE TABLE `re_address` (
   `city` varchar(16) DEFAULT NULL,
   `country` varchar(16) DEFAULT NULL,
   `address` varchar(128) DEFAULT NULL,
-  `phone` varchar(11) DEFAULT NULL
+  `phone` varchar(11) DEFAULT NULL,
+  `gender` tinyint(4) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- 转存表中的数据 `re_address`
 --
 
-INSERT INTO `re_address` (`id`, `uid`, `receiver`, `province`, `city`, `country`, `address`, `phone`) VALUES
-(18, 2, '李哈哈', '湖北', '武汉', '武昌区', '保利华都A栋305', '15078945612');
+INSERT INTO `re_address` (`id`, `uid`, `receiver`, `province`, `city`, `country`, `address`, `phone`, `gender`) VALUES
+(32, 2, 'Tom', '天津', '天津', '和平区', '和平小学', '15945612345', 0),
+(33, 2, 'Alice', '河北', '邢台', '内丘县', '451', '15812345678', 0),
+(34, 2, '张三', '天津', '天津', '河东区', '43', '15712345678', 1),
+(35, 2, '5435', '天津', '天津', '南开区', '4234', '15712345678', 0),
+(36, 2, '8768867', '北京', '北京', '宣武区', '55345', '15712346578', 0);
 
 -- --------------------------------------------------------
 
@@ -245,18 +264,27 @@ CREATE TABLE `shop_car` (
   `id` int(11) NOT NULL,
   `uid` int(11) DEFAULT NULL,
   `fid` int(11) DEFAULT NULL,
+  `shop_id` int(11) NOT NULL,
   `number` smallint(6) DEFAULT NULL,
-  `un_price` float NOT NULL
+  `un_price` float NOT NULL,
+  `isOrder` tinyint(4) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- 转存表中的数据 `shop_car`
 --
 
-INSERT INTO `shop_car` (`id`, `uid`, `fid`, `number`, `un_price`) VALUES
-(70, 2, 3, 1, 59),
-(71, 2, 4, 1, 49),
-(72, 2, 28, 1, 59);
+INSERT INTO `shop_car` (`id`, `uid`, `fid`, `shop_id`, `number`, `un_price`, `isOrder`) VALUES
+(244, 2, 4, 1, 1, 49, 20),
+(245, 2, 28, 1, 1, 59, 20),
+(246, 2, 3, 1, 1, 59, 20),
+(247, 2, 3, 1, 1, 59, 20),
+(248, 2, 5, 1, 3, 59, 20),
+(249, 2, 4, 1, 1, 49, 20),
+(250, 2, 28, 1, 1, 59, 20),
+(251, 2, 3, 1, 1, 59, 20),
+(252, 2, 4, 1, 1, 49, 20),
+(253, 2, 28, 1, 1, 59, 20);
 
 -- --------------------------------------------------------
 
@@ -296,7 +324,12 @@ INSERT INTO `user` (`id`, `name`, `gender`, `email`, `phone`, `avatar`, `user_na
 (16, NULL, NULL, NULL, '15789784564', NULL, NULL),
 (17, NULL, NULL, NULL, '17445645645', NULL, NULL),
 (18, NULL, NULL, NULL, '15045678945', NULL, NULL),
-(19, NULL, NULL, NULL, '18895461234', NULL, NULL);
+(19, NULL, NULL, NULL, '18895461234', NULL, NULL),
+(20, NULL, NULL, NULL, '15078945612', NULL, NULL),
+(21, NULL, NULL, NULL, '18672295462', NULL, NULL),
+(22, NULL, NULL, NULL, '15072772698', NULL, NULL),
+(23, NULL, NULL, NULL, '15932165478', NULL, NULL),
+(24, NULL, NULL, NULL, '15072772688', NULL, NULL);
 
 --
 -- Indexes for dumped tables
@@ -333,8 +366,9 @@ ALTER TABLE `food_catagory`
 --
 ALTER TABLE `order_`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `fid` (`fid`),
-  ADD KEY `uid` (`uid`);
+  ADD KEY `uid` (`uid`),
+  ADD KEY `order__ibfk_3` (`addr_id`),
+  ADD KEY `order__ibfk_4` (`shop_id`);
 
 --
 -- Indexes for table `re_address`
@@ -356,7 +390,8 @@ ALTER TABLE `shop`
 ALTER TABLE `shop_car`
   ADD PRIMARY KEY (`id`),
   ADD KEY `uid` (`uid`),
-  ADD KEY `fid` (`fid`);
+  ADD KEY `fid` (`fid`),
+  ADD KEY `shop_car_ibfk_3` (`shop_id`);
 
 --
 -- Indexes for table `user`
@@ -396,13 +431,13 @@ ALTER TABLE `food_catagory`
 -- 使用表AUTO_INCREMENT `order_`
 --
 ALTER TABLE `order_`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- 使用表AUTO_INCREMENT `re_address`
 --
 ALTER TABLE `re_address`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
 
 --
 -- 使用表AUTO_INCREMENT `shop`
@@ -414,13 +449,13 @@ ALTER TABLE `shop`
 -- 使用表AUTO_INCREMENT `shop_car`
 --
 ALTER TABLE `shop_car`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=73;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=254;
 
 --
 -- 使用表AUTO_INCREMENT `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
 -- 限制导出的表
@@ -442,8 +477,9 @@ ALTER TABLE `food_catagory`
 -- 限制表 `order_`
 --
 ALTER TABLE `order_`
-  ADD CONSTRAINT `order__ibfk_1` FOREIGN KEY (`fid`) REFERENCES `food` (`food_id`),
-  ADD CONSTRAINT `order__ibfk_2` FOREIGN KEY (`uid`) REFERENCES `user` (`id`);
+  ADD CONSTRAINT `order__ibfk_2` FOREIGN KEY (`uid`) REFERENCES `user` (`id`),
+  ADD CONSTRAINT `order__ibfk_3` FOREIGN KEY (`addr_id`) REFERENCES `re_address` (`id`),
+  ADD CONSTRAINT `order__ibfk_4` FOREIGN KEY (`shop_id`) REFERENCES `shop` (`id`);
 
 --
 -- 限制表 `re_address`
@@ -462,7 +498,8 @@ ALTER TABLE `shop`
 --
 ALTER TABLE `shop_car`
   ADD CONSTRAINT `shop_car_ibfk_1` FOREIGN KEY (`uid`) REFERENCES `user` (`id`),
-  ADD CONSTRAINT `shop_car_ibfk_2` FOREIGN KEY (`fid`) REFERENCES `food` (`food_id`);
+  ADD CONSTRAINT `shop_car_ibfk_2` FOREIGN KEY (`fid`) REFERENCES `food` (`food_id`),
+  ADD CONSTRAINT `shop_car_ibfk_3` FOREIGN KEY (`shop_id`) REFERENCES `shop` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

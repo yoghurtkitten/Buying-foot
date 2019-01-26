@@ -88,6 +88,27 @@
                 <button @click="confirmPayment()">确认支付</button>
             </div>
         </section>
+        <div class="modal-bg" v-if="isModel">
+            <div>
+                <i class="iconfont">&#xe661;</i>
+                <div class="payOverTime">
+                 <div>
+                     <i class="iconfont">&#xe8e7;</i>
+                 </div>
+                 <div>
+                     <p>
+                         支付已超时
+                     </p>
+                     <p>
+                         很抱歉，已超过订单支付时间限制，请重新下单
+                     </p>
+                     <p>
+                         确定
+                     </p>
+                 </div>
+                </div>
+            </div>
+        </div>
     </div>
     <script src="js/vue.js"></script>
     <script>
@@ -106,6 +127,8 @@
                 Alipay: true,
                 weChatPay: false,
                 payment: '支付宝',
+                order_no:'',
+                isModel: true,
             },
             mounted() {
                 this.getOrderPage();
@@ -116,7 +139,9 @@
             methods: {
                 confirmPayment(){
                     if (this.payment == '支付宝') {
-                        location.href = `${location.origin}/payment.html?total=${this.total}&order_id=${this.order_id}`;                        
+                        window.open(`${location.origin}/payment.html?total=${this.total}&order_id=${this.order_id}&order_no=${this.order_no}`)
+                    } else {
+                        this.isModel = true;
                     }
                 },
                 pay(payment){
@@ -139,6 +164,9 @@
 
                     setTimeout(() => {
                         clearTimeout(timer)
+                        /* setTimeout(()=>{
+                            alert()
+                        }) */
                     }, 900000)
                 },
                 show_detail() {
@@ -156,6 +184,7 @@
                     this.total = urlParam.get('total');
                     this.add_id = urlParam.get('address');
                     this.order_id = urlParam.get('order_id');
+                    this.order_no = urlParam.get('order_no');
                 },
                 getPayInfo() {
                     var _self = this;

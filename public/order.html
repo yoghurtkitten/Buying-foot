@@ -21,7 +21,7 @@
     <div id="app">
         <iframe src="./header.html" frameborder="0" scrolling="no" class="frame-div" onload="this.height=100"></iframe>
         <div class="container">
-            <section>
+            <section v-if="has_food">
                 <div v-if="orderInfo[0]">
                     <p></p>
                     <p>{{orderInfo[0].shop_name}}</p>
@@ -148,7 +148,8 @@
                                     <ul>
                                         <li @click="chooseTime('立即送达')">立即送达</li>
                                         <li v-for="i in 5" @click="chooseTime(time+(i+1)*900000)">
-                                            {{new Date(time+(i+1)*900000).getHours()}}:{{new Date(time+(i+1)*900000).getMinutes()}}
+                                            {{new Date(time+(i+1)*900000).getHours()}}:{{new
+                                            Date(time+(i+1)*900000).getMinutes()}}
                                         </li>
                                     </ul>
                                 </div>
@@ -169,7 +170,7 @@
                                     </span>
                                     <i class="iconfont">&#xeb6d;</i>
                                 </p>
-                                <div data-cover='' v-show="show_dish" >
+                                <div data-cover='' v-show="show_dish">
                                     <ul @mouseleave="dishLeave">
                                         <li @click="chooseDish(0)">
                                             <i class="iconfont">&#xe601;</i>
@@ -182,6 +183,12 @@
                             <button @click="confirm_order">确认下单</button>
                         </div>
                     </div>
+                </div>
+            </section>
+            <section v-else>
+                <div class="empty">
+                    <img src="img/nodata.6477c5.png" alt="">
+                    <p>你的购物车是空的，去<a href="javascript:;" @click="back_to_user_choose"> 下单 </a>吧</p>
                 </div>
             </section>
         </div>
@@ -238,11 +245,12 @@
                 showFitst: true,
                 isShowAdderss: true,
                 order_descript: '',
-                deliver_time:'立即送达',
+                deliver_time: '立即送达',
                 time: new Date().getTime(),
-                dish_count:'无需餐具',
+                dish_count: '无需餐具',
                 show_time: false,
                 show_dish: false,
+                has_food: false
             },
             mounted() {
                 this.getCity();
@@ -253,66 +261,66 @@
             watch: {
                 address_id: function () {
                 },
-                show_time: function(){
+                show_time: function () {
                 },
-                address: function(){
+                address: function () {
                     console.log('addressAdd')
                 }
             },
             methods: {
-                toggleTime: function(){
+                toggleTime: function () {
                     this.show_time = !this.show_time
                 },
-                toggleDish: function(){
+                toggleDish: function () {
                     this.show_dish = !this.show_dish
                 },
-                chooseTime:function(time){
+                chooseTime: function (time) {
                     console.log(time)
                     if (time == '立即送达') {
                         this.deliver_time = new Date().getTime();
                     } else {
-                        this.deliver_time = time;                
+                        this.deliver_time = time;
                     }
                 },
-                chooseDish:function(i){
+                chooseDish: function (i) {
                     this.dish_count = i;
                 },
-                timeEnter:function(){
+                timeEnter: function () {
                     this.show_time = true;
                 },
-                timeLeave: function(){
+                timeLeave: function () {
                     this.show_time = false;
                 },
-                dishEnter:function(){
+                dishEnter: function () {
                     this.show_dish = true;
                 },
-                dishLeave:function(){
+                dishLeave: function () {
                     this.show_dish = false;
                 },
                 confirm_order: function () {
                     var _self = this;
                     $.ajax({
-                        url:'/user/save_Order',
+                        url: '/user/save_Order',
                         type: 'post',
-                        data:{
+                        data: {
                             u_phone: this.user,
                             shop_id: this.sid,
                             addr_id: this.address_id,
                             order_time: this.deliver_time,
                             message: this.order_descript,
                             dish_count: this.dish_count,
-                            price:this.getTotal()
+                            price: this.getTotal()
                         },
                         dataType: 'json'
-                    }).then(function(data){
+                    }).then(function (data) {
                         // console.log(data[0].id);
                         if (data) {
-                            location.href = `${location.origin}/pay.html?sid=${_self.sid}&user=${_self.user}&address=${_self.address_id}&total=${_self.getTotal()}&order_id=${data[0].id}`;
+                            location.href = `${location.origin}/pay.html?sid=${_self.sid}&user=${_self.user}&address=${_self.address_id}&total=${_self.getTotal()}&order_id=${data[0].id}&order_no=${data[0].order_no}`;
                         } else {
                             alert('诶呀，服务器出了点小问题！')
                         }
                     })
-       
+
                 },
                 checkAddress: function (e, id) {
                     if (e.target.nodeName == 'DIV') {
@@ -358,6 +366,11 @@
                     }).then(function (data) {
                         _self.orderInfo = data;
                         console.log(data);
+                        if (data.length == 0) {
+                            _self.has_food = false;
+                        } else {
+                            _self.has_food = true;
+                        }
                     })
                 },
                 getTotal: function () {
@@ -419,6 +432,22 @@
                         $('#modal').hide();
                         $('.modal-bg').hide();
                         _self.load_adderss();
+                    })
+                },
+                back_to_user_choose:function(){
+                    $.ajax({
+                        url: '/user/getShopAddress',
+                        data: {
+                            sid: this.sid
+                        },
+                        type: 'get',
+                        dataType: 'json'
+                    }).then((data) => {
+                        var address=[];
+                        address.push(data[0].province);
+                        address.push(data[0].city);
+                        address.push(data[0].county);
+                        location.replace(`${location.origin}/user_choose.html?address=${address.join('-')}`)
                     })
                 }
             },

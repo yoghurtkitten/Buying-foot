@@ -417,3 +417,17 @@ div[data-address-list]>div>div>i{
 div[data-address-list]+div{
     cursor: pointer;
 }
+.empty{
+    width: 100%;
+    padding: 3.125rem 0 3.125rem 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.empty p{
+    margin: 0;
+    margin-left: 3%;
+    color: #999;
+    font-weight: normal!important;
+    font-family: "PingFang SC", "Lantinghei SC", "Helvetica Neue", "Microsoft Yahei", "Hiragino Sans GB", "Microsoft Sans Serif", "WenQuanYi Micro Hei", sans;
+}

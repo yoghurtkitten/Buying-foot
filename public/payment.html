@@ -47,8 +47,8 @@
                         </div>
                         <div>
                             <p>上海拉扎斯信息科技有限公司</p>
-                            <p>￥22.48</p>
-                            <p>交易号:19012630048131136308</p>
+                            <p>￥{{total}}</p>
+                            <p>交易号:{{order_no}}</p>
                         </div>
                     </div>
                     <div>
@@ -76,13 +76,41 @@
         new Vue({
             el: '#app',
             data:{
-
+                total: '',
+                order_id: '',
+                order_no: '',
             },
             mounted() {
-                
+                this.getHerfParam();
+                this.changeOrderStatu();
             },
             methods: {
-                
+                getHerfParam(){
+                    var urlPara = new URLSearchParams(location.search);
+                    this.total = urlPara.get('total');
+                    this.order_id = urlPara.get('order_id');
+                    this.order_no = urlPara.get('order_no');
+                },
+                changeOrderStatu(){
+                    $.ajax({
+                        url: '/user/changeStatu',
+                        data: {
+                            order_no: this.order_id
+                        },
+                        type: 'get',
+                        dataType: 'json'
+                    }).then((data) => {
+                        console.log(data);
+                    })
+                },
+                time(){
+                    setTimeout(() => {
+                        clearTimeout(timer)
+                        setTimeout(()=>{
+                            alert('')
+                        })
+                    }, 900000)
+                }
             },
         })
     </script>

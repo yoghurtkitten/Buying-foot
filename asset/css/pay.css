@@ -188,3 +188,23 @@ div[data-pay]>p>span>i{
     color: #f66c1c;
     font-style: normal;
 }
+.modal-bg{
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 100;
+    left: 0;
+    top: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.modal-bg>div{
+    background: #fff;
+    width: 33%;
+    height: 20%;
+}
+.payOverTime{
+    display: flex;
+}

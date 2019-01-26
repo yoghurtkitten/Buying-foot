@@ -442,16 +442,26 @@ router.get('/delete_shop_car', (req, res) => {
     })
 })
 
+function randomOrder(){
+    var outTradeNo="";  //订单号
+    for(var i=0;i<6;i++) //6位随机数，用以加在时间戳后面。
+    {
+        outTradeNo += Math.floor(Math.random()*10);
+    }
+    outTradeNo = new Date().getTime() + outTradeNo;
+    return outTradeNo;
+}
 router.post('/save_Order', (req, res) => {
     var obj = req.body;
-    var sql = 'INSERT INTO order_ (uid, addr_id, shop_id, status, order_time,message,dish_count,price) VALUES ((SELECT id FROM user WHERE user.phone=?), ?, ?, 0, ?, ?, ?, ?)'
-    pool.query(sql, [obj.u_phone, obj.addr_id, obj.shop_id, obj.order_time, obj.message, obj.dish_count, obj.price], (err, result) => {
+    var order_random = randomOrder();
+    var sql = 'INSERT INTO order_ (uid, addr_id, shop_id, status, order_time,message,dish_count,price,order_no) VALUES ((SELECT id FROM user WHERE user.phone=?), ?, ?, 0, ?, ?, ?, ?, ?)'
+    pool.query(sql, [obj.u_phone, obj.addr_id, obj.shop_id, obj.order_time, obj.message, obj.dish_count, obj.price, order_random], (err, result) => {
         if (err) {
             throw err;
         }
         if (result.affectedRows) {
             console.log(result);
-            var sql2 = 'SELECT id FROM order_ WHERE order_time=?';
+            var sql2 = 'SELECT id, order_no FROM order_ WHERE order_time=?';
             pool.query(sql2, [obj.order_time], (err, result) => {
                 if (err) {
                     throw err;
@@ -479,6 +489,36 @@ router.get('/change_order', (req, res) => {
             res.send({code: 200, msg: 'Update Success!'});
         } else {
             res.send({code: 400, msg: 'Update Fault!'});
+        }
+    })
+})
+
+router.get('/changeStatu', (req, res) => {
+    var obj = req.query;
+    var sql = 'UPDATE order_ SET status=1 WHERE id = ?';
+    pool.query(sql, [obj.order_no], (err, result) => {
+        if (err) {
+            throw err;
+        }
+        if (result.affectedRows) {
+            res.send({code: 200, msg:'updata statu success'});
+        } else {
+            res.send({code: 400, msg:'updata statu fault'});
+        }
+    })
+})
+
+router.get('/getShopAddress', (req, res) => {
+    var obj = req.query;
+    var sql = 'SELECT province, city, county FROM shop WHERE id = ?';
+    pool.query(sql, [obj.sid], (err, result) => {
+        if (err) {
+            throw err;
+        }
+        if (result) {
+            res.send(result)
+        } else{
+            res.send({code: 400, msg:'no shop'})
         }
     })
 })
