@@ -90,22 +90,31 @@
         </section>
         <div class="modal-bg" v-if="isModel">
             <div>
-                <i class="iconfont">&#xe661;</i>
-                <div class="payOverTime">
-                 <div>
-                     <i class="iconfont">&#xe8e7;</i>
-                 </div>
-                 <div>
-                     <p>
-                         支付已超时
-                     </p>
-                     <p>
-                         很抱歉，已超过订单支付时间限制，请重新下单
-                     </p>
-                     <p>
-                         确定
-                     </p>
-                 </div>
+                <i class="iconfont" @click="close_model()">&#xe661;</i>
+                <div class="payOverTime" v-if="isClose">
+                    <i class="iconfont">&#xe8e7;</i>
+                    <div>
+                        <p>
+                            支付已超时
+                        </p>
+                        <p>
+                            很抱歉，已超过订单支付时间限制，请重新下单
+                        </p>
+                        <p @click="close_model()">
+                            确定
+                        </p>
+                    </div>
+                </div>
+                <div class="wechatPay" v-if="iswechat">
+                    <p>使用微信支付 <span>{{total}}</span></p>
+                    <img src="img/pay/wechat.jpg" alt="">
+                    <div>
+                        <i class="iconfont">&#xe712;</i>
+                        <div>
+                            <p>请使用微信扫一扫</p>
+                            <p>扫描二维码完成支付</p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -127,8 +136,10 @@
                 Alipay: true,
                 weChatPay: false,
                 payment: '支付宝',
-                order_no:'',
-                isModel: true,
+                order_no: '',
+                isModel: false,
+                isClose: false,
+                iswechat: false,
             },
             mounted() {
                 this.getOrderPage();
@@ -137,14 +148,19 @@
                 this.changeOrder();
             },
             methods: {
-                confirmPayment(){
+                close_model() {
+                    this.isModel = false;
+                },
+                confirmPayment() {
                     if (this.payment == '支付宝') {
                         window.open(`${location.origin}/payment.html?total=${this.total}&order_id=${this.order_id}&order_no=${this.order_no}`)
                     } else {
                         this.isModel = true;
+                        this.iswechat = true;
+                        this.isClose = false;
                     }
                 },
-                pay(payment){
+                pay(payment) {
                     if (payment == 'ali') {
                         this.Alipay = true;
                         this.weChatPay = false;
@@ -164,9 +180,9 @@
 
                     setTimeout(() => {
                         clearTimeout(timer)
-                        /* setTimeout(()=>{
-                            alert()
-                        }) */
+                        this.isModel = true;
+                        this.isClose = true;
+                        this.iswechat = false;
                     }, 900000)
                 },
                 show_detail() {
@@ -208,7 +224,7 @@
                         url: '/user/change_order',
                         type: 'get',
                         dataType: 'json',
-                        data:{
+                        data: {
                             u_phone: this.user,
                             sid: this.sid,
                             order_id: this.order_id
