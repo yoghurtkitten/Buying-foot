@@ -14,9 +14,9 @@ server.listen(5050);
 server.use(cookieParser());
 server.use(session({
     secret: '12345',//与cookieParser中的一致
-    cookie:{maxAge:18000000},
+    cookie: { maxAge: 18000000 },
     resave: false,
-    saveUninitialized:true
+    saveUninitialized: true
 }));
 /* server.use('/',(req, res, next) => {
     console.log(req.session.user);
@@ -26,20 +26,14 @@ server.use(session({
 }); */
 server.use(express.static('public'));
 server.use(express.static('asset'));
-server.use(bodyParser.urlencoded({extended: false}));
+server.use(bodyParser.urlencoded({ extended: false }));
 
 
 //解决跨域问题
-server.use(cors());
-server.all('*', function (req, res, next) {
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Headers", "Content-Type,Content-Length, Authorization, Accept,X-Requested-With");
-    res.header("Access-Control-Allow-Methods", "PUT,POST,GET,DELETE,OPTIONS");
-    res.header("Access-Control-Allow-Credentials", true);
-    res.header("X-Powered-By", ' 3.2.1')
-    if (req.method == "OPTIONS") res.send(200);/*让options请求快速返回*/
-    else next();
-});
+server.use(cors({
+    origin: 'http://127.0.0.1:5000',
+    credentials: true  // 是否带cookie
+}));
 
 
 server.use('/user', userRouter);

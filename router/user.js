@@ -480,7 +480,7 @@ router.post('/save_Order', (req, res) => {
 
 router.get('/change_order', (req, res) => {
     var obj = req.query;
-    var sql = 'UPDATE shop_car SET isOrder=? WHERE uid=(SELECT id FROM user WHERE user.phone=?) AND shop_id=?';
+    var sql = 'UPDATE shop_car SET isOrder=? WHERE uid=(SELECT id FROM user WHERE user.phone=?) AND shop_id=? AND isOrder=0';
     pool.query(sql, [obj.order_id, obj.u_phone, obj.sid], (err, result) => {
         if (err) {
             throw err;
