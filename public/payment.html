@@ -75,7 +75,7 @@
     <script>
         new Vue({
             el: '#app',
-            data:{
+            data: {
                 total: '',
                 order_id: '',
                 order_no: '',
@@ -83,15 +83,16 @@
             mounted() {
                 this.getHerfParam();
                 this.changeOrderStatu();
+                this.time();
             },
             methods: {
-                getHerfParam(){
+                getHerfParam() {
                     var urlPara = new URLSearchParams(location.search);
                     this.total = urlPara.get('total');
                     this.order_id = urlPara.get('order_id');
                     this.order_no = urlPara.get('order_no');
                 },
-                changeOrderStatu(){
+                changeOrderStatu() {
                     $.ajax({
                         url: '/user/changeStatu',
                         data: {
@@ -103,12 +104,12 @@
                         console.log(data);
                     })
                 },
-                time(){
+                time() {
                     setTimeout(() => {
-                        clearTimeout(timer)
-                        setTimeout(()=>{
-                            alert('')
-                        })
+                        var str = alert('支付超时，请重新下单支付')
+                        setTimeout(() => {
+                            window.close();
+                        }, 2000)
                     }, 900000)
                 }
             },
