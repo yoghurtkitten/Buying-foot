@@ -1,15 +1,9 @@
-SET NAMES UTF8;
-DROP DATABASE IF EXISTS buying;
-CREATE DATABASE buying CHARSET=UTF8;
-USE buying;
-
-
 -- phpMyAdmin SQL Dump
 -- version 4.7.4
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: 2019-01-26 11:00:18
+-- Generation Time: 2019-01-29 14:02:14
 -- 服务器版本： 10.1.28-MariaDB
 -- PHP Version: 5.6.32
 
@@ -169,9 +163,8 @@ CREATE TABLE `order_` (
 --
 
 INSERT INTO `order_` (`id`, `uid`, `addr_id`, `shop_id`, `status`, `order_time`, `pay_time`, `deliver_start`, `received_time`, `message`, `dish_count`, `price`, `pay_method`, `order_no`) VALUES
-(19, 2, 32, 1, 1, 1548491917422, NULL, 0, NULL, '', 2, '236.00', '', '1548490123059182915'),
-(20, 2, 32, 1, 0, 0, NULL, 0, NULL, '', 0, '167.00', '', '1548491099656229515'),
-(21, 2, 32, 1, 0, 0, NULL, 0, NULL, '', 0, '108.00', '', '1548495446638232060');
+(24, 2, 32, 1, 0, 1548758813088, NULL, 0, NULL, '', 0, '108.00', '', '1548756122250818043'),
+(25, 2, 33, 1, 0, 1548758100374, NULL, 0, NULL, '', 1, '118.00', '', '1548756307412500378');
 
 -- --------------------------------------------------------
 
@@ -275,16 +268,10 @@ CREATE TABLE `shop_car` (
 --
 
 INSERT INTO `shop_car` (`id`, `uid`, `fid`, `shop_id`, `number`, `un_price`, `isOrder`) VALUES
-(244, 2, 4, 1, 1, 49, 20),
-(245, 2, 28, 1, 1, 59, 20),
-(246, 2, 3, 1, 1, 59, 20),
-(247, 2, 3, 1, 1, 59, 20),
-(248, 2, 5, 1, 3, 59, 20),
-(249, 2, 4, 1, 1, 49, 20),
-(250, 2, 28, 1, 1, 59, 20),
-(251, 2, 3, 1, 1, 59, 20),
-(252, 2, 4, 1, 1, 49, 20),
-(253, 2, 28, 1, 1, 59, 20);
+(260, 2, 4, 1, 1, 49, 24),
+(261, 2, 28, 1, 1, 59, 24),
+(262, 2, 3, 1, 1, 59, 25),
+(263, 2, 5, 1, 1, 59, 25);
 
 -- --------------------------------------------------------
 
@@ -431,7 +418,7 @@ ALTER TABLE `food_catagory`
 -- 使用表AUTO_INCREMENT `order_`
 --
 ALTER TABLE `order_`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
 -- 使用表AUTO_INCREMENT `re_address`
@@ -449,7 +436,7 @@ ALTER TABLE `shop`
 -- 使用表AUTO_INCREMENT `shop_car`
 --
 ALTER TABLE `shop_car`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=254;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=264;
 
 --
 -- 使用表AUTO_INCREMENT `user`
