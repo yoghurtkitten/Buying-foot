@@ -14,92 +14,19 @@
     <link rel="stylesheet" href="css/content/header.css">
     <link rel="stylesheet" href="css/icon/iconfont.css">
     <link rel="stylesheet" href="css/user_choose.css">
-    <script>
-        $(function () {
-            $.ajax({
-                type: "GET",
-                url: "/user/session",
-                dataType: "json",
-                success: function (data) {
-                    if (data.code == 200) {
-                        $('.login_user').html(`<i class="iconfont">&#xe6a2;</i>${data.msg.name}`)
-                        $('.login_user').click(function () {
-                            return false;
-                        })
-                    }
-                }
-            });
-            var urlParams = new URLSearchParams(location.search);
-            var address = urlParams.get('address');
-            var business = urlParams.get('business');
-            var title_address = address.split('-');
-            $('.address-icon+span').text(title_address[1] + ' ' + title_address[2])
-
-            var xhr = new XMLHttpRequest();
-            xhr.onreadystatechange = function () {
-                if (xhr.readyState == 4 && xhr.status == 200) {
-                    var result = xhr.responseText;
-                    var arr = JSON.parse(result);
-                    $('.detail-list ul').html('');
-                    for (const obj of arr) {
-                        $('.detail-list ul').html(`${$('.detail-list ul').html()}<li>
-                        <h4>${obj.shop_name}</h4>
-                        <div class="star">
-                            <i class="iconfont">&#xec43;</i>
-                            <i class="iconfont">&#xec43;</i>
-                            <i class="iconfont">&#xec43;</i>
-                            <i class="iconfont">&#xec43;</i>
-                            <i class="iconfont">&#xec43;</i>
-                            <span>
-                                平均${obj.deliver_cost}分钟送达
-                            </span>
-                        </div>
-                        <ul>
-                            <li>
-                                <div>
-                                    <span>醉得意排骨</span>
-                                </div>
-                                <div class="right-choose">
-                                    <span>￥10</span>
-                                    <span class="buying">去购买</span>
-                                    <div>
-                                        <p>
-                                            <i class="iconfont">&#xec43;</i>
-                                            <i class="iconfont">&#xec43;</i>
-                                            <i class="iconfont">&#xec43;</i>
-                                            <i class="iconfont">&#xec43;</i>
-                                            <i class="iconfont">&#xec43;</i>
-                                        </p>
-                                        <p>
-                                            月售68份
-                                        </p>
-                                    </div>
-                                </div>
-                            </li>
-                        </ul>
-                    </li>`);
-                    }
-
-                }
-            }
-            var addre = address.replace(/\s*/ig, '');
-            xhr.open('get', `/user/searchByBusiness?address=${addre}&business=${business}`, true);
-            xhr.send(null);
-
-        })
-    </script>
-
 </head>
 
 <body>
     <iframe src="./header.html" frameborder="0" scrolling="no" class="frame-div" onload="this.height=100"></iframe>
-    <div class="container">
+    <div class="container" id="app">
         <div class="business-type">
             <div class="row m-0 mt-5">
                 <div class="col-lg-9 col-md-6 row m-0 position-relative">
                     <div class="col-lg-2 col-md-5 d-flex align-items-center pr-0">
                         <i class="address-icon"></i>
-                        <span class="ml-2"></span>
+                        <span class="ml-2">
+                            {{address.split('-')[1]}} {{address.split('-')[2]}}
+                        </span>
                     </div>
                     <div class="col-lg-2 col-md-5 d-flex align-items-center p-0">
 
@@ -110,7 +37,10 @@
                 </div>
                 <div class="col-lg-3 col-md-6 row detail-btn m-0">
                     <div class="col-md-6 col-sm-3 col-xs-6 offset-6 p-0 m-0">
-                        <a href="login.html" class="btn mr-1 login_user">注册/登录</a>
+                        <a href="login.html" class="btn mr-1 login_user" v-if="!user">注册/登录</a>
+                        <a href="login.html" class="btn mr-1 login_user" v-else>
+                            <i class="iconfont">&#xe6a2;</i>{{user}}
+                        </a>
                     </div>
                     <div class="col-md-6 col-sm-3 col-xs-6 p-0 ">
                         <a href="#" class="new-list-btn fr btn">
@@ -122,14 +52,102 @@
         </div>
         <div class="detail-list m-0 mt-3 search-mode" id="busi_list">
             <ul>
-                
+                <li v-for="(obj, index) in businessList" :key="index">
+                    <h4>{{obj.foods[0].shop_name}}</h4>
+                    <div class="star">
+                        <i class="iconfont" v-for="item in obj.foods[0].shop_start" >&#xec43;</i>
+                        <span>
+                            平均{{obj.foods[0].deliver_time}}分钟送达
+                        </span>
+                    </div>
+                    <ul>
+                        <li v-for="(item, index) in obj.foods" :key="index">
+                            <div>
+                                <span>{{item.name}}</span>
+                            </div>
+                            <div class="right-choose">
+                                <span>￥{{item.price.toFixed(2)}}</span>
+                                <span class="buying" @click="toShop(obj.foods.id,user)">去购买</span>
+                                <div>
+                                    <p>
+                                        <i class="iconfont">&#xec43;</i>
+                                        <i class="iconfont">&#xec43;</i>
+                                        <i class="iconfont">&#xec43;</i>
+                                        <i class="iconfont">&#xec43;</i>
+                                        <i class="iconfont">&#xec43;</i>
+                                    </p>
+                                    <p>
+                                        月售68份
+                                    </p>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </li>
 
             </ul>
         </div>
     </div>
     <iframe src="./footer.html" frameborder="0" scrolling="no" class="frame-div" onload="this.height=100"></iframe>
     <script src="js/frame.js"></script>
+    <script src="js/vue.js"></script>
+    <script>
+        new Vue({
+            el: '#app',
+            data: {
+                user: '',
+                address: '',
+                business: '',
+                businessList: []
+            },
+            created() {
+                this.getUser();
+                this.getAdderss();
+            },
+            mounted() {
+                this.getBusiness();
+            },
+            methods: {
+                getUser() {
+                    $.ajax({
+                        type: "GET",
+                        url: "/user/session",
+                        dataType: "json",
+                    }).then((data) => {
+                        if (data.code == 200) {
+                            this.user = data.msg.name;
+                            console.log(this.user)
+                            $('.login_user').click(function () {
+                                return false;
+                            })
+                        }
+                    });
+                },
+                getAdderss() {
+                    var urlParams = new URLSearchParams(location.search);
+                    this.address = urlParams.get('address');
+                    this.business = urlParams.get('business');
+                },
+                getBusiness() {
+                    $.ajax({
+                        url: '/user/searchByBusiness',
+                        data: {
+                            address: this.address,
+                            business: this.business
+                        },
+                        type: 'get',
+                        dataType: 'json',
+                    }).then((data) => {
+                        this.businessList = data;
+                        console.log(data);
+                    })
+                },
+                toShop(sid, user){
+                    location.href = `${location.origin}/shop.html?sid=${sid}&user=${user}`
+                }
+            },
+        })
+    </script>
 </body>
 
 </html>
-

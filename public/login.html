@@ -118,23 +118,23 @@
 </head>
 
 <body>
-    <div class="container-fluid">
-        
+    <div class="container-fluid" id="app">
+
         <div class="login">
             <section>
                 <div class="logo">
                     <img src="img/login-logo.png" alt="" class="">
                 </div>
-    
+
                 <div class="input-group mb-3 phone-div">
-                    <input type="text" class="form-control phone-number" placeholder="手机号" maxlength="11" id="phone">
-                    <input type="hidden" id="codeFromUser">
+                    <input type="text" class="form-control phone-number" placeholder="手机号" maxlength="11" v-model="phone">
+                    <!-- <input type="hidden" id="codeFromUser" v-model="code"> -->
                     <div class="input-group-append get-code">
-                        <span class="input-group-text" id="validate_code" >获取验证码</span>
+                        <span id="validate_code" :class="{'input-group-text':true,getcode:codeStyle}" @click="getCode">{{code_span}}</span>
                     </div>
                 </div>
                 <div class="input-group mb-3 phone-div">
-                    <input type="text" class="form-control phone-number" placeholder="验证码" id="code">
+                    <input type="text" class="form-control phone-number" placeholder="验证码" id="code" v-model="pwd">
                 </div>
                 <p>
                     新用户登录即自动注册，并表示已同意<a href="#">《用户服务协议》</a>
@@ -143,29 +143,70 @@
             </section>
 
         </div>
-        <iframe src="./footer.html" frameborder="0" scrolling="no" class="frame-div" onload="this.height=100"></iframe>        
+        <iframe src="./footer.html" frameborder="0" scrolling="no" class="frame-div" onload="this.height=100"></iframe>
     </div>
     <script src="js/frame.js"></script>
+    <script src="js/vue.js"></script>
     <script>
-        function getCode() {
-            var xhr = new XMLHttpRequest();
-            xhr.onreadystatechange = function () {
-                if (xhr.readyState == 4 && xhr.status == 200) {
-                    var result = xhr.responseText;
-                    var arr = JSON.parse(result);
-                    if (arr.code == 200) {
-                        console.log('验证码发送成功！');
-                        $('#codeFromUser').val(arr.vcode)
-                    } else {
-                        console.log('验证码发送失败！');
+        new Vue({
+            el: '#app',
+            data: {
+                phone: '',
+                pwd: '',
+                codeStyle: false,
+                code: '',
+                code_span:'获取验证码',
+                time:30
+            },
+            watch: {
+                phone(val) {
+                    if (val.length == 11) {
+                        var reg = /^[1][3|4|5|7|8]\d{9}$/g;
+                        if (reg.test(val)) {
+                            this.codeStyle = true;
+                        } else {
+                            this.codeStyle = false;
+                        }
                     }
                 }
-            }
-            xhr.open('post', 'user/getVCode', true);
-            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-            var data = `phone=${phone.value}`;
-            xhr.send(data);
+            },
+            created() {
 
+            },
+            methods: {
+                getCode() {
+                    if (this.codeStyle) {
+                        $.ajax({
+                            url: '/user/getVCode',
+                            type: 'post',
+                            data: {
+                                phone: this.phone
+                            },
+                            dataType: 'json'
+                        }).then((data) => {
+                            if (data.code == 200) {
+                                console.log('验证码发送成功!');
+                                this.code = data.vcode;
+                                this.startTime();
+                            } else {
+                                console.log('验证码发送失败！');
+                            }
+                            this.codeStyle = false;
+                        })
+                    }
+                },
+                startTime(){
+                    setTimeout(()=>{
+                        this.codeStyle=true;
+                        this.code_span = '重新发送';
+                    }, 2000)
+                }
+            },
+
+        })
+    </script>
+    <!-- <script>
+        function getCode() {
             $('#validate_code').removeClass('getcode');
             var time = 30;
             var interval = setInterval(() => {
@@ -215,7 +256,7 @@
                 $('#validate_code').removeClass('getcode');
             }
         });
-    </script>
+    </script> -->
 </body>
 
 </html>

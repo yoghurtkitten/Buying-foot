@@ -123,9 +123,14 @@ router.get('/getlist', (req, res) => {
 });
 
 router.get('/searchByBusiness', (req, res) => {
+    var businessList = [];
+    var ids = [];
     var address = req.query.address.split('-');
     var [province, city, county] = address;
-    var sql = 'SELECT * FROM shop WHERE province=? and city=? and county=? and shop_name like ?';
+    var sql = `SELECT shop.id,shop.shop_name,shop.deliver_time,shop.shop_start,food.name,food.price 
+    FROM shop JOIN food ON shop.id=food.shop_id 
+    WHERE province=? and city=? and county=? and shop_name = ? LIMIT 0, 3
+    `;
     var queryPara = [province, city, county, req.query.business];
 
     pool.query(sql, queryPara, (err, result) => {
@@ -133,7 +138,31 @@ router.get('/searchByBusiness', (req, res) => {
             throw err;
         }
         if (result) {
-            res.send(result);
+            for (const key in result) {
+                if (result.hasOwnProperty(key)) {
+                    const element = result[key];
+                    if (ids.indexOf(element.id) == -1) {
+                        ids.push(element.id);
+                    }
+                }
+            }
+            var index = 0;
+            for (const i in ids) {
+                if (ids.hasOwnProperty(i)) {
+                    const element = ids[i];
+                    businessList[index++]={id:element,foods:[]}
+                }
+            }
+            index = 0;
+            for (const i in businessList) {
+                for (const j in result) {
+                    if (businessList[i].id == result[j].id) {
+                        businessList[i].foods[index++] = result[j]
+                    }
+                }
+            }
+            console.log(businessList)
+            res.send(businessList);
         } else {
             res.send('没有商家');
         }

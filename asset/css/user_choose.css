@@ -211,6 +211,7 @@ a:hover{
     margin-bottom: 5px!important;
     padding-left: 2%;
     font-family: "PingFang SC", "Lantinghei SC", "Helvetica Neue", "Microsoft Yahei", "Hiragino Sans GB", "Microsoft Sans Serif", "WenQuanYi Micro Hei", sans;
+    font-size: 16px;
 }
 .search-mode>ul>li>ul{
     border-top: 1px solid #e4e3e3;
@@ -225,6 +226,7 @@ a:hover{
     padding-right: 5%;
     padding-top: 1%;
     padding-bottom: 1%;
+    font-size: 14px;
 }
 .search-mode>ul>li>ul>li>div>div>p{
     margin: 0;
