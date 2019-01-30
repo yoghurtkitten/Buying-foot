@@ -77,23 +77,23 @@
                         </div>
                         <div class="order_info">
                             <ul>
-                                <li>
+                                <li v-for="(item, index) in allOrder" :key="index">
                                     <div>
                                         <div>
                                             <div class="order_img"></div>
-                                            <p class="order_title">鹿角戏</p>
-                                            <p>黑糖鹿丸鲜奶-大杯1份 / 黑糖珍珠奶茶-大杯1份</p>
-                                            <a href="javascript:;">共<span>2</span>个菜品></a>
+                                            <p class="order_title">{{item.content[0].shop_name}}</p>
+                                            <p>{{getShopCar(item.content)}}</p>
+                                            <a href="javascript:;">共<span>{{item.content.length}}</span>个菜品></a>
                                         </div>
                                         <div class="time">
-                                            <p>2019-01-27</p>
-                                            <p>15:15</p>
+                                            <p>{{item.content[0].order_time | dateFormat}}</p>
+                                            <p>{{item.content[0].order_time | timeFormat}}</p>
                                         </div>
                                         <div class="price">
-                                            <p>￥38.50</p>
+                                            <p>￥{{getTotal(item.content)}}</p>
                                         </div>
                                         <div>
-                                            <p>订单已取消</p>
+                                            <p>{{item.content[0].status | statuFormat}}</p>
                                             <p><a href="javascript:;">订单详情</a></p>
                                         </div>
                                     </div>
@@ -109,15 +109,18 @@
 
     <script src="js/frame.js"></script>
     <script src="js/vue.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
     <script>
-        new Vue({
+
+        var vm = new Vue({
             el: '#app',
             data: {
-                user:'',
-                order_id:'',
+                user: '',
+                allOrder: [],
+                order: []
             },
-            created() {
+            mounted() {
                 this.getUser();
             },
             methods: {
@@ -126,16 +129,74 @@
                     $.ajax({
                         type: "GET",
                         url: "/user/session",
-                        dataType: "json",
-                        success: function (data) {
-                            if (data.code == 200) {
-                                _self.user = data.msg.name;
-                            }
+                        dataType: "json"
+                    }).then((data) => {
+                        if (data.code == 200) {
+                            _self.user = data.msg.name;
+                            _self.getUserOrder();
                         }
                     });
                 },
-                
+                getUserOrder: function () {
+                    var _self = this;
+                    var index = 0;
+                    $.ajax({
+                        type: 'GET',
+                        url: '/user/getUserOrder',
+                        dataType: 'json',
+                        data: {
+                            user: this.user
+                        }
+                    }).then((data) => {
+                        console.log(data.data);
+                        _self.allOrder = data.data;
+
+                        // console.log(this.order)
+                    })
+                },
+                getTotal: function (arr) {
+                    var sum = 0;
+                    for (const key in arr) {
+                        if (arr.hasOwnProperty(key)) {
+                            const element = arr[key];
+                            sum += element.un_price * element.number;
+                        }
+                    }
+                    return sum.toFixed(2);
+                },
+                getShopCar: function (arr) {
+                    var str = '';
+                    for (const key in arr) {
+                        if (arr.hasOwnProperty(key)) {
+                            const element = arr[key];
+                            str += `${element.name} ${element.number}份/`
+                        }
+                    }
+                    return str;
+                }
             },
+            filters: {
+                statuFormat: function (val) {
+                    var str = '';
+                    switch (val) {
+                        case 0:
+                            str = '订单已取消'
+                            break;
+                        case 1:
+                            str = '订单已完成'
+                            break;
+                        default:
+                            break;
+                    }
+                    return str;
+                },
+                dateFormat: function (val) {
+                    return `${new Date(val).getFullYear()}-${(new Date(val).getMonth()+1)>10?(new Date(val).getMonth()+1):'0'+(new Date(val).getMonth()+1)}-${new Date(val).getDate()>10?new Date(val).getDate():'0'+new Date(val).getDate()}`
+                },
+                timeFormat: function (val) {
+                    return `${new Date(val).getHours()>10?new Date(val).getHours():'0'+new Date(val).getHours()}:${new Date(val).getMinutes()>10?new Date(val).getMinutes():'0'+new Date(val).getMinutes()}`;
+                }
+            }
         })
     </script>
 </body>

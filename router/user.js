@@ -340,7 +340,7 @@ router.post('/getOrderInfo', (req, res) => {
     var obj = req.body;
     var sid = obj.sid;
     var user = obj.user;
-    
+
     var sql = `SELECT shop.shop_name,shop.deliver_fee,shop.deliver_time,food.name,shop_car.number,shop_car.un_price 
     FROM food JOIN shop_car ON food.food_id=shop_car.fid JOIN shop ON food.shop_id=shop.id JOIN user ON shop_car.uid=user.id 
     WHERE user.phone=? AND shop.id=? AND shop_car.isOrder=0
@@ -442,11 +442,11 @@ router.get('/delete_shop_car', (req, res) => {
     })
 })
 
-function randomOrder(){
-    var outTradeNo="";  //订单号
-    for(var i=0;i<6;i++) //6位随机数，用以加在时间戳后面。
+function randomOrder() {
+    var outTradeNo = "";  //订单号
+    for (var i = 0; i < 6; i++) //6位随机数，用以加在时间戳后面。
     {
-        outTradeNo += Math.floor(Math.random()*10);
+        outTradeNo += Math.floor(Math.random() * 10);
     }
     outTradeNo = new Date().getTime() + outTradeNo;
     return outTradeNo;
@@ -469,11 +469,11 @@ router.post('/save_Order', (req, res) => {
                 if (result) {
                     res.send(result);
                 } else {
-                    res.send({code: 400, msg: 'Select Id Fault!'});
+                    res.send({ code: 400, msg: 'Select Id Fault!' });
                 }
             })
         } else {
-            res.send({code: 400, msg: 'Insert Fault!'});
+            res.send({ code: 400, msg: 'Insert Fault!' });
         }
     })
 })
@@ -486,9 +486,9 @@ router.get('/change_order', (req, res) => {
             throw err;
         }
         if (result.affectedRows) {
-            res.send({code: 200, msg: 'Update Success!'});
+            res.send({ code: 200, msg: 'Update Success!' });
         } else {
-            res.send({code: 400, msg: 'Update Fault!'});
+            res.send({ code: 400, msg: 'Update Fault!' });
         }
     })
 })
@@ -501,9 +501,9 @@ router.get('/changeStatu', (req, res) => {
             throw err;
         }
         if (result.affectedRows) {
-            res.send({code: 200, msg:'updata statu success'});
+            res.send({ code: 200, msg: 'updata statu success' });
         } else {
-            res.send({code: 400, msg:'updata statu fault'});
+            res.send({ code: 400, msg: 'updata statu fault' });
         }
     })
 })
@@ -517,8 +517,55 @@ router.get('/getShopAddress', (req, res) => {
         }
         if (result) {
             res.send(result)
-        } else{
-            res.send({code: 400, msg:'no shop'})
+        } else {
+            res.send({ code: 400, msg: 'no shop' })
+        }
+    })
+})
+
+router.get('/getUserOrder', (req, res) => {
+    var newOrder = [];//newOrder[{id:22, content[]}]
+    var user = req.query.user;
+    var sql = `
+    SELECT order_.id FROM order_ JOIN user ON order_.uid=user.id WHERE user.phone=?
+    `;
+    pool.query(sql, [user], (err, result) => {
+        if (err) {
+            throw err;
+        }
+        if (result) {
+            var index = 0;
+            for (const key in result) {
+                newOrder[index++] = { id: result[key].id }
+            }
+            var sql2 = `
+            SELECT order_.id,shop.shop_name,food.name,shop_car.number,shop_car.un_price,order_.status,order_.order_time,order_.order_no FROM
+             order_ JOIN user ON order_.uid=user.id JOIN shop_car ON order_.id=shop_car.isOrder JOIN
+              shop ON order_.shop_id=shop.id JOIN food ON shop_car.fid=food.food_id WHERE user.phone=?
+
+            `;
+            pool.query(sql2, [user], (err, result) => {
+                
+                if (err) {
+                    throw err;
+                }
+                if (result) {
+                    for (const key in newOrder) {
+                        var index=0;
+                        newOrder[key].content=[]
+                        for (const all in result) {
+                            if (result[all].id == newOrder[key].id) {
+                                newOrder[key].content[index++] = result[all]
+                            }
+                        }
+                    }
+                    res.send({ code: 200, data: newOrder })
+                } else {
+                    res.send({ code: 400, msg: 'SELECT FAULT!' })
+                }
+            })
+        } else {
+            res.send({ code: 400, msg: 'SELECT FAULT!' })
         }
     })
 })
