@@ -31,7 +31,7 @@ server.use(bodyParser.urlencoded({ extended: false }));
 
 //解决跨域问题
 server.use(cors({
-    origin: 'http://127.0.0.1:5000',
+    origin: ['http://127.0.0.1:5000','http://localhost:5000'],
     credentials: true  // 是否带cookie
 }));
 
