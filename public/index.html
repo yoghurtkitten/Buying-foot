@@ -13,154 +13,12 @@
     <link rel="stylesheet" href="css/bootstrap.css">
     <link rel="stylesheet" href="css/index.css">
     <link rel="stylesheet" href="css/icon/iconfont.css">
-
-    <script>
-        $(function () {
-
-            $('.show-btn').click(function () {
-                if ($('.header-info').is(':visible')) {
-                    $('.header-info').hide();
-                } else {
-                    $('.header-info').show();
-                }
-            })
-
-            var fixedDom = $('.header')[0];
-
-            $('.server-img').css('opacity', '0');
-            $('.server-title').css('opacity', '0');
-            $('.server-list').css('opacity', '0');
-            $('.phone-image').css('display', 'none');
-
-
-            window.onscroll = function () {
-                var scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
-                if (scrollTop > fixedDom.offsetTop) {
-                    $('.server-img').css({ 'opacity': '1', 'animation-name': 'upAnimate', 'animation-duration': '2s', 'animation-timing-function': 'ease', 'animation-iteration-count': '1', 'animation-fill-mode': 'forwards' });
-                    $('.server-title').css({ 'opacity': '1', 'animation-name': 'upAnimate', 'animation-duration': '2s', 'animation-timing-function': 'ease', 'animation-iteration-count': '1', 'animation-fill-mode': 'forwards' });
-                    $('.server-list').css({ 'opacity': '1', 'animation-name': 'upAnimate', 'animation-duration': '2s', 'animation-timing-function': 'ease', 'animation-iteration-count': '1', 'animation-fill-mode': 'forwards' });
-                    $('.phone-image').css({ 'opacity': '1', 'animation-name': 'upAnimate', 'animation-duration': '2s', 'animation-timing-function': 'ease', 'animation-iteration-count': '1', 'animation-fill-mode': 'forwards', 'display': 'inline' });
-
-                    fixedDom.classList.add("fixed");
-                }
-                if (scrollTop <= fixedDom.offsetTop + 10) {
-                    fixedDom.classList.remove("fixed");
-                }
-                var topHeight = document.getElementsByClassName('header')[0].clientHeight + document.getElementsByClassName('main_img')[0].clientHeight;
-                var topServer = document.getElementsByClassName('server')[0].clientHeight;
-                console.log(scrollTop+' --- '+ topHeight + '------' + document.getElementsByClassName('server')[0].clientHeight)
-                if (topHeight - scrollTop >= topServer) {
-                    $('.server-img').css({ 'opacity': '0', 'animation': 'none' });
-                    $('.server-title').css({ 'opacity': '0', 'animation': 'none' });
-                    $('.server-list').css({ 'opacity': '0', 'animation': 'none' });
-                    $('.phone-image').css({ 'opacity': '0', 'animation': 'none' });
-                } else {
-                    console.log('2')
-                }
-            }
-
-            var main_title = $('.main-title');
-
-            main_title.each(function () {
-                $(this).mouseenter(function () {
-                    $(this).removeClass('main-title_out');
-                    $(this).addClass('main-title_hover');
-                    $(this).next().css('color', '#e54c2a');
-                    $(this).next().css('border-top-color', '#e54c2a');
-
-                    var str = $(this).parent().prev().css("background-image");
-                    str = str.replace('-no', '-');
-                    str = str.replace('.png', 'ed.png');
-
-                    str = str.replace(location.href.slice(0, -1), '..');
-                    $(this).parent().prev().css("background-image", str);
-
-                    if (str.indexOf('Delicacy') != -1) {
-                        $('.phone').each(function () {
-                            $(this).css("background-image", "url('../img/phone/delicacy.png')");
-                        })
-                    }
-                    if (str.indexOf('Desserts') != -1) {
-                        $('.phone').each(function () {
-                            $(this).css("background-image", "url('../img/phone/desserts.png')")
-                        })
-                    }
-                    if (str.indexOf('fruit') != -1) {
-                        $('.phone').each(function () {
-                            $(this).css("background-image", "url('../img/phone/fresh.png')")
-                        })
-                    }
-                    if (str.indexOf('Supermarket') != -1) {
-                        $('.phone').each(function () {
-                            $(this).css("background-image", "url('../img/phone/supermarket.png')")
-                        })
-                    }
-
-                })
-                $(this).mouseleave(function () {
-                    $(this).next().css('color', '#333');
-                    $(this).next().css('border-top-color', 'transparent');
-
-                    $(this).removeClass('main-title_hover');
-                    $(this).addClass('main-title_out');
-
-                    var str = $(this).parent().prev().css("background-image");
-                    str = str.replace('-', '-no');
-                    str = str.replace('ed.png', '.png');
-                    str = str.replace(location.href.slice(0, -1), '..');
-                    $(this).parent().prev().css("background-image", str);
-                })
-            })
-
-            function header() {
-                if ($('.header-menu').is(':hidden')) {
-                    $('.show-btn').show()
-                } else {
-                    $('.show-btn').hide()
-                    $('.header-info').hide()
-                }
-            }
-            header()
-            $(window).resize(function () {
-                header()
-            })
-        })
-    </script>
 </head>
 
 <body>
     <!-- <a href="login.html">登录</a> -->
-    <div class="container-fluid">
-        <header class="header">
-            <div class="nav container navbar-light">
-                <div class="col-md-2 col-sm-3 col-xs-6">
-                    <div class="logo"><a href="index.html"><img src="img/logo.png" alt=""></a></div>
-                </div>
-                <div class="col-md-10 col-sm-9 col-xs-6">
-                    <div class="header-right">
-                        <div class="show-btn">
-                            <i class="iconfont">&#xebd8;</i>
-                        </div>
-                        <div class="header-info">
-                            <ul>
-                                <li><a href="#">首页</a></li>
-                                <li><a href="#">加盟</a></li>
-                                <li><a href="user_index.html">点外卖</a></li>
-                                <li><a href="#">关于我们</a></li>
-                            </ul>
-                        </div>
-                        <div class="header-menu list-info">
-                            <ul>
-                                <li><a href="#">首页</a></li>
-                                <li><a href="#">加盟</a></li>
-                                <li><a href="user_index.html">点外卖</a></li>
-                                <li><a href="#">关于我们</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </header>
+    <div class="container-fluid" id="app">
+        <iframe src="./header.html" frameborder="0" scrolling="no" class="frame-div" onload="this.height=100" :class="{header:isFixed}"></iframe>
         <div class="main_img">
             <div class="carousel" data-ride="carousel" id="demo">
                 <div class="carousel-inner">
@@ -193,62 +51,37 @@
                     codimentum.Lorem ipsum dolor sit amet.
                 </p>
 
-                <button type="button" class="btn btn-danger my-btn buying">我要点外卖</button>
+                <button type="button" class="btn btn-danger my-btn buying" @click="buying">我要点外卖</button>
                 <button type="button" class="btn btn-warning my-btn">我要入驻</button>
             </div>
         </div>
 
         <div class="server">
             <div class="sub-title">
-                <img src="img/server.png" alt="" class="img-responsive server-img">
+                <img src="img/server.png" alt="" :class="{'img-responsive':true, 'server-img':true, 'addAnimate':isAddAnimate}">
             </div>
             <div class="row server-content">
                 <div class="col-md-6 server-left">
-                    <div class="server-title col">
+                    <div :class="{'server-title':true, 'col':true, 'addAnimate':isAddAnimate}">
                         品类全覆盖，应有尽有
                     </div>
-                    <ul class="server-list">
-                        <li>
-                            <div class="img img1">
+                    <ul :class="{'server-list':true, 'addAnimate':isAddAnimate}">
+                        <li v-for="(item, index) in server_type" :key="index" @mouseenter="enter(item.id)" @mouseleave="leave(item.id)">
+                            <div class="img" :style="{'background-image':`url('${item.afterImg}')`}" v-if="item.ismouse">
+                            </div>
+                            <div class="img" :style="{'background-image':`url('${item.beforeImg}')`}" v-else>
+                            </div>
 
-                            </div>
                             <div>
-                                <div class="main-title">美食 Delicacy</div>
-                                <div>大牌优惠</div>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="img img2">
-
-                            </div>
-                            <div>
-                                <div class="main-title">甜点饮品 Desserts&Drinks</div>
-                                <div>幸福甜蜜</div>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="img img3">
-
-                            </div>
-                            <div>
-                                <div class="main-title">水果生鲜 Fresh food</div>
-                                <div>新鲜速达</div>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="img img4">
-
-                            </div>
-                            <div>
-                                <div class="main-title">超市便利 Supermarket</div>
-                                <div>优惠促销</div>
+                                <div :class="{'main-title':true,'main-title_hover':item.ismouse}">{{item.main}}</div>
+                                <div :class="{'subTitle':item.ismouse}">{{item.sub}}</div>
                             </div>
                         </li>
                     </ul>
                 </div>
-                <div class="col-md-6 phone-image">
+                <div :class="{'col-md-6':true,'addAnimate':isAddAnimate}">
                     <div class="out-phone">
-                        <div class="phone">
+                        <div class="phone" :style="{'background-image':`url('${server_type[index].phoneImg}')`}">
 
                         </div>
                     </div>
@@ -256,30 +89,87 @@
             </div>
         </div>
         <iframe src="./footer.html" frameborder="0" scrolling="no" class="frame-div" onload="this.height=100"></iframe>
-
     </div>
-    <script type="text/javascript">
-        function reinitIframe() {
-
-            var ifram = $(".frame-div");
-
-            try {
-                ifram.each(function () {
-                    var bHeight = this.contentWindow.document.body.scrollHeight;
-                    var dHeight = this.contentWindow.document.documentElement.scrollHeight;
-                    var height = Math.max(bHeight, dHeight);
-                    this.height = height;
-
-                })
-            } catch (ex) { }
-        }
-        window.setInterval("reinitIframe()", 200);
-
-        $('.buying').click(function () {
-            // alert(location.href)
-            location.href = `${location.href}user_index.html`;
+    <script src="js/frame.js"></script>
+    <script src="js/vue.js"></script>
+    <script>
+        new Vue({
+            el: "#app",
+            data: {
+                isFixed: false,
+                isAddAnimate: false,
+                server_type: [
+                    {
+                        id: 0,
+                        main: '美食 Delicacy',
+                        sub: '大牌优惠',
+                        beforeImg: '../img/small_img/Delicacy-nopick.png',
+                        afterImg: '../img/small_img/Delicacy-picked.png',
+                        phoneImg: '../img/phone/delicacy.png',
+                        ismouse: true
+                    },
+                    {
+                        id: 1,
+                        main: '甜点饮品 Desserts&Drinks',
+                        sub: '幸福甜蜜',
+                        beforeImg: '../img/small_img/Desserts-nopick.png',
+                        afterImg: '../img/small_img/Desserts-picked.png',
+                        phoneImg: '../img/phone/desserts.png',
+                        ismouse: false,
+                    },
+                    {
+                        id: 2,
+                        main: '水果生鲜 Fresh food',
+                        sub: '新鲜速达',
+                        ismouse: false,
+                        beforeImg: '../img/small_img/Supermarket-nopick.png',
+                        afterImg: '../img/small_img/Supermarket-picked.png',
+                        phoneImg: '../img/phone/fresh.png',
+                    },
+                    {
+                        id: 3,
+                        main: '超市便利 Supermarket',
+                        sub: '优惠促销',
+                        ismouse: false,
+                        beforeImg: '../img/small_img/fruit-nopick.png',
+                        afterImg: '../img/small_img/fruit-picked.png',
+                        phoneImg: '../img/phone/supermarket.png',
+                    },
+                ],
+                index: 0,
+            },
+            mounted() {
+                window.addEventListener('scroll', this.handleScroll)
+            },
+            methods: {
+                buying() {
+                    location.href = `${location.href}user_index.html`;
+                },
+                handleScroll() {
+                    var scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop;
+                    // console.log(scrollTop)
+                    if (scrollTop > 199) {
+                        this.isFixed = true;
+                        this.isAddAnimate = true;
+                    } else {
+                        this.isAddAnimate = false;
+                    }
+                    if (scrollTop < 50) {
+                        this.isFixed = false;
+                    }
+                },
+                enter(id) {
+                    this.server_type[id].ismouse = true;
+                    this.index = id;
+                },
+                leave(id) {
+                    this.server_type[id].ismouse = false;
+                },
+            },
         })
     </script>
+
+
 </body>
 
 </html>
