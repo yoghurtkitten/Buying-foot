@@ -150,7 +150,7 @@ router.get('/searchByBusiness', (req, res) => {
             for (const i in ids) {
                 if (ids.hasOwnProperty(i)) {
                     const element = ids[i];
-                    businessList[index++]={id:element,foods:[]}
+                    businessList[index++] = { id: element, foods: [] }
                 }
             }
             index = 0;
@@ -325,27 +325,32 @@ router.post('/setShopCar', (req, res) => {
 
 router.post('/update_shopCar', (req, res) => {
     var obj = req.body;
-    var sql = `UPDATE shop_car SET number=? WHERE fid=? AND shop_car.isOrder=0`
-    pool.query(sql, [obj.number, obj.foods_id], (err, result) => {
-        if (err) {
-            throw err;
-        }
-        if (result.affectedRows) {
-            var sql2 = `SELECT un_price FROM shop_car WHERE fid=? AND shop_car.isOrder=0`;
-            pool.query(sql2, [obj.foods_id], (err, result) => {
-                if (err) {
-                    throw err;
-                }
-                if (result) {
-                    res.send(result);
-                } else {
-                    res.send({ code: 400, msg: 'fault_select' })
-                }
-            })
-        } else {
-            res.send({ code: 400, msg: 'fault' })
-        }
-    })
+    if (obj.number == 0) {
+        console.log('123456')
+        var sql = `DELETE FROM shop_car WHERE fid=? AND shop_car.isOrder=0`;
+        pool.query(sql, [obj.foods_id], (err, result) => {
+            if (err) {
+                throw err;
+            }
+            if (result.affectedRows) {
+                res.send({ code: 200, msg: 'Success' })
+            } else {
+                res.send({ code: 400, msg: 'fault' })
+            }
+        })
+    } else {
+        var sql = `UPDATE shop_car SET number=? WHERE fid=? AND shop_car.isOrder=0`
+        pool.query(sql, [obj.number, obj.foods_id], (err, result) => {
+            if (err) {
+                throw err;
+            }
+            if (result.affectedRows) {
+                res.send({ code: 200, msg: 'Success' })
+            } else {
+                res.send({ code: 400, msg: 'fault' })
+            }
+        })
+    }
 })
 
 router.get('/load_shop_car', (req, res) => {
@@ -574,14 +579,14 @@ router.get('/getUserOrder', (req, res) => {
 
             `;
             pool.query(sql2, [user], (err, result) => {
-                
+
                 if (err) {
                     throw err;
                 }
                 if (result) {
                     for (const key in newOrder) {
-                        var index=0;
-                        newOrder[key].content=[]
+                        var index = 0;
+                        newOrder[key].content = []
                         for (const all in result) {
                             if (result[all].id == newOrder[key].id) {
                                 newOrder[key].content[index++] = result[all]

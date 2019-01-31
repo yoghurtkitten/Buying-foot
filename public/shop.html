@@ -332,9 +332,11 @@
                             const element = this.shop_car[key];
                             if (element.fid == f_id) {
                                 element.number += i;
-                                if (element.number == 0) {
-                                    element.number = 1;
+                                if (element.number <= 0) {
+                                    element.number = 0;
+                                    _self.load_shop_car()
                                 }
+                                console.log(element.number)
                                 $.ajax({
                                     url: "/user/update_shopCar",
                                     type: "post",
