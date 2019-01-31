@@ -14,46 +14,10 @@
     <link rel="stylesheet" href="css/content/header.css">
     <link rel="stylesheet" href="css/icon/iconfont.css">
 
-    <script>
-        $(function () {
-            var fixedDom = $('.header')[0];
-            window.onscroll = function () {
-                var scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
-                if (scrollTop > fixedDom.offsetTop) {
-                    fixedDom.classList.add("fixed");
-                }
-                if (scrollTop <= fixedDom.offsetTop + 10) {
-                    fixedDom.classList.remove("fixed");
-                }
-            }
-
-            $('.show-btn').click(function(){
-                if ($('.header-info').is(':visible')) {
-                    $('.header-info').hide();
-                } else {
-                    $('.header-info').show();
-                }
-            })
-            function header() {
-                if ($('.header-menu').is(':hidden')) {
-                    $('.show-btn').show()
-                } else {
-                    $('.show-btn').hide()
-                    $('.header-info').hide()
-                }
-            }
-            header()
-            $(window).resize(function () {
-                header()
-            })
-
-        })
-    </script>
-
 </head>
 
 <body>
-    <div class="container-fluid">
+    <div class="container-fluid" id="app">
         <header class="header">
             <div class="nav container navbar-light">
                 <div class="col-md-2 col-sm-3 col-xs-6">
@@ -61,10 +25,10 @@
                 </div>
                 <div class="col-md-10 col-sm-9 col-xs-6">
                     <div class="header-right">
-                        <div class="show-btn">
+                        <div class="show-btn" @click="toggle">
                             <i class="iconfont">&#xebd8;</i>
                         </div>
-                        <div class="header-info">
+                        <div class="header-info" v-if="isShow">
                             <ul>
                                 <li><a href="#">首页</a></li>
                                 <li><a href="#">加盟</a></li>
@@ -85,6 +49,34 @@
             </div>
         </header>
     </div>
+    <script src="js/vue.js"></script>
+    <script>
+        new Vue({
+            el: '#app',
+            data: {
+                isShow: false,
+            },
+            mounted() {
+                var _self = this;
+                window.onresize = function () {
+                    _self.showHeader();
+                }
+            },
+            methods: {
+                toggle() {
+                    this.isShow = !this.isShow;
+                },
+                showHeader() {
+                    if ($('.header-menu').is(':hidden')) {
+                        $('.show-btn').show()
+                    } else {
+                        $('.show-btn').hide()
+                        $('.header-info').hide()
+                    }
+                }
+            },
+        })
+    </script>
 
 </body>
 
