@@ -1,3 +1,7 @@
+﻿
+drop database if exists buying;
+create database buying;
+use buying;
 -- phpMyAdmin SQL Dump
 -- version 4.7.4
 -- https://www.phpmyadmin.net/
