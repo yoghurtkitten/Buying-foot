@@ -7,6 +7,8 @@ html{
 }
 iframe{
     width: 100%;
+    z-index: 10;
+    height: 117px;
 }
 .container-fluid{
     width: 100%;
@@ -51,18 +53,6 @@ iframe{
     color: #fff;
 }
 
-.list-info ul {
-    display: flex;
-    list-style: none;
-    margin-bottom: 0;
-}
-.list-info ul li{
-    height:115px;
-    margin-right:4px;
-    line-height: 115px;
-    font-size: 0.8rem;
-    padding-left: 2rem;
-}
 @media screen and (max-width:1540px){
     .my-btn{
         font-size: 16px;
@@ -93,9 +83,6 @@ iframe{
     }
     ul li .main-title{
         font-size: 1.1rem!important;
-    }
-    .header-menu{
-        display: none!important;
     }
 }
 @media screen and (max-width:982px) and (min-width:849px){
@@ -167,27 +154,6 @@ iframe{
         width: 80%!important;
         height: 500px!important;
     }
-}
-.list-info ul li a{
-    text-decoration: none;
-    font-weight: bold;
-    color: #535353;
-    height: 100%;
-    display: flex;
-    text-align: center;
-}
-.list-info ul li a:hover{
-    color:#e54c2a;
-}
-.nav{
-    display: flex;
-    padding-left: 15px;
-    justify-content:space-around;
-}
-.nav img{
-    vertical-align: middle;
-    margin-bottom: -23px;
-    margin-right: 150px;
 }
 .slider{
     width: 100%;
@@ -285,33 +251,6 @@ iframe{
     top: -0px;
     animation: navAnimate 2s ease 1;
 }
-.header-menu{
-    display: inline-block;
-}
-.header-right{
-    float: right;
-    display: flex;
-    height: 100%;
-    align-items: center;
-    position: relative;
-}
-
-.header-info{
-    position: absolute;
-    width: 300px;
-    right: 0;
-    font-size: 16px;
-}
-
-.header-info ul li{
-    float: left;
-    margin-left: 5%;
-}
-.header-info ul li a{
-    color: #212529;
-    font-weight: bold;
-    text-decoration: none;
-}
 .server-img{
     margin-top: 4%;
     margin-bottom: 2%;
@@ -341,21 +280,8 @@ ul li .main-title{
     float: left;
     margin-right: 5%;
     vertical-align:middle;
-}
-.img1{
-    background: url('../img/small_img/Delicacy-nopick.png') no-repeat center center;
-    background-size: cover;
-}
-.img2{
-    background: url('../img/small_img/Desserts-nopick.png') no-repeat center center;
-    background-size: cover;
-}
-.img3{
-    background: url('../img/small_img/Supermarket-nopick.png') no-repeat center center;
-    background-size: cover;
-}
-.img4{
-    background: url('../img/small_img/fruit-nopick.png') no-repeat center center;
+    background-repeat: no-repeat;
+    background-position: center;
     background-size: cover;
 }
 .out-phone{
@@ -367,7 +293,9 @@ ul li .main-title{
 .phone{
     width: 90%;
     height: 100%;
-    background: url('../img/phone/desserts.png') no-repeat center center;
+    /* background: url('../img/phone/desserts.png') no-repeat center center; */
+    background-repeat: no-repeat;
+    background-position: center;
     background-size: 100%;
     margin-left: 5%;
     transition: all 0.5s;
@@ -401,7 +329,7 @@ ul li .main-title{
     padding-left: 4%;
 }
 .phone-image{
-    animation: upAnimate 2s ease 1 forwards;        
+    /* animation: upAnimate 2s ease 1 forwards;         */
 }
 .carousel{
     z-index: -1;
@@ -428,12 +356,14 @@ ul li .main-title{
 .carousel-item img{
     width: 100%;
 }
-.show-btn{
-    width: 50px;
-    height: 50px;
-    z-index: 100;
-    cursor: pointer;
+.header {
+    position: fixed;
 }
-.show-btn i{
-    font-size: 30px;
+.addAnimate{
+    opacity: 1;
+    animation: upAnimate 2s ease 1 forwards;
+}
+.subTitle{
+    color:#e54c2a;
+    border-top-color:#e54c2a;
 }

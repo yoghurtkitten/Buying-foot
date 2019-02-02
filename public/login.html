@@ -134,12 +134,12 @@
                     </div>
                 </div>
                 <div class="input-group mb-3 phone-div">
-                    <input type="text" class="form-control phone-number" placeholder="验证码" id="code" v-model="pwd">
+                    <input type="text" class="form-control phone-number" placeholder="验证码" id="code" v-model="pwd" :disabled="isDisabled">
                 </div>
                 <p>
                     新用户登录即自动注册，并表示已同意<a href="#">《用户服务协议》</a>
                 </p>
-                <button class="btn form-control" onclick="login()">登录</button>
+                <button class="btn form-control" @click="login()">登录</button>
             </section>
 
         </div>
@@ -156,7 +156,8 @@
                 codeStyle: false,
                 code: '',
                 code_span:'获取验证码',
-                time:30
+                time:30,
+                isDisabled: true,
             },
             watch: {
                 phone(val) {
@@ -188,6 +189,7 @@
                                 console.log('验证码发送成功!');
                                 this.code = data.vcode;
                                 this.startTime();
+                                this.isDisabled = false;
                             } else {
                                 console.log('验证码发送失败！');
                             }
@@ -196,67 +198,36 @@
                     }
                 },
                 startTime(){
+                    var timer = setInterval(() => {
+                        this.code_span = `已发送${this.time}`;
+                        this.time--;
+                    }, 1000)
                     setTimeout(()=>{
+                        clearInterval(timer);
                         this.codeStyle=true;
                         this.code_span = '重新发送';
-                    }, 2000)
+                        this.isDisabled = true;
+                    }, 30000)
+                },
+                login(){
+                    $.ajax({
+                        url:'/user/login',
+                        type: 'post',
+                        dataType: 'json',
+                        data:{
+                            phone: this.phone,
+                            user_code: this.code,
+                            code: this.pwd,
+                        }
+                    }).then((data) => {
+                        console.log(data);
+                        window.location.replace(document.referrer);
+                    })
                 }
             },
 
         })
     </script>
-    <!-- <script>
-        function getCode() {
-            $('#validate_code').removeClass('getcode');
-            var time = 30;
-            var interval = setInterval(() => {
-                $('#validate_code').text(`( 已发送${time} )`);
-                time--;
-            },1000);
-            setTimeout(() => {
-                clearInterval(interval);
-                $('#validate_code').addClass('getcode');
-                $('#validate_code').text(`重新发送`);
-            },31000);
-        }
-        function login(){
-            var xhr = new XMLHttpRequest();
-
-            xhr.onreadystatechange = function () {
-                if (xhr.readyState == 4 && xhr.status == 200) {
-                    var result = xhr.responseText;
-                    var arr = JSON.parse(result);
-                    if (arr.code == 200) {
-                        console.log(arr.msg);
-                        window.location.replace(document.referrer);
-                    } else if (arr.code == 403) {
-                        alert('验证码有误');
-                    } else {
-                        console.log('登录失败');
-                    }
-                }
-            }
-
-            xhr.open('post', '/user/login', true);
-            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-            
-            var data = `phone=${phone.value}&code=${code.value}&user_code=${codeFromUser.value}`;
-            xhr.send(data);
-        }
-
-        $("#phone").bind("input propertychange",function(event){
-            var num= parseInt($('#phone').val());
-            var reg = /^[1][3|4|5|7|8]\d{9}$/g;
-            if (reg.test(num)) {
-                console.log('123');
-                $('#validate_code').addClass('getcode');
-                $('#validate_code').attr('onclick','getCode()')
-            } else {
-                $('#validate_code').attr('onclick','')
-                $('#validate_code').removeClass('getcode');
-            }
-        });
-    </script> -->
 </body>
 
 </html>
