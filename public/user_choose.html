@@ -49,6 +49,8 @@
                             </div>
                         </div>
                     </div>
+                </div>
+                <div>
                     <div class="type-detail row d-flex align-content-center m-0 pl-3 mt-2 pt-3 pb-3">
                         <div class="col-lg-1 col-md-12 p-0">
                             <div class="business-type-title">商家分类</div>
@@ -56,8 +58,8 @@
                         <div class="col-lg-7 col-md-8 col-sm-12">
                             <ul class="list-unstyled m-0">
                                 <li v-for="(item, index) in type" :key="index">
-                                    <a href="javascript:;" v-text="item" v-if="index==0" @click="loadAll"></a>
-                                    <a href="javascript:;" v-text="item" v-else @click="select_type(item)"></a>
+                                    <a href="javascript:;" v-text="item.name" v-if="index==0" @click="loadAll" :class="{'active':item.isActive}"></a>
+                                    <a href="javascript:;" v-text="item.name" v-else @click="select_type(item.name)" :class="{'active':item.isActive}"></a>
                                 </li>
                             </ul>
                         </div>
@@ -69,34 +71,34 @@
                             </a>
                         </div>
                     </div>
-                </div>
-                <div class="detail-list m-0 mt-3" id="busi_list">
-                    <ul v-for="(obj, index) in shop_item" :key="index">
-                        <li @click="choose_shop(obj.id)">
-                            <img :src="obj.shop_img" alt="">
-                            <p class="business-title">
-                                {{obj.shop_name}}
-                            </p>
-                            <div class="star">
-                                <i class="iconfont" v-for="n in obj.shop_start" :key="n">&#xec43;</i>
-                                <span>
-                                    {{obj.shop_start}}分
-                                </span>
-                            </div>
-                            <p class="descript d-flex align-items-center">
-                                <span>起送:￥{{obj.deliver_fee}}</span>
-                                <span class="pl-3">配送费:￥{{obj.deliver_cost}}</span>
-                                <span>
-                                    <i class="iconfont">&#xe784;</i>
-                                    {{obj.deliver_time}}分钟
-                                </span>
-                            </p>
-                            <input type="hidden" :value="obj.id" id="busi_id">
-                        </li>
-                    </ul>
-                </div>
-                <div class="load" @click="load">
-                    <p>点击加载更多商家...</p>
+                    <div class="detail-list m-0 mt-3" id="busi_list">
+                        <ul v-for="(obj, index) in shop_item" :key="index">
+                            <li @click="choose_shop(obj.id)">
+                                <img :src="obj.shop_img" alt="">
+                                <p class="business-title">
+                                    {{obj.shop_name}}
+                                </p>
+                                <div class="star">
+                                    <i class="iconfont" v-for="n in obj.shop_start" :key="n">&#xec43;</i>
+                                    <span>
+                                        {{obj.shop_start}}分
+                                    </span>
+                                </div>
+                                <p class="descript d-flex align-items-center">
+                                    <span>起送:￥{{obj.deliver_fee}}</span>
+                                    <span class="pl-3">配送费:￥{{obj.deliver_cost}}</span>
+                                    <span>
+                                        <i class="iconfont">&#xe784;</i>
+                                        {{obj.deliver_time}}分钟
+                                    </span>
+                                </p>
+                                <input type="hidden" :value="obj.id" id="busi_id">
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="load" @click="load">
+                        <p>点击加载更多商家...</p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -117,11 +119,11 @@
                 shop_item: [],
                 search_shop: '',
                 type: [
-                    "全部",
-                    "美食",
-                    "正餐优选",
-                    "精选小吃",
-                    "下午茶"
+                    { name: "全部", isActive: true },
+                    { name: "美食", isActive: false },
+                    { name: "正餐优选", isActive: false },
+                    { name: "精选小吃", isActive: false },
+                    { name: "下午茶", isActive: false },
                 ],
                 loading: ''
             },
@@ -210,7 +212,7 @@
                         return typeIndex;
                     }
                 },
-                choose_shop:function(sid){
+                choose_shop: function (sid) {
                     if ($(".login_user").text() == '注册/登录') {
                         alert('请登录')
                     } else {
@@ -228,4 +230,5 @@
         })
     </script>
 </body>
+
 </html>

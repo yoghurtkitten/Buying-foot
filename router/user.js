@@ -109,7 +109,7 @@ router.get('/getlist', (req, res) => {
     } else {
         sql = 'SELECT * FROM shop WHERE province=? and city=? and county=? LIMIT ?,20';
     }
-
+    console.log(`SELECT * FROM shop WHERE province=${province} and city=${city} and county=${county} LIMIT ${n},20`);
     pool.query(sql, queryPara, (err, result) => {
         if (err) {
             throw err;
@@ -126,6 +126,7 @@ router.get('/searchByBusiness', (req, res) => {
     var businessList = [];
     var ids = [];
     var address = req.query.address.split('-');
+    console.log(address)
     var [province, city, county] = address;
     var sql = `SELECT shop.id,shop.shop_name,shop.deliver_time,shop.shop_start,food.name,food.price 
     FROM shop JOIN food ON shop.id=food.shop_id 
@@ -161,7 +162,7 @@ router.get('/searchByBusiness', (req, res) => {
                     }
                 }
             }
-            console.log(businessList)
+            // console.log(businessList)
             res.send(businessList);
         } else {
             res.send('没有商家');
@@ -232,6 +233,7 @@ router.post('/login', (req, res) => {
                     name: obj.phone
                 }
                 req.session.user = user;
+                // console.log(req.session.user);
                 res.send({ code: 200, msg: 'Login Success!' })
             } else {
                 res.send({ code: 403, msg: 'Login Error!', code: v_code })
@@ -258,6 +260,7 @@ router.post('/login', (req, res) => {
 
 router.get('/session', (req, res) => {
     var session_msg = req.session.user;
+    // console.log(req.session)
     if (session_msg) {
         res.send({ code: 200, msg: session_msg });
     } else {
@@ -326,7 +329,6 @@ router.post('/setShopCar', (req, res) => {
 router.post('/update_shopCar', (req, res) => {
     var obj = req.body;
     if (obj.number == 0) {
-        console.log('123456')
         var sql = `DELETE FROM shop_car WHERE fid=? AND shop_car.isOrder=0`;
         pool.query(sql, [obj.foods_id], (err, result) => {
             if (err) {
@@ -494,7 +496,7 @@ router.post('/save_Order', (req, res) => {
             throw err;
         }
         if (result.affectedRows) {
-            console.log(result);
+            // console.log(result);
             var sql2 = 'SELECT id, order_no FROM order_ WHERE order_time=?';
             pool.query(sql2, [obj.order_time], (err, result) => {
                 if (err) {

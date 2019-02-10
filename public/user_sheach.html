@@ -19,73 +19,75 @@
 <body>
     <iframe src="./header.html" frameborder="0" scrolling="no" class="frame-div" onload="this.height=100"></iframe>
     <div class="container" id="app">
-        <div class="business-type">
-            <div class="row m-0 mt-5">
-                <div class="col-lg-9 col-md-6 row m-0 position-relative">
-                    <div class="col-lg-2 col-md-5 d-flex align-items-center pr-0">
-                        <i class="address-icon"></i>
-                        <span class="ml-2">
-                            {{address.split('-')[1]}} {{address.split('-')[2]}}
-                        </span>
+        <div class="section">
+            <div class="business-type">
+                <div class="row m-0 mt-5">
+                    <div class="col-lg-9 col-md-6 row m-0 position-relative">
+                        <div class="col-lg-2 col-md-5 d-flex align-items-center pr-0">
+                            <i class="address-icon"></i>
+                            <span class="ml-2">
+                                {{address.split('-')[1]}} {{address.split('-')[2]}}
+                            </span>
+                        </div>
+                        <div class="col-lg-2 col-md-5 d-flex align-items-center p-0">
+    
+                            <a href="user_index.html" class="ml-3 mr-4 select-address">
+                                [切换地址]
+                            </a>
+                        </div>
                     </div>
-                    <div class="col-lg-2 col-md-5 d-flex align-items-center p-0">
-
-                        <a href="user_index.html" class="ml-3 mr-4 select-address">
-                            [切换地址]
-                        </a>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6 row detail-btn m-0">
-                    <div class="col-md-6 col-sm-3 col-xs-6 offset-6 p-0 m-0">
-                        <a href="login.html" class="btn mr-1 login_user" v-if="!user">注册/登录</a>
-                        <a href="login.html" class="btn mr-1 login_user" v-else>
-                            <i class="iconfont">&#xe6a2;</i>{{user}}
-                        </a>
-                    </div>
-                    <div class="col-md-6 col-sm-3 col-xs-6 p-0 ">
-                        <a href="#" class="new-list-btn fr btn">
-                            我的订单
-                        </a>
+                    <div class="col-lg-3 col-md-6 row detail-btn m-0">
+                        <div class="col-md-6 col-sm-3 col-xs-6 offset-6 p-0 m-0">
+                            <a href="login.html" class="btn mr-1 login_user" v-if="!user">注册/登录</a>
+                            <a href="login.html" class="btn mr-1 login_user" v-else>
+                                <i class="iconfont">&#xe6a2;</i>{{user}}
+                            </a>
+                        </div>
+                        <div class="col-md-6 col-sm-3 col-xs-6 p-0 ">
+                            <a href="#" class="new-list-btn fr btn">
+                                我的订单
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="detail-list m-0 mt-3 search-mode" id="busi_list">
-            <ul>
-                <li v-for="(obj, index) in businessList" :key="index">
-                    <h4>{{obj.foods[0].shop_name}}</h4>
-                    <div class="star">
-                        <i class="iconfont" v-for="item in obj.foods[0].shop_start" >&#xec43;</i>
-                        <span>
-                            平均{{obj.foods[0].deliver_time}}分钟送达
-                        </span>
-                    </div>
-                    <ul>
-                        <li v-for="(item, index) in obj.foods" :key="index">
-                            <div>
-                                <span>{{item.name}}</span>
-                            </div>
-                            <div class="right-choose">
-                                <span>￥{{item.price.toFixed(2)}}</span>
-                                <span class="buying" @click="toShop(obj.foods.id,user)">去购买</span>
+            <div class="detail-list m-0 mt-3 search-mode" id="busi_list">
+                <ul>
+                    <li v-for="(obj, index) in businessList" :key="index">
+                        <h4>{{obj.foods[0].shop_name}}</h4>
+                        <div class="star">
+                            <i class="iconfont" v-for="item in obj.foods[0].shop_start" >&#xec43;</i>
+                            <span>
+                                平均{{obj.foods[0].deliver_time}}分钟送达
+                            </span>
+                        </div>
+                        <ul>
+                            <li v-for="(item, index) in obj.foods" :key="index">
                                 <div>
-                                    <p>
-                                        <i class="iconfont">&#xec43;</i>
-                                        <i class="iconfont">&#xec43;</i>
-                                        <i class="iconfont">&#xec43;</i>
-                                        <i class="iconfont">&#xec43;</i>
-                                        <i class="iconfont">&#xec43;</i>
-                                    </p>
-                                    <p>
-                                        月售68份
-                                    </p>
+                                    <span>{{item.name}}</span>
                                 </div>
-                            </div>
-                        </li>
-                    </ul>
-                </li>
-
-            </ul>
+                                <div class="right-choose">
+                                    <span>￥{{item.price.toFixed(2)}}</span>
+                                    <span class="buying" @click="toShop(obj.foods.id,user)">去购买</span>
+                                    <div>
+                                        <p>
+                                            <i class="iconfont">&#xec43;</i>
+                                            <i class="iconfont">&#xec43;</i>
+                                            <i class="iconfont">&#xec43;</i>
+                                            <i class="iconfont">&#xec43;</i>
+                                            <i class="iconfont">&#xec43;</i>
+                                        </p>
+                                        <p>
+                                            月售68份
+                                        </p>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </li>
+    
+                </ul>
+            </div>
         </div>
     </div>
     <iframe src="./footer.html" frameborder="0" scrolling="no" class="frame-div" onload="this.height=100"></iframe>
@@ -129,6 +131,8 @@
                     this.business = urlParams.get('business');
                 },
                 getBusiness() {
+                    console.log(this.address)
+                    console.log(this.business)
                     $.ajax({
                         url: '/user/searchByBusiness',
                         data: {
@@ -146,6 +150,7 @@
                     location.href = `${location.origin}/shop.html?sid=${sid}&user=${user}`
                 }
             },
+            
         })
     </script>
 </body>
