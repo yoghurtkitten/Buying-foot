@@ -447,15 +447,18 @@ router.post('/load_Order', (req, res) => {
     var sid = obj.sid;
     var user = obj.user;
     var add_id = obj.add_id;
+    var order_id = parseInt(obj.order_id);
+    console.log(order_id)
     var sql = `SELECT shop.shop_name,shop.deliver_fee,shop.deliver_time,food.name,shop_car.number,shop_car.un_price,re_address.receiver,re_address.province,re_address.city,re_address.country,re_address.address,re_address.phone,re_address.gender 
     FROM food JOIN shop_car ON food.food_id=shop_car.fid JOIN shop ON food.shop_id=shop.id JOIN user ON shop_car.uid=user.id JOIN re_address ON user.id=re_address.uid WHERE 
-    user.phone=? AND shop.id=? AND re_address.id=?
+    user.phone=? AND shop.id=? AND re_address.id=? AND shop_car.isOrder=?
     `;
-    pool.query(sql, [user, sid, add_id], (err, result) => {
+    pool.query(sql, [user, sid, add_id, order_id], (err, result) => {
         if (err) {
             throw err;
         }
         if (result) {
+            console.log(result)
             res.send(result);
         } else {
             res.send({ code: 400, msg: 'get order info fault!' })
@@ -531,8 +534,8 @@ router.get('/change_order', (req, res) => {
 
 router.get('/changeStatu', (req, res) => {
     var obj = req.query;
-    var sql = 'UPDATE order_ SET status=1 WHERE id = ?';
-    pool.query(sql, [obj.order_no], (err, result) => {
+    var sql = 'UPDATE order_ SET status=1,pay_method=? WHERE id = ?';
+    pool.query(sql, [obj.pay_method, obj.order_no], (err, result) => {
         if (err) {
             throw err;
         }
@@ -540,6 +543,19 @@ router.get('/changeStatu', (req, res) => {
             res.send({ code: 200, msg: 'updata statu success' });
         } else {
             res.send({ code: 400, msg: 'updata statu fault' });
+        }
+    })
+})
+
+router.get('/orderStatu', (req, res) => {
+    var obj = req.query;
+    var sql = 'SELECT status FROM order_ WHERE id=?';
+    pool.query(sql, [obj.order_id], (err, result) => {
+        if (err) {
+            throw err;
+        }
+        if (result.length) {
+            res.send(result)
         }
     })
 })
