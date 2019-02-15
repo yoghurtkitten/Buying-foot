@@ -591,7 +591,7 @@ router.get('/getUserOrder', (req, res) => {
                 newOrder[index++] = { id: result[key].id }
             }
             var sql2 = `
-            SELECT order_.id,shop.shop_name,food.name,shop_car.number,shop_car.un_price,order_.status,order_.order_time,order_.order_no FROM
+            SELECT order_.id,shop.shop_name,shop.shop_img,food.name,shop_car.number,shop_car.un_price,order_.status,order_.order_time,order_.order_no FROM
              order_ JOIN user ON order_.uid=user.id JOIN shop_car ON order_.id=shop_car.isOrder JOIN
               shop ON order_.shop_id=shop.id JOIN food ON shop_car.fid=food.food_id WHERE user.phone=?
 

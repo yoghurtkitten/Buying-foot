@@ -81,19 +81,19 @@
                                     <div>
                                         <div>
                                             <div class="order_img"></div>
-                                            <p class="order_title">{{item.content[0].shop_name}}</p>
+                                            <p class="order_title" v-if="item.content[0]">{{item.content[0].shop_name}}</p>
                                             <p>{{getShopCar(item.content)}}</p>
                                             <a href="javascript:;">共<span>{{item.content.length}}</span>个菜品></a>
                                         </div>
                                         <div class="time">
-                                            <p>{{item.content[0].order_time | dateFormat}}</p>
-                                            <p>{{item.content[0].order_time | timeFormat}}</p>
+                                            <p v-if="item.content[0]">{{item.content[0].order_time | dateFormat}}</p>
+                                            <p v-if="item.content[0]">{{item.content[0].order_time | timeFormat}}</p>
                                         </div>
                                         <div class="price">
                                             <p>￥{{getTotal(item.content)}}</p>
                                         </div>
                                         <div>
-                                            <p>{{item.content[0].status | statuFormat}}</p>
+                                            <p v-if="item.content[0]">{{item.content[0].status | statuFormat}}</p>
                                             <p><a href="javascript:;">订单详情</a></p>
                                         </div>
                                     </div>
