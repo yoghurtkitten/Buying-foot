@@ -77,12 +77,12 @@
                         </div>
                         <div class="order_info">
                             <ul>
-                                <li v-for="(item, index) in allOrder" :key="index">
+                                <li v-for="(item, index) in allOrder" :key="index" v-if="item.content.length>0 && index <= 2">
                                     <div>
                                         <div>
                                             <div class="order_img"></div>
-                                            <p class="order_title" v-if="item.content[0]">{{item.content[0].shop_name}}</p>
-                                            <p>{{getShopCar(item.content)}}</p>
+                                            <p class="order_title">{{item.content[0].shop_name}}</p>
+                                            <p class="detail">{{getShopCar(item.content)}}</p>
                                             <a href="javascript:;">共<span>{{item.content.length}}</span>个菜品></a>
                                         </div>
                                         <div class="time">
@@ -191,10 +191,10 @@
                     return str;
                 },
                 dateFormat: function (val) {
-                    return `${new Date(val).getFullYear()}-${(new Date(val).getMonth()+1)>10?(new Date(val).getMonth()+1):'0'+(new Date(val).getMonth()+1)}-${new Date(val).getDate()>10?new Date(val).getDate():'0'+new Date(val).getDate()}`
+                    return `${new Date(val).getFullYear()}-${(new Date(val).getMonth() + 1) > 10 ? (new Date(val).getMonth() + 1) : '0' + (new Date(val).getMonth() + 1)}-${new Date(val).getDate() > 10 ? new Date(val).getDate() : '0' + new Date(val).getDate()}`
                 },
                 timeFormat: function (val) {
-                    return `${new Date(val).getHours()>10?new Date(val).getHours():'0'+new Date(val).getHours()}:${new Date(val).getMinutes()>10?new Date(val).getMinutes():'0'+new Date(val).getMinutes()}`;
+                    return `${new Date(val).getHours() > 10 ? new Date(val).getHours() : '0' + new Date(val).getHours()}:${new Date(val).getMinutes() > 10 ? new Date(val).getMinutes() : '0' + new Date(val).getMinutes()}`;
                 }
             }
         })

@@ -107,7 +107,7 @@ section>div>span{
     margin-top: 3%;
     padding: 2%;
     height: 403px;
-    overflow: hidden;
+    /* overflow: hidden; */
 }
 .show_order{
     border-bottom: 2px solid #f4f4f4;
@@ -132,6 +132,12 @@ section>div>span{
 }
 .order_info>ul>li>div p{
     margin-bottom: 2%;
+}
+.detail{
+    width: 70%;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 }
 .order_title{
     color: #333;
