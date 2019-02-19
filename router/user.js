@@ -615,7 +615,7 @@ router.get('/getShopCarInfo', (req, res) => {
 
 router.get('/getAddressInfo', (req, res) => {
     var obj = req.query;
-    var sql = 'SELECT re_address.receiver, re_address.address,re_address.phone,order_.message,order_.order_time FROM order_ JOIN re_address ON order_.addr_id=re_address.id WHERE order_.order_no=?';
+    var sql = 'SELECT re_address.receiver, re_address.address,re_address.phone,re_address.gender,order_.message,order_.order_time FROM order_ JOIN re_address ON order_.addr_id=re_address.id WHERE order_.order_no=?';
     pool.query(sql, [obj.order_no], (err, result) => {
         if (err) {
             throw err;
