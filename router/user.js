@@ -56,45 +56,6 @@ router.post('/getVCode', (req, res) => {
     })  */
 
 })
-
-router.post('/regist', (req, res) => {
-    var obj = req.body;
-    var validateResult = validate(obj);
-    if (validateResult.str) {
-        res.send({ code: validateResult.code, msg: validateResult.str });
-        return;
-    }
-    var sql = 'INSERT INTO user SET ?';
-    pool.query(sql, [obj], (err, result) => {
-        if (err) {
-            throw err;
-        }
-        if (result.affectedRows) {
-            res.send({ code: 200, msg: 'Insert Success!' })
-        } else {
-            res.send({ code: 401, msg: 'Insert Fault!' })
-        }
-    })
-});
-
-
-router.get('/query', (req, res) => {
-    // res.send(req.query.id);
-    var id = req.query.id;
-    var sql = 'SELECT * FROM user WHERE id = ?';
-    pool.query(sql, [id], (err, result) => {
-        if (err) {
-            throw err;
-        }
-        if (result.length) {
-            res.send(result);
-        } else {
-            res.send({ code: 401, msg: 'Query Fault!' });
-        }
-    })
-})
-
-
 router.get('/getlist', (req, res) => {
     var address = req.query.address.split('-');
     var n = parseInt(req.query.n);
@@ -591,9 +552,10 @@ router.get('/getUserOrder', (req, res) => {
                 newOrder[index++] = { id: result[key].id }
             }
             var sql2 = `
-            SELECT order_.id,shop.shop_name,shop.shop_img,food.name,shop_car.number,shop_car.un_price,order_.status,order_.order_time,order_.order_no FROM
-             order_ JOIN user ON order_.uid=user.id JOIN shop_car ON order_.id=shop_car.isOrder JOIN
-              shop ON order_.shop_id=shop.id JOIN food ON shop_car.fid=food.food_id WHERE user.phone=?
+            SELECT order_.id,shop.id AS sid,shop.shop_name,shop.shop_img,food.name,shop_car.number,shop_car.un_price,order_.status,order_.order_time,order_.order_no,order_.addr_id FROM
+            order_ JOIN user ON order_.uid=user.id JOIN shop_car ON order_.id=shop_car.isOrder JOIN
+            shop ON order_.shop_id=shop.id JOIN food ON shop_car.fid=food.food_id 
+            WHERE user.phone=?
 
             `;
             pool.query(sql2, [user], (err, result) => {
@@ -618,6 +580,50 @@ router.get('/getUserOrder', (req, res) => {
             })
         } else {
             res.send({ code: 400, msg: 'SELECT FAULT!' })
+        }
+    })
+})
+
+router.get('/getShopInfo', (req, res) => {
+    var obj = req.query;
+    var sql = `SELECT shop_name, shop_phone,deliver_fee FROM shop JOIN order_ ON shop.id=order_.shop_id WHERE order_.order_no=?`;
+    pool.query(sql, [obj.order_no], (err,result) => {
+        if (err) {
+            throw err;
+        }
+        if (result.length) {
+            res.send({code:200,data:result});
+        } else {
+            res.send({code:400,data:'Get shop info fault!'})
+        }
+    })
+})
+router.get('/getShopCarInfo', (req, res) => {
+    var obj = req.query;
+    var sql = 'SELECT shop_car.number,shop_car.un_price*shop_car.number AS price,food.name FROM shop_car JOIN order_ ON shop_car.isOrder=order_.id JOIN food ON food.food_id=shop_car.fid WHERE order_.order_no=?';
+    pool.query(sql, [obj.order_no], (err, result) => {
+        if (err) {
+            throw err;
+        }
+        if (result.length) {
+            res.send({code:200,data:result});            
+        } else {
+            res.send({code:400,data:'Get shop_car info fault!'})
+        }
+    })
+})
+
+router.get('/getAddressInfo', (req, res) => {
+    var obj = req.query;
+    var sql = 'SELECT re_address.receiver, re_address.address,re_address.phone,order_.message,order_.order_time FROM order_ JOIN re_address ON order_.addr_id=re_address.id WHERE order_.order_no=?';
+    pool.query(sql, [obj.order_no], (err, result) => {
+        if (err) {
+            throw err;
+        }
+        if (result.length) {
+            res.send({code:200,data:result});
+        } else {
+            res.send({code:400,data:'Get address info fault!'})
         }
     })
 })

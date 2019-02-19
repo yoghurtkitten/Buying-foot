@@ -13,10 +13,10 @@ server.listen(5050);
 
 server.use(cookieParser());
 server.use(session({
-    secret: '12345',//与cookieParser中的一致
-    cookie: { maxAge: 18000000 },
-    resave: false,
-    saveUninitialized: true
+    secret: '12345',//自定义安全字符串
+    cookie: { maxAge: 18000000 },//毫秒数，依靠cookie，保存8个小时
+    resave: false,//每次请求都需要更新session
+    saveUninitialized: true//初始化是否保存数据
 }));
 /* server.use('/',(req, res, next) => {
     console.log(req.session.user);
