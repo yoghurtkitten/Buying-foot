@@ -70,7 +70,7 @@ router.get('/getlist', (req, res) => {
     } else {
         sql = 'SELECT * FROM shop WHERE province=? and city=? and county=? LIMIT ?,20';
     }
-    console.log(`SELECT * FROM shop WHERE province=${province} and city=${city} and county=${county} LIMIT ${n},20`);
+    // console.log(`SELECT * FROM shop WHERE province=${province} and city=${city} and county=${county} LIMIT ${n},20`);
     pool.query(sql, queryPara, (err, result) => {
         if (err) {
             throw err;
@@ -87,7 +87,7 @@ router.get('/searchByBusiness', (req, res) => {
     var businessList = [];
     var ids = [];
     var address = req.query.address.split('-');
-    console.log(address)
+    // console.log(address)
     var [province, city, county] = address;
     var sql = `SELECT shop.id,shop.shop_name,shop.deliver_time,shop.shop_start,food.name,food.price 
     FROM shop JOIN food ON shop.id=food.shop_id 
@@ -356,8 +356,9 @@ router.post('/getOrderInfo', (req, res) => {
 
 router.post('/save_address', (req, res) => {
     var obj = req.body;
-    var sql = `INSERT INTO re_address VALUES (null, (SELECT id FROM user WHERE user.phone=?), ?, ?, ?, ?, ?, ?, ?)`;
-    pool.query(sql, [obj.u_phone, obj.receiver, obj.province, obj.city, obj.country, obj.address, obj.phone, obj.gender], (err, result) => {
+    console.log(req.session.user)
+    var sql = `INSERT INTO re_address VALUES (null, (SELECT id FROM user WHERE user.phone=?), ?, ?, ?, ?, ?, ?, ?, 0)`;
+    pool.query(sql, [req.session.user, obj.receiver, obj.province, obj.city, obj.country, obj.address, obj.phone, obj.gender], (err, result) => {
         if (err) {
             throw err;
         }
@@ -386,7 +387,7 @@ router.post('/valiUser', (req, res) => {
 
 router.get('/valiAddress', (req, res) => {
     var obj = req.query;
-    var sql = "select re_address.id, re_address.receiver,re_address.province,re_address.city,re_address.country,re_address.address,re_address.phone,re_address.gender from re_address JOIN user ON re_address.uid=user.id WHERE user.phone=?";
+    var sql = "select re_address.id, re_address.receiver,re_address.province,re_address.city,re_address.country,re_address.address,re_address.phone,re_address.gender from re_address JOIN user ON re_address.uid=user.id WHERE user.phone=? AND re_address.isDel=0";
     pool.query(sql, [obj.user], (err, result) => {
         if (err) {
             throw err;
@@ -409,7 +410,7 @@ router.post('/load_Order', (req, res) => {
     var user = obj.user;
     var add_id = obj.add_id;
     var order_id = parseInt(obj.order_id);
-    console.log(order_id)
+    // console.log(order_id)
     var sql = `SELECT shop.shop_name,shop.deliver_fee,shop.deliver_time,food.name,shop_car.number,shop_car.un_price,re_address.receiver,re_address.province,re_address.city,re_address.country,re_address.address,re_address.phone,re_address.gender 
     FROM food JOIN shop_car ON food.food_id=shop_car.fid JOIN shop ON food.shop_id=shop.id JOIN user ON shop_car.uid=user.id JOIN re_address ON user.id=re_address.uid WHERE 
     user.phone=? AND shop.id=? AND re_address.id=? AND shop_car.isOrder=?
@@ -419,7 +420,7 @@ router.post('/load_Order', (req, res) => {
             throw err;
         }
         if (result) {
-            console.log(result)
+            // console.log(result)
             res.send(result);
         } else {
             res.send({ code: 400, msg: 'get order info fault!' })
@@ -624,6 +625,21 @@ router.get('/getAddressInfo', (req, res) => {
             res.send({code:200,data:result});
         } else {
             res.send({code:400,data:'Get address info fault!'})
+        }
+    })
+})
+
+router.get('/getOrderStatu', (req, res) => {
+    var obj = req.query;
+    var sql = `SELECT status FROM order_ WHERE id=?`;
+    pool.query(sql, [obj.order_id], (err, result) => {
+        if (err) {
+            throw err;
+        }
+        if (result.length) {
+            res.send({code:result[0].status})
+        } else {
+            res.send({code:-1})
         }
     })
 })
