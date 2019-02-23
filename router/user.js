@@ -356,9 +356,9 @@ router.post('/getOrderInfo', (req, res) => {
 
 router.post('/save_address', (req, res) => {
     var obj = req.body;
-    console.log(req.session.user)
+    // console.log(req.session.user.name, obj.receiver, obj.province, obj.city, obj.country, obj.address, obj.phone, obj.gender)
     var sql = `INSERT INTO re_address VALUES (null, (SELECT id FROM user WHERE user.phone=?), ?, ?, ?, ?, ?, ?, ?, 0)`;
-    pool.query(sql, [req.session.user, obj.receiver, obj.province, obj.city, obj.country, obj.address, obj.phone, obj.gender], (err, result) => {
+    pool.query(sql, [req.session.user.name, obj.receiver, obj.province, obj.city, obj.country, obj.address, obj.phone, obj.gender], (err, result) => {
         if (err) {
             throw err;
         }
@@ -642,6 +642,55 @@ router.get('/getOrderStatu', (req, res) => {
             res.send({code:-1})
         }
     })
+})
+
+router.get('/get_address', (req, res) => {
+    var obj = req.query;
+    var sql = `SELECT * FROM re_address WHERE uid=(SELECT id FROM user WHERE user.phone=?) AND isDel=0`;
+    pool.query(sql, [req.session.user.name], (err, result) => {
+        if (err) {
+            throw err;
+        }
+        if (result.length) {
+            res.send({code:200, data:result});
+        } else {
+            res.send({code:400, data:result});
+        }
+    })
+})
+
+router.get('/delAddress', (req, res) => {
+    var obj = req.query;
+    var sql = `UPDATE re_address SET isDel=1 WHERE id=?`;
+    pool.query(sql, [obj.id], (err, result) => {
+        if (err) {
+            throw err;
+        }
+        if (result.affectedRows) {
+            res.send({code:200, msg:'Delete Success!!'})
+        } else {
+            res.send({code:400, msg:'Delete Fault!!'})
+        }
+    })
+})
+
+router.get('/selectAddress', (req, res) => {
+    var obj = req.query;
+    var sql = 'SELECT * FROM re_address WHERE id=?';
+    pool.query(sql, [obj.id], (err, result) => {
+        if (err) {
+            throw err;
+        }
+        if (result.length) {
+            res.send({code:200, data:result})
+        } else {
+            res.send({code:400, data:'The User Is Not Exists!'})
+        }
+    })
+})
+router.post('/update_address', (req, res) => {
+    var obj = req.body;
+    console.log(obj)
 })
 
 module.exports = router;
