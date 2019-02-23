@@ -690,7 +690,18 @@ router.get('/selectAddress', (req, res) => {
 })
 router.post('/update_address', (req, res) => {
     var obj = req.body;
-    console.log(obj)
+    var sql = 'UPDATE re_address SET receiver=?, province=?, city=?, country=?, address=?, phone=?, gender=? WHERE id=?';
+    pool.query(sql, [obj.receiver, obj.province, obj.city, obj.country, obj.address, obj.phone, obj.gender, obj.id], (err, result) => {
+        if (err) {
+            throw err;
+        }
+        if (result.affectedRows) {
+            res.send({code:200, msg:'Update Success!'});
+        } else {
+            res.send({code:200, msg:'Update Fault!'});
+        }
+    })
+
 })
 
 module.exports = router;
