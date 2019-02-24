@@ -253,7 +253,7 @@ router.get('/getFoodsCatagory', (req, res) => {
         }
         if (result) {
             food_catagory.catagory = result;
-            var sql2 = 'SELECT * FROM shop JOIN food ON shop.id=food.shop_id WHERE food.shop_id=?';
+            var sql2 = 'SELECT * FROM shop JOIN food ON shop.id=food.shop_id JOIN food_catagory ON food.type_id=food_catagory.id WHERE food.shop_id=?';
             pool.query(sql2, [sid], (err, result) => {
                 if (err) {
                     throw err;
@@ -756,6 +756,21 @@ router.get('/isSave', (req, res) => {
             }
         } else {
             res.send({ code: 400, data: result })
+        }
+    })
+})
+
+router.get('/getSave', (req, res) => {
+    var obj = req.query;
+    var sql = 'SELECT shop.id, shop.shop_name, shop.shop_start, shop.deliver_cost, shop.deliver_fee, shop.deliver_time, shop.shop_img FROM save JOIN shop ON save.sid=shop.id WHERE uid=(SELECT id FROM user WHERE user.phone=?)';
+    pool.query(sql, [req.session.user.name], (err, result) => {
+        if (err) {
+            throw err;
+        }
+        if (result.length) {
+            res.send({code:200, data:result});
+        } else {
+            res.send({code:400, data:result});
         }
     })
 })
