@@ -588,14 +588,14 @@ router.get('/getUserOrder', (req, res) => {
 router.get('/getShopInfo', (req, res) => {
     var obj = req.query;
     var sql = `SELECT shop_name, shop_phone,deliver_fee FROM shop JOIN order_ ON shop.id=order_.shop_id WHERE order_.order_no=?`;
-    pool.query(sql, [obj.order_no], (err,result) => {
+    pool.query(sql, [obj.order_no], (err, result) => {
         if (err) {
             throw err;
         }
         if (result.length) {
-            res.send({code:200,data:result});
+            res.send({ code: 200, data: result });
         } else {
-            res.send({code:400,data:'Get shop info fault!'})
+            res.send({ code: 400, data: 'Get shop info fault!' })
         }
     })
 })
@@ -607,9 +607,9 @@ router.get('/getShopCarInfo', (req, res) => {
             throw err;
         }
         if (result.length) {
-            res.send({code:200,data:result});            
+            res.send({ code: 200, data: result });
         } else {
-            res.send({code:400,data:'Get shop_car info fault!'})
+            res.send({ code: 400, data: 'Get shop_car info fault!' })
         }
     })
 })
@@ -622,9 +622,9 @@ router.get('/getAddressInfo', (req, res) => {
             throw err;
         }
         if (result.length) {
-            res.send({code:200,data:result});
+            res.send({ code: 200, data: result });
         } else {
-            res.send({code:400,data:'Get address info fault!'})
+            res.send({ code: 400, data: 'Get address info fault!' })
         }
     })
 })
@@ -637,9 +637,9 @@ router.get('/getOrderStatu', (req, res) => {
             throw err;
         }
         if (result.length) {
-            res.send({code:result[0].status})
+            res.send({ code: result[0].status })
         } else {
-            res.send({code:-1})
+            res.send({ code: -1 })
         }
     })
 })
@@ -652,9 +652,9 @@ router.get('/get_address', (req, res) => {
             throw err;
         }
         if (result.length) {
-            res.send({code:200, data:result});
+            res.send({ code: 200, data: result });
         } else {
-            res.send({code:400, data:result});
+            res.send({ code: 400, data: result });
         }
     })
 })
@@ -667,9 +667,9 @@ router.get('/delAddress', (req, res) => {
             throw err;
         }
         if (result.affectedRows) {
-            res.send({code:200, msg:'Delete Success!!'})
+            res.send({ code: 200, msg: 'Delete Success!!' })
         } else {
-            res.send({code:400, msg:'Delete Fault!!'})
+            res.send({ code: 400, msg: 'Delete Fault!!' })
         }
     })
 })
@@ -682,9 +682,9 @@ router.get('/selectAddress', (req, res) => {
             throw err;
         }
         if (result.length) {
-            res.send({code:200, data:result})
+            res.send({ code: 200, data: result })
         } else {
-            res.send({code:400, data:'The User Is Not Exists!'})
+            res.send({ code: 400, data: 'The User Is Not Exists!' })
         }
     })
 })
@@ -696,12 +696,68 @@ router.post('/update_address', (req, res) => {
             throw err;
         }
         if (result.affectedRows) {
-            res.send({code:200, msg:'Update Success!'});
+            res.send({ code: 200, msg: 'Update Success!' });
         } else {
-            res.send({code:200, msg:'Update Fault!'});
+            res.send({ code: 200, msg: 'Update Fault!' });
         }
     })
+})
+router.post('/SaveShop', (req, res) => {
+    var obj = req.body;
+    var sql = 'INSERT INTO save VALUES(null, (SELECT id FROM user WHERE user.phone=?), ?, 0)';
+    pool.query(sql, [req.session.user.name, obj.sid], (err, result) => {
+        if (err) {
+            throw err;
+        }
+        if (result.affectedRows) {
+            sql = 'SELECT max(id) from save';
+            pool.query(sql, (err, result) => {
+                if (err) {
+                    throw err;
+                }
+                if (result.length) {
+                    res.send({ code: 200, data: result })
+                } else {
+                    res.send({ code: 400, data: 'Insert Fault' });
+                }
+            })
+        } else {
+            res.send({ code: 400, data: 'Insert Fault!!' });
+        }
+    })
+})
+router.get('/UnSave', (req, res) => {
+    var obj = req.query;
+    var sql = 'UPDATE save SET isDel=? WHERE id=?';
+    pool.query(sql, [obj.isDel, obj.id], (err, result) => {
+        if (err) {
+            throw err;
+        }
+        if (result.affectedRows) {
+            res.send({ code: 200, data: obj.id });
+        } else {
+            res.send({ code: 400, data: 'Update Fault!!' });
+        }
+    })
+})
 
+router.get('/isSave', (req, res) => {
+    var obj = req.query;
+    var sql = 'SELECT id, isDel FROM save WHERE uid=(SELECT id FROM user WHERE user.phone=?) AND sid=?';
+    pool.query(sql, [req.session.user.name, obj.sid], (err, result) => {
+        if (err) {
+            throw err;
+        }
+        if (result.length) {
+            if (result[0].isDel == 1) {
+                res.send({ code: 200, data: result })
+            } else {
+                res.send({ code: 201, data: result })
+            }
+        } else {
+            res.send({ code: 400, data: result })
+        }
+    })
 })
 
 module.exports = router;
