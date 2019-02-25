@@ -775,4 +775,19 @@ router.get('/getSave', (req, res) => {
     })
 })
 
+router.get('/getOrderStatus', (req, res) => {
+    var obj = req.query;
+    var sql = 'SELECT status FROM order_ WHERE order_no=?';
+    pool.query(sql, [obj.order_no], (err, result) => {
+        if (err) {
+            throw err;
+        }
+        if (result.length) {
+            res.send({code:200, data:result});
+        } else {
+            res.send({code:400, data:result});
+        }
+    })
+})
+
 module.exports = router;
