@@ -2,15 +2,24 @@ const express = require('express');
 const router = express.Router();
 const pool = require('../pool');
 
-router.post('/reigiste', (req, res) => {
-    console.log('123');
-    /* var sql = 'SELECT * FROM business';
-    pool.query(sql, (err, result) => {
+router.get('/Login', (req, res) => {
+    var obj = req.query;
+    var sql = 'SELECT phone FROM business WHERE phone=? AND password=?';
+    pool.query(sql, [obj.user, obj.pwd], (err, result) => {
         if (err) {
             throw err;
         }
-        res.send(result);
-    }); */
+        if (result.length) {
+            var business = {
+                name: result[0].phone
+            }
+            req.session.business = business;
+            console.log(req.session.business.name)
+            res.send({code:200, data:result});
+        } else {
+            res.send({code:400, data:'登录失败'})
+        }
+    })
 });
 
 module.exports = router;
