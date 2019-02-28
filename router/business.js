@@ -15,9 +15,9 @@ router.get('/Login', (req, res) => {
             }
             req.session.business = business;
             console.log(req.session.business.name)
-            res.send({code:200, data:result});
+            res.send({ code: 200, data: result });
         } else {
-            res.send({code:400, data:'登录失败'})
+            res.send({ code: 400, data: '登录失败' })
         }
     })
 });

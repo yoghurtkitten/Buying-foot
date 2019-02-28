@@ -66,9 +66,9 @@ router.get('/getlist', (req, res) => {
     var queryPara = [province, city, county, n];
     if (req.query.type) {
         queryPara = [province, city, county, shop_type, n]
-        sql = 'SELECT * FROM shop WHERE province=? and city=? and county=? and shop_type=? LIMIT ?,20';
+        sql = 'SELECT * FROM shop WHERE province=? and city=? and county=? and shop_type=? and isPass=1 LIMIT ?,20';
     } else {
-        sql = 'SELECT * FROM shop WHERE province=? and city=? and county=? LIMIT ?,20';
+        sql = 'SELECT * FROM shop WHERE province=? and city=? and county=? and isPass=1 LIMIT ?,20';
     }
     // console.log(`SELECT * FROM shop WHERE province=${province} and city=${city} and county=${county} LIMIT ${n},20`);
     pool.query(sql, queryPara, (err, result) => {

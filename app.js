@@ -5,6 +5,8 @@ const businessRouter = require('./router/business');
 var cookieParser = require('cookie-parser');
 var session = require('express-session');
 var cors = require("cors")
+const fs = require('fs');
+const multer = require('multer');
 
 
 const server = express();
@@ -26,6 +28,7 @@ server.use(session({
 }); */
 server.use(express.static('public'));
 server.use(express.static('asset'));
+server.use(express.static('upload'));
 server.use(bodyParser.urlencoded({ extended: false }));
 
 
@@ -38,6 +41,20 @@ server.use(cors({
 
 server.use('/user', userRouter);
 server.use('/business', businessRouter);
+
+
+var upload = multer({ dest: "upload/" });
+server.post('/upload', upload.single('mypic'), (req, res) => {
+    var src = req.file.originalname;
+    var i3 = src.lastIndexOf('.');
+    var suff = src.substring(i3);
+    var ftime = new Date().getTime();
+    var frane = Math.floor(Math.random() * 9999);
+    var des = `./upload/${ftime}${frane}${suff}`;
+    fs.renameSync(req.file.path, des);
+    console.log(des)
+    res.send({ code: 1, msg: '上传文件成功', path: des})
+})
 
 
 
