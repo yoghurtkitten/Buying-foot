@@ -363,7 +363,16 @@ router.post('/save_address', (req, res) => {
             throw err;
         }
         if (result.affectedRows) {
-            res.send({ code: 200, msg: 'Insert Success' });
+            sql = 'SELECT max(id) AS id FROM re_address';
+            pool.query(sql,(err, result) => {
+                if (err) {
+                    throw err;
+                }
+                if (result.length) {
+                    
+                    res.send({ code: 200, msg: 'Insert Success', id: result});
+                }
+            })
         } else {
             res.send({ code: 400, msg: 'Insert Fault' });
         }
