@@ -1,14 +1,16 @@
 SET NAMES UTF8;
 DROP DATABASE IF EXISTS buying;
-CREATE DATABASE buying CHARSET-UTF8;
+CREATE DATABASE buying CHARSET=UTF8;
 USE buying;
+
+
 
 -- phpMyAdmin SQL Dump
 -- version 4.5.1
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: 2019-03-02 03:24:39
+-- Generation Time: 2019-03-02 04:46:59
 -- 服务器版本： 10.1.13-MariaDB
 -- PHP Version: 5.6.21
 
@@ -73,7 +75,7 @@ CREATE TABLE `food` (
   `name` varchar(16) DEFAULT NULL,
   `price` decimal(6,0) DEFAULT NULL,
   `ingredients` varchar(64) DEFAULT NULL,
-  `foot_type` varchar(16) NOT NULL,
+  `type_id` int(16) NOT NULL,
   `food_start` tinyint(4) NOT NULL,
   `sell_number` smallint(6) NOT NULL,
   `food_img` varchar(128) NOT NULL
@@ -83,35 +85,35 @@ CREATE TABLE `food` (
 -- 转存表中的数据 `food`
 --
 
-INSERT INTO `food` (`food_id`, `shop_id`, `name`, `price`, `ingredients`, `foot_type`, `food_start`, `sell_number`, `food_img`) VALUES
-(3, 1, '川香回锅肉', '59', '亲，记得点米饭哦！', '热销', 5, 25, 'img/goods/rou.jpg'),
-(4, 1, '老长沙肉炒肉', '49', '亲，记得点米饭哦！', '热销', 4, 25, 'img/goods/rou2.jpg'),
-(5, 1, '卤藕牛三样', '59', '亲，记得点米饭哦！', '热销', 5, 18, 'img/goods/agg.webp'),
-(6, 1, '铁板牛肉', '49', '亲，记得点米饭哦！', '新品', 4, 30, 'img/goods/rou.jpg'),
-(7, 1, '南京鸭血粉丝汤', '59', '亲，记得点米饭哦！', '新品', 5, 28, 'img/goods/agg.webp'),
-(8, 1, '老坛酸菜龙利鱼', '59', '土豆软糯，牛肉酥烂入味', '新品', 5, 35, 'img/goods/agg.webp'),
-(9, 1, '水煮肉片', '49', '豆芽，千张打底，重辣！配有香葱芝麻', '靓粥', 4, 24, 'img/goods/rou.jpg'),
-(10, 1, '土豆炖牛腩', '59', '土豆软糯，牛肉酥烂入味', '靓粥', 5, 19, 'img/goods/agg.webp'),
-(11, 1, '鹌鹑蛋香干烧排骨', '49', '亲 米饭需要单点', '靓粥', 4, 28, 'img/goods/agg.webp'),
-(12, 1, '私房毛血旺', '59', '亲 米饭需要单点', '饮品', 5, 32, 'img/goods/agg.webp'),
-(13, 1, '香辣带鱼', '49', '亲 米饭需要单点', '饮品', 4, 37, 'img/goods/agg.webp'),
-(14, 1, '外婆下饭菜\r\n', '59', '亲 米饭需要单点', '饮品', 5, 35, 'img/goods/agg.webp'),
-(15, 1, '虎皮青椒荷包蛋', '59', '亲 米饭需要单点', '小食', 5, 28, 'img/goods/agg.webp'),
-(16, 1, '剁椒黑木耳炒鸡蛋\r\n', '49', '亲 米饭需要单点', '小食', 4, 27, 'img/goods/agg.webp'),
-(17, 1, '炒双素(四季豆+土豆条）', '59', '亲 米饭需要单点', '小食', 5, 34, 'img/goods/agg.webp'),
-(18, 1, '新派麻婆豆腐', '49', '亲 米饭需要单点', '套餐', 4, 26, 'img/goods/agg.webp'),
-(19, 1, '橄菜四季豆肉丁', '59', '亲 米饭需要单点', '套餐', 5, 18, 'img/goods/agg.webp'),
-(20, 1, '新派鱼香肉丝', '49', '亲 米饭需要单点', '套餐', 4, 37, 'img/goods/agg.webp'),
-(21, 1, '干锅土豆片（孜然味）', '59', '亲 米饭需要单点', '冷藏', 5, 28, 'img/goods/agg.webp'),
-(22, 1, '蕃茄紫菜蛋花汤', '59', '亲 米饭需要单点', '冷藏', 5, 25, 'img/goods/agg.webp'),
-(23, 1, '铁板牛肉', '49', '亲 米饭需要单点', '暖汤', 4, 34, 'img/goods/agg.webp'),
-(24, 1, '土豆炖牛腩', '59', '亲 米饭需要单点', '暖汤', 5, 28, 'img/goods/agg.webp'),
-(25, 1, '铁板牛肉', '49', '亲 米饭需要单点', '暖汤', 4, 35, 'img/goods/agg.webp'),
-(26, 1, '外婆下饭菜', '59', '亲 米饭需要单点', '优惠', 5, 27, 'img/goods/agg.webp'),
-(27, 1, '虎皮青椒荷包蛋', '49', '亲 米饭需要单点', '小份热菜', 4, 29, 'img/goods/agg.webp'),
-(28, 1, '土豆炖牛腩', '59', '土豆软糯，牛肉酥烂入味', '热销', 5, 0, 'img/goods/agg.webp'),
-(29, 1, '土豆炖牛腩', '59', '土豆软糯，牛肉酥烂入味', '热销', 5, 0, 'img/goods/agg.webp'),
-(30, 1, '铁板牛肉', '49', '土豆软糯，牛肉酥烂入味', '新品', 4, 0, 'img/goods/agg.webp');
+INSERT INTO `food` (`food_id`, `shop_id`, `name`, `price`, `ingredients`, `type_id`, `food_start`, `sell_number`, `food_img`) VALUES
+(3, 1, '川香回锅肉', '59', '亲，记得点米饭哦！', 1, 5, 25, 'img/goods/rou.jpg'),
+(4, 1, '老长沙肉炒肉', '49', '亲，记得点米饭哦！', 1, 4, 25, 'img/goods/rou2.jpg'),
+(5, 1, '卤藕牛三样', '59', '亲，记得点米饭哦！', 1, 5, 18, 'img/goods/agg.webp'),
+(6, 1, '铁板牛肉', '49', '亲，记得点米饭哦！', 2, 4, 30, 'img/goods/rou.jpg'),
+(7, 1, '南京鸭血粉丝汤', '59', '亲，记得点米饭哦！', 2, 5, 28, 'img/goods/agg.webp'),
+(8, 1, '老坛酸菜龙利鱼', '59', '土豆软糯，牛肉酥烂入味', 2, 5, 35, 'img/goods/agg.webp'),
+(9, 1, '水煮肉片', '49', '豆芽，千张打底，重辣！配有香葱芝麻', 3, 4, 24, 'img/goods/rou.jpg'),
+(10, 1, '土豆炖牛腩', '59', '土豆软糯，牛肉酥烂入味', 3, 5, 19, 'img/goods/agg.webp'),
+(11, 1, '鹌鹑蛋香干烧排骨', '49', '亲 米饭需要单点', 3, 4, 28, 'img/goods/agg.webp'),
+(12, 1, '私房毛血旺', '59', '亲 米饭需要单点', 4, 5, 32, 'img/goods/agg.webp'),
+(13, 1, '香辣带鱼', '49', '亲 米饭需要单点', 4, 4, 37, 'img/goods/agg.webp'),
+(14, 1, '外婆下饭菜\r\n', '59', '亲 米饭需要单点', 4, 5, 35, 'img/goods/agg.webp'),
+(15, 1, '虎皮青椒荷包蛋', '59', '亲 米饭需要单点', 5, 5, 28, 'img/goods/agg.webp'),
+(16, 1, '剁椒黑木耳炒鸡蛋\r\n', '49', '亲 米饭需要单点', 5, 4, 27, 'img/goods/agg.webp'),
+(17, 1, '炒双素(四季豆+土豆条）', '59', '亲 米饭需要单点', 5, 5, 34, 'img/goods/agg.webp'),
+(18, 1, '新派麻婆豆腐', '49', '亲 米饭需要单点', 6, 4, 26, 'img/goods/agg.webp'),
+(19, 1, '橄菜四季豆肉丁', '59', '亲 米饭需要单点', 6, 5, 18, 'img/goods/agg.webp'),
+(20, 1, '新派鱼香肉丝', '49', '亲 米饭需要单点', 6, 4, 37, 'img/goods/agg.webp'),
+(21, 1, '干锅土豆片（孜然味）', '59', '亲 米饭需要单点', 7, 5, 28, 'img/goods/agg.webp'),
+(22, 1, '蕃茄紫菜蛋花汤', '59', '亲 米饭需要单点', 7, 5, 25, 'img/goods/agg.webp'),
+(23, 1, '铁板牛肉', '49', '亲 米饭需要单点', 8, 4, 34, 'img/goods/agg.webp'),
+(24, 1, '土豆炖牛腩', '59', '亲 米饭需要单点', 8, 5, 28, 'img/goods/agg.webp'),
+(25, 1, '铁板牛肉', '49', '亲 米饭需要单点', 8, 4, 35, 'img/goods/agg.webp'),
+(26, 1, '外婆下饭菜', '59', '亲 米饭需要单点', 9, 5, 27, 'img/goods/agg.webp'),
+(27, 1, '虎皮青椒荷包蛋', '49', '亲 米饭需要单点', 10, 4, 29, 'img/goods/agg.webp'),
+(28, 1, '土豆炖牛腩', '59', '土豆软糯，牛肉酥烂入味', 0, 5, 0, 'img/goods/agg.webp'),
+(29, 1, '土豆炖牛腩', '59', '土豆软糯，牛肉酥烂入味', 0, 5, 0, 'img/goods/agg.webp'),
+(30, 1, '铁板牛肉', '49', '土豆软糯，牛肉酥烂入味', 0, 4, 0, 'img/goods/agg.webp');
 
 -- --------------------------------------------------------
 
@@ -164,6 +166,13 @@ CREATE TABLE `order_` (
   `order_no` varchar(64) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- 转存表中的数据 `order_`
+--
+
+INSERT INTO `order_` (`id`, `uid`, `addr_id`, `shop_id`, `status`, `order_time`, `pay_time`, `deliver_start`, `received_time`, `message`, `dish_count`, `price`, `pay_method`, `order_no`) VALUES
+(1, 29, 51, 1, 1, 1551497972480, NULL, 0, NULL, '', 1, '118.00', '微信', '1551496211831163646');
+
 -- --------------------------------------------------------
 
 --
@@ -188,18 +197,27 @@ CREATE TABLE `re_address` (
 --
 
 INSERT INTO `re_address` (`id`, `uid`, `receiver`, `province`, `city`, `country`, `address`, `phone`, `gender`, `isDel`) VALUES
-(32, 2, 'Tom', '天津', '天津', '和平区', '和平小学', '15945612345', 0, 0),
-(33, 2, 'Alice', '河北', '邢台', '内丘县', '451', '15812345678', 0, 1),
-(34, 2, '张三', '天津', '天津', '河东区', '43', '15712345678', 1, 1),
-(35, 2, '5435', '天津', '天津', '南开区', '4234', '15712345678', 0, 1),
-(36, 2, '8768867', '北京', '北京', '宣武区', '55345', '15712346578', 0, 0),
-(37, 25, 'Jerry', '河北', '石家庄', '郊区', 'A451', '15012345678', 0, 0),
-(38, 20, '王五', '河北', '石家庄', '郊区', 'A21', '15812345678', 1, 0),
-(39, 2, 'Jerry', '湖北', '武汉', '武昌区', '卓刀泉南路', '15012345678', 1, 0),
-(40, 2, '李大川', '湖北', '武汉', '武昌区', '张之洞路千家街', '15912345645', 1, 0),
-(46, 2, '张大以', '湖北省', '武昌区', '洪山区', '五环天地', '18845612345', 0, 0),
-(47, 2, 'blibli', '天津', '天津城', '河东区', '13454', '15072774512', 0, 0),
-(50, 2, 'BangBang', '天津市', '天津城区', '南开区', 'A4小区', '19984645645', 1, 0);
+(51, 29, '张三', '湖北省', '武汉市', '洪山区', '杨家湾五环天地', '18627785990', 1, 0);
+
+-- --------------------------------------------------------
+
+--
+-- 表的结构 `save`
+--
+
+CREATE TABLE `save` (
+  `id` int(11) NOT NULL,
+  `uid` int(11) NOT NULL,
+  `sid` int(11) NOT NULL,
+  `isDel` tinyint(4) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- 转存表中的数据 `save`
+--
+
+INSERT INTO `save` (`id`, `uid`, `sid`, `isDel`) VALUES
+(6, 32, 1, 0);
 
 -- --------------------------------------------------------
 
@@ -272,6 +290,13 @@ CREATE TABLE `shop_car` (
   `isOrder` tinyint(4) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- 转存表中的数据 `shop_car`
+--
+
+INSERT INTO `shop_car` (`id`, `uid`, `fid`, `shop_id`, `number`, `un_price`, `isOrder`) VALUES
+(1, 29, 3, 1, 2, 59, 1);
+
 -- --------------------------------------------------------
 
 --
@@ -316,7 +341,14 @@ INSERT INTO `user` (`id`, `name`, `gender`, `email`, `phone`, `avatar`, `user_na
 (22, NULL, NULL, NULL, '15072772698', NULL, NULL),
 (23, NULL, NULL, NULL, '15932165478', NULL, NULL),
 (24, NULL, NULL, NULL, '15072772688', NULL, NULL),
-(25, NULL, NULL, NULL, '15745612345', NULL, NULL);
+(25, NULL, NULL, NULL, '15745612345', NULL, NULL),
+(26, NULL, NULL, NULL, '15845612345', NULL, NULL),
+(27, NULL, NULL, NULL, '15784651545', NULL, NULL),
+(28, NULL, NULL, NULL, '15784654548', NULL, NULL),
+(29, NULL, NULL, NULL, '15451234545', NULL, NULL),
+(30, NULL, NULL, NULL, '15484561545', NULL, NULL),
+(31, NULL, NULL, NULL, '15645641234', NULL, NULL),
+(32, NULL, NULL, NULL, '15456456151', NULL, NULL);
 
 --
 -- Indexes for dumped tables
@@ -363,6 +395,12 @@ ALTER TABLE `order_`
 ALTER TABLE `re_address`
   ADD PRIMARY KEY (`id`),
   ADD KEY `uid` (`uid`);
+
+--
+-- Indexes for table `save`
+--
+ALTER TABLE `save`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `shop`
@@ -414,12 +452,17 @@ ALTER TABLE `food_catagory`
 -- 使用表AUTO_INCREMENT `order_`
 --
 ALTER TABLE `order_`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- 使用表AUTO_INCREMENT `re_address`
 --
 ALTER TABLE `re_address`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=51;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=52;
+--
+-- 使用表AUTO_INCREMENT `save`
+--
+ALTER TABLE `save`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 --
 -- 使用表AUTO_INCREMENT `shop`
 --
@@ -429,12 +472,12 @@ ALTER TABLE `shop`
 -- 使用表AUTO_INCREMENT `shop_car`
 --
 ALTER TABLE `shop_car`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- 使用表AUTO_INCREMENT `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
 --
 -- 限制导出的表
 --

@@ -705,6 +705,8 @@ router.post('/update_address', (req, res) => {
 router.post('/SaveShop', (req, res) => {
     var obj = req.body;
     var sql = 'INSERT INTO save VALUES(null, (SELECT id FROM user WHERE user.phone=?), ?, 0)';
+    console.log(req.session.user.name)
+    console.log(obj.sid)
     pool.query(sql, [req.session.user.name, obj.sid], (err, result) => {
         if (err) {
             throw err;
