@@ -1,13 +1,14 @@
-
-CREATE DATABASE buying;
-use buying;
+SET NAMES UTF8;
+DROP DATABASE IF EXISTS buying;
+CREATE DATABASE buying CHARSET-UTF8;
+USE buying;
 
 -- phpMyAdmin SQL Dump
 -- version 4.5.1
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: 2019-02-23 10:59:32
+-- Generation Time: 2019-03-02 03:24:39
 -- 服务器版本： 10.1.13-MariaDB
 -- PHP Version: 5.6.21
 
@@ -44,18 +45,21 @@ CREATE TABLE `admin` (
 
 CREATE TABLE `business` (
   `id` int(11) NOT NULL,
-  `name` varchar(8) DEFAULT NULL,
   `password` varchar(16) DEFAULT NULL,
   `phone` varchar(11) DEFAULT NULL,
-  `shopman_name` varchar(8) DEFAULT NULL
+  `shopman_name` varchar(8) DEFAULT NULL,
+  `idCard` varchar(24) NOT NULL,
+  `business_img` varchar(128) NOT NULL,
+  `contact` varchar(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- 转存表中的数据 `business`
 --
 
-INSERT INTO `business` (`id`, `name`, `password`, `phone`, `shopman_name`) VALUES
-(1, NULL, NULL, '15072772685', NULL);
+INSERT INTO `business` (`id`, `password`, `phone`, `shopman_name`, `idCard`, `business_img`, `contact`) VALUES
+(1, '123456', '18672274395', NULL, '', '0', ''),
+(2, '123456', '15078452148', '张晓恩', '421182159841257895', './upload/15514387144851859.png', '张三');
 
 -- --------------------------------------------------------
 
@@ -218,36 +222,39 @@ CREATE TABLE `shop` (
   `deliver_time` tinyint(11) NOT NULL,
   `shop_img` varchar(64) NOT NULL,
   `shop_start` tinyint(4) NOT NULL,
-  `shop_phone` varchar(16) NOT NULL
+  `shop_phone` varchar(16) NOT NULL,
+  `isPass` tinyint(4) NOT NULL,
+  `licenseName` varchar(128) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- 转存表中的数据 `shop`
 --
 
-INSERT INTO `shop` (`id`, `business_id`, `shop_name`, `shop_type`, `province`, `city`, `county`, `address`, `license`, `deliver_fee`, `deliver_cost`, `deliver_time`, `shop_img`, `shop_start`, `shop_phone`) VALUES
-(1, 1, '叮咚叮咚早餐店（杨家湾店）', '正餐优选', '湖北省', '武汉市', '武昌区', '湖北省武汉市武昌区', '654654131', '8', '20', 30, 'img/brand/miaomiao.jpg', 3, '15912345678'),
-(2, 1, '咕叽快餐', '下午茶', '湖北省', '武汉市', '武昌区', '湖北省武汉市武昌区杨家湾五环天地', '458453135486', '10', '15', 30, 'img/brand/95608b68ffb39943dbe10ac8c5b9aacd15834.jpg', 5, '15912345678'),
-(3, 1, '四美包子', '精选小吃', '湖北省', '武汉市', '武昌区', '湖北省武汉市武昌区杨家湾', '74867654154', '5', '30', 20, 'img/business/business-icon.png', 4, '15912345678'),
-(4, 1, '华莱士', '下午茶', '湖北省', '武汉市', '武昌区', '湖北省武汉市武昌区白沙洲大道', '86745645', '11', '30', 15, 'img/business/hualaishi.jpg', 4, '15912345678'),
-(5, 1, '华莱士', '精选小吃', '湖北省', '武汉市', '武昌区', '湖北省武汉市武昌区白沙洲', '78457546', '12', '20', 30, 'img/business/business-icon.png', 5, '15912345678'),
-(6, 1, '华莱士', '正餐优选', '湖北省', '武汉市', '武昌区', '湖北省武汉市武昌区白沙洲', '66541351', '10', '21', 35, 'img/business/business-icon.png', 4, '15912345678'),
-(7, 1, '华莱士', '美食', '湖北省', '武汉市', '武昌区', '湖北省武汉市武昌区白沙洲', '66541351', '10', '21', 35, 'img/business/business-icon.png', 3, '15912345678'),
-(8, 1, '华莱士', '美食', '湖北省', '武汉市', '武昌区', '湖北省武汉市武昌区白沙洲', '66541351', '10', '21', 35, 'img/business/business-icon.png', 5, '15912345678'),
-(9, 1, '华莱士', '美食', '湖北省', '武汉市', '武昌区', '湖北省武汉市武昌区白沙洲', '66541351', '10', '21', 35, 'img/business/business-icon.png', 4, '15912345678'),
-(10, 1, '华莱士', '美食', '湖北省', '武汉市', '武昌区', '湖北省武汉市武昌区白沙洲', '66541351', '10', '21', 35, 'img/business/business-icon.png', 5, '15912345678'),
-(11, 1, '华莱士', '美食', '湖北省', '武汉市', '武昌区', '湖北省武汉市武昌区白沙洲', '66541351', '10', '21', 35, 'img/business/business-icon.png', 3, '15912345678'),
-(12, 1, '华莱士', '美食', '湖北省', '武汉市', '武昌区', '湖北省武汉市武昌区白沙洲', '66541351', '10', '21', 35, 'img/business/business-icon.png', 4, '15912345678'),
-(13, 1, '华莱士', '美食', '湖北省', '武汉市', '武昌区', '湖北省武汉市武昌区白沙洲', '66541351', '10', '21', 35, 'img/business/business-icon.png', 5, '15912345678'),
-(14, 1, '华莱士', '美食', '湖北省', '武汉市', '武昌区', '湖北省武汉市武昌区白沙洲', '66541351', '10', '21', 35, 'img/business/business-icon.png', 3, '15912345678'),
-(15, 1, '华莱士', '美食', '湖北省', '武汉市', '武昌区', '湖北省武汉市武昌区白沙洲', '66541351', '10', '21', 35, 'img/business/business-icon.png', 5, '15912345678'),
-(16, 1, '华莱士', '美食', '湖北省', '武汉市', '武昌区', '湖北省武汉市武昌区白沙洲', '66541351', '10', '21', 35, 'img/business/business-icon.png', 3, '15912345678'),
-(17, 1, '华莱士', '美食', '湖北省', '武汉市', '武昌区', '湖北省武汉市武昌区白沙洲', '66541351', '10', '21', 35, 'img/business/business-icon.png', 4, '15912345678'),
-(18, 1, '华莱士', '美食', '湖北省', '武汉市', '武昌区', '湖北省武汉市武昌区白沙洲', '66541351', '10', '21', 35, 'img/business/business-icon.png', 5, '15912345678'),
-(19, 1, '华莱士', '美食', '湖北省', '武汉市', '武昌区', '湖北省武汉市武昌区白沙洲', '66541351', '10', '21', 35, 'img/business/business-icon.png', 5, ''),
-(20, 1, '华莱士', '美食', '湖北省', '武汉市', '武昌区', '湖北省武汉市武昌区白沙洲', '66541351', '10', '21', 35, 'img/business/business-icon.png', 4, ''),
-(21, 1, '四美包子', '正餐优选', '湖北省', '武汉市', '武昌区', '湖北省武汉市武昌区杨家湾', '74867654154', '5', '30', 20, 'img/business/business-icon.png', 3, ''),
-(22, 1, '叮咚早餐店', '下午茶', '湖北省', '武汉市', '武昌区', '湖北省武汉市武昌区', '654654131', '8', '20', 30, 'img/brand/95608b68ffb39943dbe10ac8c5b9aacd15834.jpg', 4, '');
+INSERT INTO `shop` (`id`, `business_id`, `shop_name`, `shop_type`, `province`, `city`, `county`, `address`, `license`, `deliver_fee`, `deliver_cost`, `deliver_time`, `shop_img`, `shop_start`, `shop_phone`, `isPass`, `licenseName`) VALUES
+(1, 1, '叮咚叮咚早餐店（杨家湾店）', '正餐优选', '湖北省', '武汉市', '武昌区', '湖北省武汉市武昌区', '654654131', '8', '20', 30, 'img/brand/miaomiao.jpg', 3, '15912345678', 1, ''),
+(2, 1, '咕叽快餐', '下午茶', '湖北省', '武汉市', '武昌区', '湖北省武汉市武昌区杨家湾五环天地', '458453135486', '10', '15', 30, 'img/brand/95608b68ffb39943dbe10ac8c5b9aacd15834.jpg', 5, '15912345678', 1, ''),
+(3, 1, '四美包子', '精选小吃', '湖北省', '武汉市', '武昌区', '湖北省武汉市武昌区杨家湾', '74867654154', '5', '30', 20, 'img/business/business-icon.png', 4, '15912345678', 1, ''),
+(4, 1, '华莱士', '下午茶', '湖北省', '武汉市', '武昌区', '湖北省武汉市武昌区白沙洲大道', '86745645', '11', '30', 15, 'img/business/hualaishi.jpg', 4, '15912345678', 1, ''),
+(5, 1, '华莱士', '精选小吃', '湖北省', '武汉市', '武昌区', '湖北省武汉市武昌区白沙洲', '78457546', '12', '20', 30, 'img/business/business-icon.png', 5, '15912345678', 1, ''),
+(6, 1, '华莱士', '正餐优选', '湖北省', '武汉市', '武昌区', '湖北省武汉市武昌区白沙洲', '66541351', '10', '21', 35, 'img/business/business-icon.png', 4, '15912345678', 1, ''),
+(7, 1, '华莱士', '美食', '湖北省', '武汉市', '武昌区', '湖北省武汉市武昌区白沙洲', '66541351', '10', '21', 35, 'img/business/business-icon.png', 3, '15912345678', 1, ''),
+(8, 1, '华莱士', '美食', '湖北省', '武汉市', '武昌区', '湖北省武汉市武昌区白沙洲', '66541351', '10', '21', 35, 'img/business/business-icon.png', 5, '15912345678', 1, ''),
+(9, 1, '华莱士', '美食', '湖北省', '武汉市', '武昌区', '湖北省武汉市武昌区白沙洲', '66541351', '10', '21', 35, 'img/business/business-icon.png', 4, '15912345678', 1, ''),
+(10, 1, '华莱士', '美食', '湖北省', '武汉市', '武昌区', '湖北省武汉市武昌区白沙洲', '66541351', '10', '21', 35, 'img/business/business-icon.png', 5, '15912345678', 1, ''),
+(11, 1, '华莱士', '美食', '湖北省', '武汉市', '武昌区', '湖北省武汉市武昌区白沙洲', '66541351', '10', '21', 35, 'img/business/business-icon.png', 3, '15912345678', 1, ''),
+(12, 1, '华莱士', '美食', '湖北省', '武汉市', '武昌区', '湖北省武汉市武昌区白沙洲', '66541351', '10', '21', 35, 'img/business/business-icon.png', 4, '15912345678', 1, ''),
+(13, 1, '华莱士', '美食', '湖北省', '武汉市', '武昌区', '湖北省武汉市武昌区白沙洲', '66541351', '10', '21', 35, 'img/business/business-icon.png', 5, '15912345678', 1, ''),
+(14, 1, '华莱士', '美食', '湖北省', '武汉市', '武昌区', '湖北省武汉市武昌区白沙洲', '66541351', '10', '21', 35, 'img/business/business-icon.png', 3, '15912345678', 1, ''),
+(15, 1, '华莱士', '美食', '湖北省', '武汉市', '武昌区', '湖北省武汉市武昌区白沙洲', '66541351', '10', '21', 35, 'img/business/business-icon.png', 5, '15912345678', 1, ''),
+(16, 1, '华莱士', '美食', '湖北省', '武汉市', '武昌区', '湖北省武汉市武昌区白沙洲', '66541351', '10', '21', 35, 'img/business/business-icon.png', 3, '15912345678', 1, ''),
+(17, 1, '华莱士', '美食', '湖北省', '武汉市', '武昌区', '湖北省武汉市武昌区白沙洲', '66541351', '10', '21', 35, 'img/business/business-icon.png', 4, '15912345678', 1, ''),
+(18, 1, '华莱士', '美食', '湖北省', '武汉市', '武昌区', '湖北省武汉市武昌区白沙洲', '66541351', '10', '21', 35, 'img/business/business-icon.png', 5, '15912345678', 1, ''),
+(19, 1, '华莱士', '美食', '湖北省', '武汉市', '武昌区', '湖北省武汉市武昌区白沙洲', '66541351', '10', '21', 35, 'img/business/business-icon.png', 5, '', 1, ''),
+(20, 1, '华莱士', '美食', '湖北省', '武汉市', '武昌区', '湖北省武汉市武昌区白沙洲', '66541351', '10', '21', 35, 'img/business/business-icon.png', 4, '', 1, ''),
+(21, 1, '四美包子', '正餐优选', '湖北省', '武汉市', '武昌区', '湖北省武汉市武昌区杨家湾', '74867654154', '5', '30', 20, 'img/business/business-icon.png', 3, '', 1, ''),
+(22, 1, '叮咚早餐店', '下午茶', '湖北省', '武汉市', '武昌区', '湖北省武汉市武昌区', '654654131', '8', '20', 30, 'img/brand/95608b68ffb39943dbe10ac8c5b9aacd15834.jpg', 4, '', 1, ''),
+(24, 2, '豪大大鸡排', '正餐优选', '湖北省', '荆门市', '京山县', '湖北省荆门市京山县文博路', '15456132548454121', '0', '0', 0, './upload/15514387144851859.png', 0, '15078452148', 0, '豪大大美食有限公司');
 
 -- --------------------------------------------------------
 
@@ -392,7 +399,7 @@ ALTER TABLE `admin`
 -- 使用表AUTO_INCREMENT `business`
 --
 ALTER TABLE `business`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- 使用表AUTO_INCREMENT `food`
 --
@@ -407,7 +414,7 @@ ALTER TABLE `food_catagory`
 -- 使用表AUTO_INCREMENT `order_`
 --
 ALTER TABLE `order_`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=122;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- 使用表AUTO_INCREMENT `re_address`
 --
@@ -417,12 +424,12 @@ ALTER TABLE `re_address`
 -- 使用表AUTO_INCREMENT `shop`
 --
 ALTER TABLE `shop`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 --
 -- 使用表AUTO_INCREMENT `shop_car`
 --
 ALTER TABLE `shop_car`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=402;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- 使用表AUTO_INCREMENT `user`
 --
