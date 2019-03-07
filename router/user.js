@@ -1,4 +1,4 @@
-const express = require('express');
+﻿const express = require('express');
 var pool = require('../pool');
 var formidable = require('formidable');
 var router = express.Router();
@@ -596,7 +596,7 @@ router.get('/getUserOrder', (req, res) => {
 
 router.get('/getShopInfo', (req, res) => {
     var obj = req.query;
-    var sql = `SELECT shop_name, shop_phone,deliver_fee FROM shop JOIN order_ ON shop.id=order_.shop_id WHERE order_.order_no=?`;
+    var sql = `SELECT shop_name, shop_phone,deliver_fee,shop_img FROM shop JOIN order_ ON shop.id=order_.shop_id WHERE order_.order_no=?`;
     pool.query(sql, [obj.order_no], (err, result) => {
         if (err) {
             throw err;
@@ -797,6 +797,21 @@ router.get('/getOrderStatus', (req, res) => {
             res.send({code:200, data:result});
         } else {
             res.send({code:400, data:result});
+        }
+    })
+})
+
+router.get('/hasFood', (req, res) => {
+    var obj = req.query;
+    var sql = 'SELECT COUNT(food.food_id) as c FROM shop JOIN food ON shop.id=food.shop_id WHERE shop.id=?';
+    pool.query(sql, [obj.sid], (err, result) => {
+        if (err) {
+            throw err;
+        }
+        if (result.length) {
+            res.send({code: 200, data: result[0]})
+        } else {
+            res.send({code: 400, data: result})
         }
     })
 })
