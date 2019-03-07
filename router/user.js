@@ -356,7 +356,7 @@ router.post('/getOrderInfo', (req, res) => {
 
 router.post('/save_address', (req, res) => {
     var obj = req.body;
-    // console.log(req.session.user.name, obj.receiver, obj.province, obj.city, obj.country, obj.address, obj.phone, obj.gender)
+    console.log(req.session.user.name, obj.receiver, obj.province, obj.city, obj.country, obj.address, obj.phone, obj.gender)
     var sql = `INSERT INTO re_address VALUES (null, (SELECT id FROM user WHERE user.phone=?), ?, ?, ?, ?, ?, ?, ?, 0)`;
     pool.query(sql, [req.session.user.name, obj.receiver, obj.province, obj.city, obj.country, obj.address, obj.phone, obj.gender], (err, result) => {
         if (err) {
