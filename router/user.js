@@ -816,4 +816,20 @@ router.get('/hasFood', (req, res) => {
     })
 })
 
+router.get('/getFoodCount', (req, res) => {
+    var obj = req.query;
+    var inventory = parseInt(obj.inventory);
+    var sql = 'UPDATE food SET inventory=inventory-? WHERE food_id=? AND inventory>?';
+    pool.query(sql, [inventory, obj.food_id, inventory], (err,result) => {
+        if (err) {
+            throw err;
+        }
+        if (result.affectedRows) {
+            res.send({code: 200, data: '添加成功'})
+        } else {
+            res.send({code: 400, data: '库存不足'})
+        }
+    })
+})
+
 module.exports = router;
