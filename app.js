@@ -52,7 +52,18 @@ server.post('/upload', upload.single('mypic'), (req, res) => {
     var frane = Math.floor(Math.random() * 9999);
     var des = `./upload/${ftime}${frane}${suff}`;
     fs.renameSync(req.file.path, des);
-    console.log(des)
+    // console.log(des)
+    res.send({ code: 1, msg: '上传文件成功', path: des})
+})
+server.post('/uploadFood', upload.single('file'), (req, res) => {
+    var src = req.file.originalname;
+    var i3 = src.lastIndexOf('.');
+    var suff = src.substring(i3);
+    var ftime = new Date().getTime();
+    var frane = Math.floor(Math.random() * 9999);
+    var des = `./upload/${ftime}${frane}${suff}`;
+    fs.renameSync(req.file.path, des);
+    // console.log(des)
     res.send({ code: 1, msg: '上传文件成功', path: des})
 })
 
