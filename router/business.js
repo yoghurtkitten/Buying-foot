@@ -265,4 +265,20 @@ router.get("/getFoodInfo", (req, res) => {
     }
   });
 });
+
+router.get("/addFoodType", (req, res) => {
+  var obj = req.query;
+  var sql = `INSERT INTO food_catagory VALUES (null, ?, 
+        (SELECT shop.id FROM shop JOIN business ON shop.business_id=business.id WHERE business.phone=?))`;
+  pool.query(sql, [obj.type_name, obj.bphone], (err, result) => {
+    if (err) {
+      throw err;
+    }
+    if (res.affectedRows) {
+      res.send({ code: 200, data: '添加成功' });
+    } else {
+      res.send({ code: 400, data: '添加失败' });
+    }
+  });
+});
 module.exports = router;
