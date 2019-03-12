@@ -517,6 +517,21 @@ router.get('/changeStatu', (req, res) => {
         }
     })
 })
+router.get('/updateFoodSell', (req, res) => {
+    var obj = req.query;
+    var sql = `UPDATE food JOIN shop_car ON food.food_id=shop_car.fid JOIN order_ ON shop_car.isOrder=order_.id 
+    SET food.sell_number=food.sell_number+shop_car.number WHERE order_.id=?`;
+    pool.query(sql, [obj.order_id], (err, result) => {
+        if (err) {
+            throw err;
+        }
+        if (result.affectedRows) {
+            res.send({ code: 200, msg: 'updata statu success' });
+        } else {
+            res.send({ code: 400, msg: 'updata statu fault' });
+        }
+    })
+})
 
 router.get('/orderStatu', (req, res) => {
     var obj = req.query;
