@@ -251,7 +251,7 @@ router.get("/getFoodCata", (req, res) => {
 
 router.get("/getFoodInfo", (req, res) => {
   var obj = req.query;
-  var sql = `SELECT food_catagory.id, food_catagory.type_name, food.name, food.price, food.food_img, food.initial, food.inventory 
+  var sql = `SELECT food_catagory.id, food_catagory.type_name, food.name, food.price, food.food_img, food.food_id, food.initial, food.inventory 
     FROM food_catagory JOIN shop ON food_catagory.shop_id=shop.id JOIN business ON shop.business_id=business.id 
     JOIN food ON food.type_id=food_catagory.id WHERE business.phone=?`;
   pool.query(sql, [obj.bphone], (err, result) => {
@@ -274,11 +274,131 @@ router.get("/addFoodType", (req, res) => {
     if (err) {
       throw err;
     }
-    if (res.affectedRows) {
-      res.send({ code: 200, data: '添加成功' });
+    if (result.affectedRows) {
+      res.send({ code: 200, data: "添加成功" });
     } else {
-      res.send({ code: 400, data: '添加失败' });
+      res.send({ code: 400, data: "添加失败" });
     }
   });
 });
+
+router.post("/addFood", (req, res) => {
+  var obj = req.body;
+  var sql = `INSERT INTO food VALUES (null, 
+        (SELECT shop.id FROM shop JOIN business ON shop.business_id=business.id WHERE business.phone=?), 
+        ?,?,?,?,?,0,?,?,?)`;
+  pool.query(
+    sql,
+    [
+      obj.bphone,
+      obj.food_name,
+      obj.price,
+      obj.discript,
+      obj.type_id,
+      obj.star,
+      obj.imageUrl,
+      obj.inventory,
+      obj.initial
+    ],
+    (err, result) => {
+      if (err) {
+        throw err;
+      }
+      if (result.affectedRows) {
+        res.send({ code: 200, data: "添加成功" });
+      } else {
+        res.send({ code: 400, data: "添加失败" });
+      }
+    }
+  );
+});
+
+router.get("/initFood", (req, res) => {
+  var obj = req.query;
+  var sql = "UPDATE food SET inventory=initial WHERE food_id=?";
+  pool.query(sql, [obj.food_id], (err, result) => {
+    if (err) {
+      throw err;
+    }
+    if (result.affectedRows) {
+      res.send({ code: 200, data: "修改成功" });
+    } else {
+      res.send({ code: 400, data: "修改失败" });
+    }
+  });
+});
+
+router.get("/foodZero", (req, res) => {
+  var obj = req.query;
+  var sql = "UPDATE food SET inventory=0 WHERE food_id=?";
+  pool.query(sql, [obj.food_id], (err, result) => {
+    if (err) {
+      throw err;
+    }
+    if (result.affectedRows) {
+      res.send({ code: 200, data: "修改成功" });
+    } else {
+      res.send({ code: 400, data: "修改失败" });
+    }
+  });
+});
+router.get("/changeFoodType", (req, res) => {
+  var obj = req.query;
+  console.log(obj.id, obj.type_name);
+  var sql = "UPDATE food_catagory SET type_name=? WHERE id=?";
+  pool.query(sql, [obj.type_name, obj.id], (err, result) => {
+    if (err) {
+      throw err;
+    }
+    if (result.affectedRows) {
+      res.send({ code: 200, data: "修改成功" });
+    } else {
+      res.send({ code: 400, data: "修改失败" });
+    }
+  });
+});
+router.get("/delFood", (req, res) => {
+  var obj = req.query;
+  var sql = "DELETE FROM food WHERE food_id=?";
+  pool.query(sql, [obj.food_id], (err, result) => {
+    if (err) {
+      throw err;
+    }
+    if (result.affectedRows) {
+      res.send({ code: 200, data: "删除成功" });
+    } else {
+      res.send({ code: 400, data: "删除失败" });
+    }
+  });
+});
+router.get("/getSingleFood", (req, res) => {
+  var obj = req.query;
+  var sql = "SELECT * FROM food WHERE food_id=?";
+  pool.query(sql, [obj.food_id], (err, result) => {
+    if (err) {
+      throw err;
+    }
+    if (result.length) {
+      res.send({ code: 200, data: result });
+    } else {
+      res.send({ code: 400, data: result });
+    }
+  });
+});
+router.post('/updateFoodInfo', (req, res) => {
+    var obj = req.body;
+    var sql = `UPDATE food SET name=?,price=?,ingredients=?,
+    type_id=?,food_start=?,food_img=?,inventory=?,initial=? WHERE food_id=?`;
+    pool.query(sql, [obj.name, obj.price, obj.ingredients, obj.type_id, obj.food_start, 
+        obj.food_img,obj.inventory,obj.initial,obj.food_id], (err, result) => {
+        if (err) {
+            throw err;
+        }
+        if (result.affectedRows) {
+            res.send({ code: 200, data: "更新成功" });
+          } else {
+            res.send({ code: 400, data: "更新失败" });
+          }
+    })
+})
 module.exports = router;
