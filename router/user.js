@@ -66,9 +66,9 @@ router.get('/getlist', (req, res) => {
     var queryPara = [province, city, county, n];
     if (req.query.type) {
         queryPara = [province, city, county, shop_type, n]
-        sql = 'SELECT * FROM shop WHERE province=? and city=? and county=? and shop_type=? and isPass=1 LIMIT ?,20';
+        sql = 'SELECT * FROM shop WHERE province=? and city=? and county=? and shop_type=? and isPass=0 LIMIT ?,20';
     } else {
-        sql = 'SELECT * FROM shop WHERE province=? and city=? and county=? and isPass=1 LIMIT ?,20';
+        sql = 'SELECT * FROM shop WHERE province=? and city=? and county=? and isPass=0 LIMIT ?,20';
     }
     // console.log(`SELECT * FROM shop WHERE province=${province} and city=${city} and county=${county} LIMIT ${n},20`);
     pool.query(sql, queryPara, (err, result) => {
@@ -503,8 +503,9 @@ router.get('/change_order', (req, res) => {
     })
 })
 
-router.get('/changeStatu', (req, res) => {
-    var obj = req.query;
+router.post('/changeStatu', (req, res) => {
+    var obj = req.body;
+    console.log(obj.pay_method, obj.order_no)
     var sql = 'UPDATE order_ SET status=1,pay_method=? WHERE id = ?';
     pool.query(sql, [obj.pay_method, obj.order_no], (err, result) => {
         if (err) {
