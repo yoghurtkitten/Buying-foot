@@ -2,6 +2,7 @@
 const bodyParser = require('body-parser');
 const userRouter = require('./router/user');
 const businessRouter = require('./router/business');
+const adminRouter = require('./router/admin');
 var cookieParser = require('cookie-parser');
 var session = require('express-session');
 var cors = require("cors")
@@ -41,6 +42,7 @@ server.use(cors({
 
 server.use('/user', userRouter);
 server.use('/business', businessRouter);
+server.use('/admin', adminRouter);
 
 
 var upload = multer({ dest: "upload/" });

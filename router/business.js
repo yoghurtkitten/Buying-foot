@@ -40,7 +40,7 @@ router.post("/registe", (req, res) => {
       }
       if (result.affectedRows) {
         sql = `INSERT INTO shop (business_id, shop_name, shop_type, province, city, county, address, license, shop_img, shop_phone, licenseName, isPass) 
-            VALUES ((SELECT max(id) from business), ?, ?, ?,?,?,?,?,?,?,?,0)`;
+            VALUES ((SELECT max(id) from business), ?, ?, ?,?,?,?,?,?,?,?,1)`;
         pool.query(
           sql,
           [
@@ -74,7 +74,7 @@ router.post("/registe", (req, res) => {
 });
 router.get("/valiBusiness", (req, res) => {
   var obj = req.query;
-  var sql = `SELECT isPass FROM business WHERE phone=?`;
+  var sql = `SELECT shop.isPass FROM business JOIN shop ON shop.business_id=business.id WHERE business.phone=?`;
   pool.query(sql, [obj.phone], (err, result) => {
     if (err) {
       throw err;

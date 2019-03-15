@@ -31,7 +31,7 @@ router.post('/getVCode', (req, res) => {
     v_code = validate_code();
     res.send({ code: 200, msg: "短信发送成功", vcode: v_code });
 
-    /* var queryData = querystring.stringify({
+   /*  var queryData = querystring.stringify({
         "mobile": obj.phone,  // 接受短信的用户手机号码
         "tpl_id": "127698",  // 您申请的短信模板ID，根据实际情况修改
         "tpl_value": `#code#=${v_code}`,  // 您设置的模板变量，根据实际情况修改
