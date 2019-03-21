@@ -23,7 +23,7 @@ router.get("/Login", (req, res) => {
 router.post("/registe", (req, res) => {
   // res.send(req.body);
   var obj = req.body;
-  var sql = "INSERT INTO business VALUES (null, ?,?,?,?,?,?,0)";
+  var sql = "INSERT INTO business VALUES (null,?,?,?,?,?,?)";
   pool.query(
     sql,
     [
